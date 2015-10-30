@@ -7,10 +7,26 @@
 
 #ifndef PRODFORNECEDOR_H_
 #define PRODFORNECEDOR_H_
+#include "Produto.h"
+#include "Patamar.h"
 
 class ProdFornecedor {
+private:
+	Produto* produto;
+	double stock;
+	vector<Patamar*> patamares;
 public:
 	ProdFornecedor();
+	ProdFornecedor(Produto* produto, double stock) : produto(produto), stock(stock) {};
+	ProdFornecedor(Produto* produto, double stock, vector<Patamar*> patamares) :
+		produto(produto), stock(stock), patamares(patamares) {};
+	Produto* getProduto() const;
+	double getStock() const;
+	vector<Patamar*> getPatamares() const;
+	void setProduto(Produto* produto);
+	void setStock(double stock);
+	void setPatamares(vector<Patamar*> patamares);
+	void addPatamar(double min, double max, double preco);
 	virtual ~ProdFornecedor();
 };
 
