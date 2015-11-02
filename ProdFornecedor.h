@@ -10,27 +10,35 @@
 #include "Produto.h"
 #include "Patamar.h"
 
+template<typename T>
+struct melhorPreco{
+	T quantidade;
+	float preco;
+};
+
 
 template<typename T>
 class ProdFornecedor {
 private:
 	Produto* produto;
 	T stock;
-	vector<Patamar*> patamares;
+	vector<Patamar<T>*> patamares;
+
 public:
 	ProdFornecedor();
 	ProdFornecedor(Produto* produto, T stock) : produto(produto), stock(stock) {};
-	ProdFornecedor(Produto* produto, T stock, vector<Patamar*> patamares) :
+	ProdFornecedor(Produto* produto, T stock, vector<Patamar<T>*> patamares) :
 		produto(produto), stock(stock), patamares(patamares) {};
 	Produto* getProduto() const;
 	T getStock() const;
-	vector<Patamar*> getPatamares() const;
+	vector<Patamar<T>*> getPatamares() const;
 	void setProduto(Produto* produto);
 	void setStock(T stock);
-	void setPatamares(vector<Patamar*> patamares);
-	void addPatamar(double min, double max, double preco);
+	void setPatamares(vector<Patamar<T>*> patamares);
+	void addPatamar(T min, T max, float preco);
 	void removePatamarIndice(int indice);
-	void removePatamarInterator(vector<Patamar *>::iterator it);
+	float getPrecoStock() const;
+	melhorPreco<T> getMelhorPreco(string nome, T quantidade);
 	void displayPatamares();
 	~ProdFornecedor() {};
 };
