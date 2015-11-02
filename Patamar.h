@@ -8,18 +8,20 @@
 #ifndef PATAMAR_H_
 #define PATAMAR_H_
 
+template<typename T>
 class Patamar {
 private:
-	double min, max, preco;
+	 T min, max;
+	 float preco;
 public:
 	Patamar();
-	Patamar(double min, double max, double preco) : min(min), max(max), preco(preco) {};
-	double getMinimo() const;
-	double getMaximo() const;
-	double getPreco() const;
-	void setMinimo(double minimo);
-	void setMaximo(double maximo);
-	void setPreco(double preco);
+	Patamar(T min, T max, float preco) : min(min), max(max), preco(preco) {};
+	T getMinimo() const;
+	T getMaximo() const;
+	float getPreco() const;
+	void setMinimo(T minimo);
+	void setMaximo(T maximo);
+	void setPreco(float preco);
 	virtual ~Patamar();
 };
 
