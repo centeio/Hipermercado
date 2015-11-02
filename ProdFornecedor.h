@@ -10,27 +10,29 @@
 #include "Produto.h"
 #include "Patamar.h"
 
+
+template<typename T>
 class ProdFornecedor {
 private:
 	Produto* produto;
-	double stock;
+	T stock;
 	vector<Patamar*> patamares;
 public:
 	ProdFornecedor();
-	ProdFornecedor(Produto* produto, double stock) : produto(produto), stock(stock) {};
-	ProdFornecedor(Produto* produto, double stock, vector<Patamar*> patamares) :
+	ProdFornecedor(Produto* produto, T stock) : produto(produto), stock(stock) {};
+	ProdFornecedor(Produto* produto, T stock, vector<Patamar*> patamares) :
 		produto(produto), stock(stock), patamares(patamares) {};
 	Produto* getProduto() const;
-	double getStock() const;
+	T getStock() const;
 	vector<Patamar*> getPatamares() const;
 	void setProduto(Produto* produto);
-	void setStock(double stock);
+	void setStock(T stock);
 	void setPatamares(vector<Patamar*> patamares);
 	void addPatamar(double min, double max, double preco);
 	void removePatamarIndice(int indice);
 	void removePatamarInterator(vector<Patamar *>::iterator it);
-	void displayPatamares() const;
-	virtual ~ProdFornecedor();
+	void displayPatamares();
+	~ProdFornecedor() {};
 };
 
 #endif /* PRODFORNECEDOR_H_ */

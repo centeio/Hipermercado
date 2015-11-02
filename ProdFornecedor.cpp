@@ -6,54 +6,70 @@
  */
 
 #include "ProdFornecedor.h"
+#include <iterator>
 
 //Constructor
-ProdFornecedor::ProdFornecedor() {
+template<class T>
+ProdFornecedor<T>::ProdFornecedor() {
 	// TODO Auto-generated constructor stub
 	produto = NULL;
 	stock = 0;
 
 }
 
-ProdFornecedor::~ProdFornecedor() {
-	// TODO Auto-generated destructor stub
-}
+template<typename T>
+Produto* ProdFornecedor<T>::getProduto() const { return produto; }
 
-Produto* ProdFornecedor::getProduto() const { return produto; }
+template<typename T>
+T ProdFornecedor<T>::getStock() const { return stock; }
 
-double ProdFornecedor::getStock() const { return stock; }
+template<typename T>
+vector<Patamar*> ProdFornecedor<T>::getPatamares() const { return patamares; }
 
-vector<Patamar*> ProdFornecedor::getPatamares() const { return patamares; }
+template<typename T>
+void ProdFornecedor<T>::setProduto(Produto* produto) { this->produto = produto; }
 
-void ProdFornecedor::setProduto(Produto* produto) { this->produto = produto; }
+template<typename T>
+void ProdFornecedor<T>::setStock(T stock) { this->stock = stock; }
 
-void ProdFornecedor::setStock(double stock) { this->stock = stock; }
+template<typename T>
+void ProdFornecedor<T>::setPatamares(vector<Patamar*> patamares) { this->patamares = patamares; }
 
-void ProdFornecedor::setPatamares(vector<Patamar*> patamares) { this->patamares = patamares; }
-
-void ProdFornecedor::addPatamar(double min, double max, double preco) {
+template<typename T>
+void ProdFornecedor<T>::addPatamar(double min, double max, double preco) {
 	Patamar* patamar = new Patamar(min,max,preco);
 
 	patamares.push_back(patamar);
 }
 
-void ProdFornecedor::removePatamarIndice(int indice) {
+template<typename T>
+void ProdFornecedor<T>::removePatamarIndice(int indice) {
 
 	delete(*(patamares.begin() + indice));
 	patamares.erase(patamares.begin() + indice);
 }
 
-void ProdFornecedor::removePatamarInterator(vector<Patamar *>::iterator it) {
+template<typename T>
+void ProdFornecedor<T>::removePatamarInterator(vector<Patamar *>::iterator it) {
 
 	delete(*it);
 	patamares.erase(it);
 }
 
-void ProdFornecedor::displayPatamares() const {
+template<typename T>
+void ProdFornecedor<T>::displayPatamares() {
 
-
-	for(unsigned int i = 0; i < patamares.size(); i++) {
-		cout << "[" << setw(4) << patamares.at(i)->getMinimo() << "," << setw(4) << patamares.at(i)->getMaximo()
-				<< "] Preco: " << patamares.at(i)->getPreco() << "€ cada" << endl;
+	for(vector<Patamar*>::iterator it = patamares.begin(); it != patamares.end(); it++) {
+		cout << *it << endl;
 	}
 }
+
+ostream& operator<<(ostream& out, Patamar* patamar) {
+
+	out << "[" << setw(4) << patamar->getMinimo() << "," << setw(4) << patamar->getMaximo() << "] Preco: "
+			<< patamar->getPreco() << "€ cada";
+	return out;
+}
+
+template class ProdFornecedor<double>;
+template class ProdFornecedor<int>;
