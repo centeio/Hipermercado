@@ -22,10 +22,6 @@ string Produto::getNome() const { return nome; }
 
 void Produto::setNome(string nome) { this->nome = nome; }
 
-//Produto Unidade
+string Produto::getMedida() const { return medida; }
 
-//Produto Medida
-
-string ProdutoMedida::getMedida() const { return medida; }
-
-void ProdutoMedida::setMedida(string medida) { this->medida = medida; }
+void Produto::setMedida(string medida) { this->medida = medida; }

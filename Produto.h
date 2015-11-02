@@ -17,29 +17,15 @@ using namespace std;
 class Produto {
 private:
 	string nome;
+	string medida;
 public:
 	Produto();
-	Produto(string nome) : nome(nome) {};
+	Produto(string nome, string medida) : nome(nome), medida(medida) {};
 	string getNome() const;
 	void setNome(string nome);
+	string getMedida() const;
+	void setMedida(string medida);
 	virtual ~Produto();
 };
 
 #endif /* PRODUTO_H_ */
-
-class ProdutoUnidade: public Produto {
-public:
-	ProdutoUnidade();
-	ProdutoUnidade(string nome) : Produto(nome) {};
-
-};
-
-class ProdutoMedida: public Produto {
-private:
-	string medida;
-public:
-	ProdutoMedida();
-	ProdutoMedida(string nome, string medida) : Produto(nome) , medida(medida) {};
-	string getMedida() const;
-	void setMedida(string medida);
-};
