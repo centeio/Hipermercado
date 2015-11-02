@@ -11,33 +11,81 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Fornecedor.h"
-#include "Produto.h"
-#include "Encomenda.h"
-#include "PedidoEncomenda.h"
 
 using namespace std;
-template <class T>
-class Hipermercado {
-
-public:
-	static Hipermercado* getInstance() {
-		if(Instance == NULL) Instance = new Hipermercado("Super");
-		return Instance;
-	};
-	vector<Fornecedor<T>*> getFornecedores() const;
-	vector<Produto*> getProdutos() const;
-	vector<PedidoEncomenda<T>*> getPedidos() const;
-	vector<Encomenda<T>*> getEncomendas() const;
-private:
+/*
+class Produto{
+protected:
 	string nome;
-	vector<Fornecedor<T>*> fornecedores;
-	vector<Produto*> produtos;
-	vector<PedidoEncomenda<T>*> pedidos;
-	vector<Encomenda<T>*> encomendas;
-	static Hipermercado<T>* Instance = NULL;
-	void addEncomenda(Fornecedor<T>* fornecedor,Produto<T>* produto,T quantidade);
+public:
+
+	virtual string getName() const;
+};
+
+class ProdUnidade: public Produto{
+private:
 
 };
+
+class ProdMedida: public Produto{
+private:
+	string medida;
+
+};
+
+template <class A>
+class Patamar{
+private:
+	A min, max;
+	string preco;
+};
+
+template <class A>
+class ProdFornecedor{
+private:
+	A stock;
+	Produto* produto;
+	vector<Patamar*> patamares;
+};
+
+class Fornecedor{
+private:
+	string nome, nif, morada;
+	vector<ProdFornecedor*> produtos;
+};
+
+class FIndividual: public Fornecedor{
+
+
+};
+
+class FEmpresa: public Fornecedor{
+
+
+};
+
+class PedidoEncomenda{
+private:
+	vector<Produto*> produtos;
+};
+
+class Encomenda{ //uma por fornecedor
+private:
+	Fornecedor fornecedor;
+	vector<LinhaEncomenda*> linhas;
+};
+
+template <class A>
+class LinhaEncomenda{
+private:
+	Produto* produto;
+	A quantidade;
+	string preco;
+};
+
+class Hipermercado{
+	string nome;
+
+};*/
 
 #endif /* HIPERMERCADO_H_ */
