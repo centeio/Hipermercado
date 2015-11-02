@@ -36,3 +36,24 @@ void ProdFornecedor::addPatamar(double min, double max, double preco) {
 
 	patamares.push_back(patamar);
 }
+
+void ProdFornecedor::removePatamarIndice(int indice) {
+
+	delete(*(patamares.begin() + indice));
+	patamares.erase(patamares.begin() + indice);
+}
+
+void ProdFornecedor::removePatamarInterator(vector<Patamar *>::iterator it) {
+
+	delete(*it);
+	patamares.erase(it);
+}
+
+void ProdFornecedor::displayPatamares() const {
+
+
+	for(unsigned int i = 0; i < patamares.size(); i++) {
+		cout << "[" << setw(4) << patamares.at(i)->getMinimo() << "," << setw(4) << patamares.at(i)->getMaximo()
+				<< "] Preco: " << patamares.at(i)->getPreco() << "€ cada" << endl;
+	}
+}

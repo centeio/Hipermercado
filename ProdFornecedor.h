@@ -27,6 +27,9 @@ public:
 	void setStock(double stock);
 	void setPatamares(vector<Patamar*> patamares);
 	void addPatamar(double min, double max, double preco);
+	void removePatamarIndice(int indice);
+	void removePatamarInterator(vector<Patamar *>::iterator it);
+	void displayPatamares() const;
 	virtual ~ProdFornecedor();
 };
 

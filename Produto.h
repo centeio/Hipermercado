@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <iomanip>
 using namespace std;
 
 
@@ -29,6 +30,7 @@ public:
 class ProdutoUnidade: public Produto {
 public:
 	ProdutoUnidade();
+	ProdutoUnidade(string nome) : Produto(nome) {};
 
 };
 
@@ -37,7 +39,7 @@ private:
 	string medida;
 public:
 	ProdutoMedida();
-	ProdutoMedida(string medida) : medida(medida) {};
+	ProdutoMedida(string nome, string medida) : Produto(nome) , medida(medida) {};
 	string getMedida() const;
 	void setMedida(string medida);
 };
