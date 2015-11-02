@@ -7,12 +7,12 @@
 
 #include "LinhaEncomenda.h"
 
-LinhaEncomenda::LinhaEncomenda() {
-	// TODO Auto-generated constructor stub
-
+template <class T>
+LinhaEncomenda<T>::LinhaEncomenda(Produto* produto, T quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
 }
 
-LinhaEncomenda::~LinhaEncomenda() {
+template <class T>
+LinhaEncomenda<T>::~LinhaEncomenda() {
 	// TODO Auto-generated destructor stub
 }
 

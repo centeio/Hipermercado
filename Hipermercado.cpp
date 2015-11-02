@@ -5,6 +5,25 @@
  *      Author: Carolina
  */
 
+#include "Hipermercado.h"
 
+// TODO STATIC DATA
 
+template <class T>
+vector<Fornecedor<T>*> Hipermercado<T>::getFornecedores() const{return fornecedores;}
+
+template <class T>
+vector<Produto*> Hipermercado<T>::getProdutos() const{return produtos;}
+
+template <class T>
+vector<PedidoEncomenda<T>*> Hipermercado<T>::getPedidos() const{return pedidos;}
+
+template <class T>
+vector<Encomenda<T>*> Hipermercado<T>::getEncomendas() const{return encomendas;}
+
+template <class T>
+void Hipermercado<T>::addEncomenda(Fornecedor<T>* fornecedor,Produto<T>* produto,T quantidade){
+	Encomenda enc(fornecedor,produto,quantidade);
+	encomendas.push_back(enc);
+}
 
