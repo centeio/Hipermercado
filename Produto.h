@@ -25,6 +25,7 @@ public:
 	void setNome(string nome);
 	string getMedida() const;
 	void setMedida(string medida);
+	bool operator==(Produto &produto);
 	virtual ~Produto();
 };
 
