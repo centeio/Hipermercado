@@ -26,6 +26,7 @@ public:
 	string getMedida() const;
 	void setMedida(string medida);
 	bool operator==(Produto &produto);
+	friend ostream& operator<< (ostream& out, Produto* produto);
 	virtual ~Produto();
 };
 

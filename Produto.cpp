@@ -29,3 +29,9 @@ void Produto::setMedida(string medida) { this->medida = medida; }
 bool Produto::operator== (Produto &produto) {
 	return (nome == produto.getNome());
 }
+
+ostream& operator<< (ostream& out, Produto* produto) {
+
+	out << "Nome do Produto: " << produto->nome << ". Medida utilizada: " << produto->medida << endl;
+	return out;
+}

@@ -42,5 +42,13 @@ void Patamar<T>::setMaximo(T maximo) { this->max = maximo;}
 template<typename T>
 void Patamar<T>::setPreco(float preco) { this->preco = preco; }
 
+template<typename T>
+ostream& operator<<(ostream& out, Patamar<T>* patamar) {
+
+	out << "[" << setw(4) << patamar->min << "," << setw(4) << patamar->max << "] Preco: "
+			<< patamar->preco << "€ cada";
+	return out;
+}
+
 template class Patamar<double>;
 template class Patamar<int>;

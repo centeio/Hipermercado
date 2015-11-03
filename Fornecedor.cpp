@@ -87,19 +87,21 @@ void Fornecedor<T>::displayProdutosForn() const {
 
 	if(resposta == "Y") {
 		for(unsigned int i = 0; i < produtos.size(); i++) {
-			cout << produtos.at(i)->getProduto() << endl;
+			cout << produtos.at(i) << endl;
 			produtos.at(i)->displayPatamares();
 		}
 	}else {
 		for(unsigned int i = 0; i < produtos.size(); i++) {
-			cout << produtos.at(i)->getProduto() << endl; }
+			cout << produtos.at(i) << endl; }
 	}
 
 }
 
-ostream& operator<<(ostream& out, Produto* produto) {
+template<typename T>
+ostream& operator<< <>(ostream& out, Fornecedor<T>* fornecedor) {
 
-	out << "Nome do Produto: " << produto->getNome() << ". Medida utilizada: " << produto->getMedida() << endl;
+	out << "Nome do fornecedor: " << fornecedor->nome << ". " << endl << "NIF: " << fornecedor->NIF << "."
+			<< endl<< "Morada: " << fornecedor->morada << endl;
 	return out;
 }
 
