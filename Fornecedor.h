@@ -27,11 +27,10 @@ public:
 	void addProduto(Produto* produto, string stock, vector<Patamar<T>* > patamares);
 	void remProduto(Produto* produto);
 	void decStock(Produto* produto, T quantidade);
+	friend ostream& operator<< <>(ostream& out, Fornecedor<T>* fornecedor);
 	void displayProdutosForn() const;
 	virtual ~Fornecedor();
 };
-
-ostream& operator<<(ostream& out, Produto* produto);
 
 
 #endif /* FORNECEDOR_H_ */

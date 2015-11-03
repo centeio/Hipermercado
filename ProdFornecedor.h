@@ -39,6 +39,7 @@ public:
 	void removePatamarIndice(int indice);
 	float getPrecoStock() const;
 	melhorPreco<T> getMelhorPreco(string nome, T quantidade);
+	friend ostream& operator<< <>(ostream& out, ProdFornecedor<T>* prodFornecedor);
 	void displayPatamares();
 	~ProdFornecedor() {};
 };

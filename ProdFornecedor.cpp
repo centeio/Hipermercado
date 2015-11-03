@@ -97,10 +97,9 @@ melhorPreco<T> ProdFornecedor<T>::getMelhorPreco(string nome, T quantidade) {
 }
 
 template<typename T>
-ostream& operator<<(ostream& out, Patamar<T>* patamar) {
+ostream& operator<< (ostream& out, ProdFornecedor<T>* prodFornecedor) {
 
-	out << "[" << setw(4) << patamar->getMinimo() << "," << setw(4) << patamar->getMaximo() << "] Preco: "
-			<< patamar->getPreco() << "€ cada";
+	out << prodFornecedor->produto << endl << "Stock: " << prodFornecedor->stock << endl;
 	return out;
 }
 

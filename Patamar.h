@@ -8,6 +8,7 @@
 #ifndef PATAMAR_H_
 #define PATAMAR_H_
 
+
 template<typename T>
 class Patamar {
 private:
@@ -22,6 +23,7 @@ public:
 	void setMinimo(T minimo);
 	void setMaximo(T maximo);
 	void setPreco(float preco);
+	friend std::ostream& operator<< <>(std::ostream& out, Patamar<T>* patamar);
 	virtual ~Patamar();
 };
 
