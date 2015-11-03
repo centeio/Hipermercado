@@ -6,6 +6,7 @@
  */
 
 #include "Fornecedor.h"
+#include <sstream>
 
 template<typename T>
 Fornecedor<T>::Fornecedor() {
@@ -28,10 +29,37 @@ template<typename T>
 string Fornecedor<T>::getMorada() const { return morada; }
 
 template<typename T>
-void Fornecedor<T>::addProduto(Produto* produto, T stock, vector<Patamar<T>* > patamares) {
-	ProdFornecedor<T>* prodFornecedor = new ProdFornecedor<T>(produto, stock, patamares);
+vector<ProdFornecedor<T>*> Fornecedor<T>::getProdutosForn() const { return produtos; }
+
+template<typename T>
+void Fornecedor<T>::setNome(string nome) { this->nome = nome; }
+
+template<typename T>
+void Fornecedor<T>::setNIF(string NID) { this->NIF = NIF; }
+
+template<typename T>
+void Fornecedor<T>::setMorada(string morada) { this->morada = morada; }
+
+template<typename T>
+void Fornecedor<T>::addProduto(Produto* produto, string stock, vector<Patamar<T>* > patamares) {
+	stringstream str(stock);
+	T st;
+
+	str >> st;
+	ProdFornecedor<T>* prodFornecedor = new ProdFornecedor<T>(produto, st, patamares);
 
 	produtos.push_back(prodFornecedor);
+}
+
+template<typename T>
+void Fornecedor<T>::remProduto(Produto* produto) {
+
+	for(unsigned int i = 0; i < produtos.size(); i++) {
+		if(*produtos.at(i)->getProduto() == *produto) {
+			produtos.erase(produtos.begin() + i);
+		}
+	}
+
 }
 
 template<typename T>
@@ -41,6 +69,38 @@ void Fornecedor<T>::decStock(Produto* produto, T quantidade) {
 		if(*produto == *produtos.at(i)->getProduto())
 			produtos.at(i)->setStock(produtos.at(i)->getStock() - quantidade);
 	}
+}
+
+template<typename T>
+void Fornecedor<T>::displayProdutosForn() const {
+	string resposta = "";
+
+	cout << "Pretende que se imprima os patamares de cada produto (Y/N): " << flush;
+	cin >> resposta;
+
+	while(resposta != "Y" || resposta != "N"){
+		cerr << "Input invalido. Por favor introduza apenas Y ou N: " << flush;
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cin >> resposta;
+	}
+
+	if(resposta == "Y") {
+		for(unsigned int i = 0; i < produtos.size(); i++) {
+			cout << produtos.at(i)->getProduto() << endl;
+			produtos.at(i)->displayPatamares();
+		}
+	}else {
+		for(unsigned int i = 0; i < produtos.size(); i++) {
+			cout << produtos.at(i)->getProduto() << endl; }
+	}
+
+}
+
+ostream& operator<<(ostream& out, Produto* produto) {
+
+	out << "Nome do Produto: " << produto->getNome() << ". Medida utilizada: " << produto->getMedida() << endl;
+	return out;
 }
 
 template class Fornecedor<double>;

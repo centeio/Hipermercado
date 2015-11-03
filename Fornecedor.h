@@ -20,11 +20,18 @@ public:
 	string getNome() const;
 	string getNIF() const;
 	string getMorada() const;
-	void addProduto(Produto* produto, T stock, vector<Patamar<T>* > patamares);
+	vector<ProdFornecedor<T>*> getProdutosForn() const;
+	void setNome(string nome);
+	void setNIF(string NIF);
+	void setMorada(string morada);
+	void addProduto(Produto* produto, string stock, vector<Patamar<T>* > patamares);
+	void remProduto(Produto* produto);
 	void decStock(Produto* produto, T quantidade);
+	void displayProdutosForn() const;
 	virtual ~Fornecedor();
 };
 
+ostream& operator<<(ostream& out, Produto* produto);
 
 
 #endif /* FORNECEDOR_H_ */
