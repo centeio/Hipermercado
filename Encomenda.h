@@ -22,7 +22,7 @@ private:
 	vector<LinhaEncomenda<T>* > linhas;
 	Data data;
 public:
-	Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade);
+	Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco);
 	Encomenda();
 	virtual ~Encomenda();
 	friend ostream &operator<<(ostream& os,const Encomenda<T>& enc);

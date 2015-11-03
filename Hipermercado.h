@@ -24,7 +24,7 @@ public:
 	static Hipermercado* getInstance() {
 		if(Instance == NULL) Instance = new Hipermercado("Super");
 		return Instance;
-	};
+	}
 	vector<Fornecedor<T>*> getFornecedores() const;
 	vector<Produto*> getProdutos() const;
 	vector<PedidoEncomenda<T>*> getPedidos() const;
