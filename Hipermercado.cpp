@@ -21,9 +21,103 @@ template <class T>
 vector<Encomenda<T>*> Hipermercado<T>::getEncomendas() const{return encomendas;}
 
 template <class T>
+void Hipermercado<T>::addFornecedor(Fornecedor<T>* fornecedor){
+	fornecedores.push_back(fornecedor);
+}
+
+template <class T>
+void Hipermercado<T>::eliminaFornecedor(string NIF){
+	int j=-1;
+	for(unsigned int i=0;i<fornecedores.size();i++){
+		if(fornecedores.at(i)->getNIF()==NIF)
+			j=i;
+	}
+	if(j==-1)
+		cout<<"Nao existe esse fornecedor."<<endl;
+	else
+		fornecedores.erase(fornecedores.begin()+j);
+}
+
+template <class T>
+void Hipermercado<T>::addProduto(Produto* produto){
+	produtos.push_back(produto);
+}
+
+template <class T>
+void Hipermercado<T>::eliminaProduto(string nome){
+	int j=-1;
+	for(unsigned int i=0;i<produtos.size();i++){
+		if(produtos.at(i)->getNome()==nome)
+			j=i;
+	}
+	if(j==-1)
+		cout<<"Nao existe esse produto."<<endl;
+	else
+		produtos.erase(produtos.begin()+j);
+}
+
+template <class T>
+void Hipermercado<T>::eliminaPedido(unsigned int indice){
+	if(indice+1>=pedidos.size())
+		cout<<"Nao existe esse pedido."<<endl;
+	else
+		pedidos.erase(pedidos.begin()+indice);
+}
+
+template <class T>
+void Hipermercado<T>::addPedido(PedidoEncomenda<T>* pedido){
+	pedidos.push_back(pedido);
+}
+
+template <class T>
 void Hipermercado<T>::addEncomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade){
 	Encomenda<T> enc(fornecedor,produto,quantidade);
 	encomendas.push_back(enc);
+}
+
+template <class T>
+void Hipermercado<T>::displayFornecedores() const{
+	for(unsigned int i=0;i<fornecedores.size();i++){
+		cout << fornecedores.at(i);
+	}
+}
+
+template <class T>
+void Hipermercado<T>::displayProdutos() const{
+	for(unsigned int i=0;i<produtos.size();i++){
+		cout << produtos.at(i);
+	}
+}
+
+template <class T>
+void Hipermercado<T>::displayPedidos() const{
+	for(unsigned int i=0;i<pedidos.size();i++){
+		cout << "PEDIDO "<<i<<endl;
+		cout << pedidos.at(i)<<endl;
+	}
+}
+
+template <class T>
+void Hipermercado<T>::displayPedidosPorProcessar() const{
+	for(unsigned int i=0;i<pedidos.size();i++){
+		if(!pedidos.at(i)->getFinalizado())
+		cout << pedidos.at(i);
+	}
+}
+
+template <class T>
+void Hipermercado<T>::displayPedidosProcessados() const{
+	for(unsigned int i=0;i<pedidos.size();i++){
+		if(pedidos.at(i)->getFinalizado())
+		cout << pedidos.at(i);
+	}
+}
+
+template <class T>
+void Hipermercado<T>::displayEncomendas() const{
+	for(unsigned int i=0;i<encomendas.size();i++){
+		cout << encomendas.at(i);
+	}
 }
 
 

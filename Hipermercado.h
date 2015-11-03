@@ -29,6 +29,18 @@ public:
 	vector<Produto*> getProdutos() const;
 	vector<PedidoEncomenda<T>*> getPedidos() const;
 	vector<Encomenda<T>*> getEncomendas() const;
+	void displayFornecedores() const;
+	void displayProdutos() const;
+	void displayPedidos() const;
+	void displayEncomendas() const;
+	void displayPedidosPorProcessar() const;
+	void displayPedidosProcessados() const;
+	void addFornecedor(Fornecedor<T>* fornecedor);
+	void eliminaFornecedor(string NIF);
+	void addProduto(Produto* produto);
+	void eliminaProduto(string nome);
+	void addPedido(PedidoEncomenda<T>* pedido);
+	void eliminaPedido(unsigned int indice);
 private:
 	string nome;
 	vector<Fornecedor<T>*> fornecedores;

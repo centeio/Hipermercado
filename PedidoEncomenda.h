@@ -31,11 +31,12 @@ public:
 	virtual ~PedidoEncomenda();
 	void processamento();
 	Data getData() const;
-	bool getFinalizado();
+	bool getFinalizado() const;
 	vector<Produto*> getProdutos() const;
 	vector<unsigned int> getQuantidade() const;
 	void acrescenta(Produto* produto, T quantidade);
 	void eliminaProduto(Produto* produto);
+	friend ostream &operator<<(ostream& os,const PedidoEncomenda<T>& p);
 	class ProdutoNaoExiste{
 	private:
 		Produto* produto;

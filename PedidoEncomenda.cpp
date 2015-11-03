@@ -17,6 +17,18 @@ PedidoEncomenda<T>::PedidoEncomenda(Data data, vector<Produto*> produtos,
 }
 
 template<class T>
+Data PedidoEncomenda<T>::getData() const{return data;}
+
+template<class T>
+bool PedidoEncomenda<T>::getFinalizado() const{return finalizado;}
+
+template<class T>
+vector<Produto*> PedidoEncomenda<T>::getProdutos() const{return produtos;}
+
+template<class T>
+vector<unsigned int> PedidoEncomenda<T>::getQuantidade() const{return quantidade;}
+
+template<class T>
 void PedidoEncomenda<T>::acrescenta(Produto* produto, T quantidade) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {
@@ -63,6 +75,7 @@ void PedidoEncomenda<T>::processamento() {
 				else
 					throw ProdutoParcialmenteComprado(produtos.at(i));
 				q=0;
+
 			}
 			else{
 				bool existe=false;
@@ -81,7 +94,8 @@ void PedidoEncomenda<T>::processamento() {
 
 			}
 		}
-	}
+	finalizado=true;
+}
 
 
 template<class T>
@@ -97,6 +111,18 @@ void PedidoEncomenda<T>::eliminaProduto(Produto* produto) {
 		produtos.erase(produtos.begin() + j);
 		quantidade.erase(quantidade.begin() + j);
 	}
+}
+
+template <class T>
+ostream &operator<<(ostream& os,const PedidoEncomenda<T>& p){
+	os<<"Data "<<p.getData()<<"\n \n";
+	if(p.getFinalizado())
+		os<<"Finalizado"<<endl;
+	os<<"Produto: "<<setw(15)<<"Quantidade:"<<endl;
+	for (unsigned int i=0; i<p.getProdutos().size();i++){
+		os<<p.getProdutos().at(i)<<setw(15)<<p.getQuantidades().at(i)<<endl;
+	}
+	return os;
 }
 
 template<class T>
