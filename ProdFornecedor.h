@@ -35,7 +35,7 @@ public:
 	void setProduto(Produto* produto);
 	void setStock(T stock);
 	void setPatamares(vector<Patamar<T>*> patamares);
-	void addPatamar(T min, T max, float preco);
+	void addPatamar(string min, string max, string preco);
 	void removePatamarIndice(int indice);
 	float getPrecoStock() const;
 	melhorPreco<T> getMelhorPreco(string nome, T quantidade);

@@ -8,6 +8,7 @@
 #include "ProdFornecedor.h"
 #include <iterator>
 #include <climits>
+#include <sstream>
 
 //Constructor
 template<typename T>
@@ -37,8 +38,16 @@ template<typename T>
 void ProdFornecedor<T>::setPatamares(vector<Patamar<T>*> patamares) { this->patamares = patamares; }
 
 template<typename T>
-void ProdFornecedor<T>::addPatamar(T min, T max, float preco) {
-	Patamar<T>* patamar = new Patamar<T>(min,max,preco);
+void ProdFornecedor<T>::addPatamar(string min, string max, string preco) {
+	T minimo,maximo;
+	float prec;
+	stringstream str(min);
+
+	str >> minimo; str.clear();
+	str << max;	str >> maximo; str.clear();
+	str << preco; str >> prec; str.clear();
+
+	Patamar<T>* patamar = new Patamar<T>(minimo,maximo,prec);
 
 	patamares.push_back(patamar);
 }
