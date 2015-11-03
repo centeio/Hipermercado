@@ -6,7 +6,7 @@
  */
 
 #include "PedidoEncomenda.h"
-
+#include "Fornecedor.h"
 
 
 template<class T>
@@ -29,7 +29,7 @@ void PedidoEncomenda<T>::acrescenta(Produto* produto, T quantidade) {
 	else {
 		produtos.push_back(produto);
 		quantidade.push_back(quantidade);
-		actualizaData();
+	//	actualizaData();
 	}
 }
 
@@ -100,8 +100,4 @@ void PedidoEncomenda<T>::eliminaProduto(Produto* produto) {
 }
 
 template<class T>
-PedidoEncomenda<T>::~PedidoEncomenda() {
-// TODO Auto-generated destructor stub
-PedidoEncomenda::~PedidoEncomenda() {
-	// TODO Auto-generated destructor stub
-}
+PedidoEncomenda<T>::~PedidoEncomenda() {}

@@ -9,8 +9,7 @@
 
 template <class T>
 LinhaEncomenda<T>::LinhaEncomenda(Produto* produto, T quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
-
+}
 
 template <class T>
-LinhaEncomenda<T>::~LinhaEncomenda() {
-}
+LinhaEncomenda<T>::~LinhaEncomenda() {}

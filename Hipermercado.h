@@ -36,6 +36,6 @@ private:
 	vector<PedidoEncomenda<T>*> pedidos;
 	vector<Encomenda<T>*> encomendas;
 	static Hipermercado<T>* Instance = NULL;
-	void addEncomenda(Fornecedor<T>* fornecedor,Produto<T>* produto,T quantidade);
+	void addEncomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade);
 };
 #endif /* HIPERMERCADO_H_ */

@@ -9,9 +9,8 @@
 #include <iomanip>
 
 template <class T>
-Encomenda<T>::Encomenda(Fornecedor* fornecedor,Produto* produto,T quantidade): fornecedor(fornecedor) {
-	LinhaEncomenda<T> tmp(produto,quantidade);
-	linhas.push_back(tmp);
+Encomenda<T>::Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade): fornecedor(fornecedor) {
+	linhas.push_back(new(LinhaEncomenda<T>(produto,quantidade)));
 	data=dataactual;
 }
 
@@ -24,8 +23,6 @@ Fornecedor* Encomenda<T>::getFornecedor() const{return fornecedor;}
 
 template <class T>
 vector<LinhaEncomenda<T> > Encomenda<T>::getLinhas() const{return linhas;}
-Encomenda::Encomenda() {
-	// TODO Auto-generated constructor stub
 
 template <class T>
 void Encomenda<T>::addLinha(Produto* produto,T quantidade,float preco){
@@ -42,6 +39,4 @@ ostream &operator<<(ostream& os, const Encomenda<T>& enc){
 				<<"Preco: "<<enc.getLinhas().at(i).getPreco()<<endl;
 	}
 	return os;
-Encomenda::~Encomenda() {
-	// TODO Auto-generated destructor stub
 }
