@@ -21,8 +21,8 @@ template <class T>
 vector<Encomenda<T>*> Hipermercado<T>::getEncomendas() const{return encomendas;}
 
 template <class T>
-void Hipermercado<T>::addEncomenda(Fornecedor<T>* fornecedor,Produto<T>* produto,T quantidade){
-	Encomenda enc(fornecedor,produto,quantidade);
+void Hipermercado<T>::addEncomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade){
+	Encomenda<T> enc(fornecedor,produto,quantidade);
 	encomendas.push_back(enc);
 }
 

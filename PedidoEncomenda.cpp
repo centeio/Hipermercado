@@ -6,7 +6,7 @@
  */
 
 #include "PedidoEncomenda.h"
-
+#include "Fornecedor.h"
 
 
 template<class T>
@@ -29,7 +29,7 @@ void PedidoEncomenda<T>::acrescenta(Produto* produto, T quantidade) {
 	else {
 		produtos.push_back(produto);
 		quantidade.push_back(quantidade);
-		actualizaData();
+	//	actualizaData();
 	}
 }
 
@@ -43,10 +43,10 @@ void PedidoEncomenda<T>::processamento() {
 		q=quantidade.at(i);
 		while (q > 0) {
 			int melhorp = INT_MAX, fornecedor;
-			for (j = 0; j < Hipermercado::getInstance().getFornecedores().size(); j++) {
+			for (j = 0; j < Hipermercado<T>::getInstance().getFornecedores().size(); j++) {
 
-				for (k = 0;k< Hipermercado::getInstance().getFornecedores.at(j).getProdutoForn().size();k++) {
-					if (Hipermercado::getInstance().getFornecedores.at(j).getProdutoForn().at(k).getNome() == produtos.getNome()){
+				for (k = 0;k< Hipermercado<T>::getInstance().getFornecedores.at(j).getProdutoForn().size();k++) {
+					if (Hipermercado<T>::getInstance().getFornecedores.at(j).getProdutoForn().at(k).getNome() == produtos.at(i)->getNome()){
 						melhorPreco<T> = getMelhorPreco(produtos.at(i)->getNome(),q);
 					if (melhorp > melhorPreco.preco) {
 						melhorp = melhorPreco.preco;
@@ -57,7 +57,7 @@ void PedidoEncomenda<T>::processamento() {
 			}
 
 
-			if(j>=Hipermercado::getInstance().getFornecedores().size()){
+			if(j>=Hipermercado<T>::getInstance().getFornecedores().size()){
 				if(q==quantidade.at(i))
 					throw ProdutoNaoEstaAVenda(produtos.at(i));
 				else
@@ -66,16 +66,16 @@ void PedidoEncomenda<T>::processamento() {
 			}
 			else{
 				bool existe=false;
-				for(unsigned int enc=0;enc<Hipermercado::getInstance().getEncomendas().size();enc++){
-					if(Hipermercado::getInstance().getEncomendas().at(enc).getFornecedor()==fornecedor)
-						if(Hipermercado::getInstance().getEncomendas().at(enc).getData()==data){
-							Hipermercado::getInstance().getEncomendas()->addLinha(produtos.at(i),qt,melhorp);
+				for(unsigned int enc=0;enc<Hipermercado<T>::getInstance().getEncomendas().size();enc++){
+					if(Hipermercado<T>::getInstance().getEncomendas().at(enc).getFornecedor()==fornecedor)
+						if(Hipermercado<T>::getInstance().getEncomendas().at(enc).getData()==data){
+							Hipermercado<T>::getInstance().getEncomendas()->addLinha(produtos.at(i),qt,melhorp);
 							existe=true;
 						}
 				}
 				if(!existe)
-					Hipermercado::getInstance().addEncomenda(Hipermercado::getInstance().getFornecedores().at(j),produtos.at(i),qt,melhorp);
-				Hipermercado::getInstance().getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
+					Hipermercado<T>::getInstance().addEncomenda(Hipermercado<T>::getInstance().getFornecedores().at(j),produtos.at(i),qt,melhorp);
+				Hipermercado<T>::getInstance().getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
 			}
 
 
@@ -100,8 +100,4 @@ void PedidoEncomenda<T>::eliminaProduto(Produto* produto) {
 }
 
 template<class T>
-PedidoEncomenda<T>::~PedidoEncomenda() {
-// TODO Auto-generated destructor stub
-PedidoEncomenda::~PedidoEncomenda() {
-	// TODO Auto-generated destructor stub
-}
+PedidoEncomenda<T>::~PedidoEncomenda() {}

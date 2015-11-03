@@ -11,22 +11,23 @@
 #include <vector>
 #include "Fornecedor.h"
 #include "LinhaEncomenda.h"
+#include "Data.h"
 
 using namespace std;
 
 template <class T>
 class Encomenda {
 private:
-	Fornecedor* fornecedor;
-	vector<LinhaEncomenda<T> > linhas;
+	Fornecedor<T>* fornecedor;
+	vector<LinhaEncomenda<T>* > linhas;
 	Data data;
 public:
-	Encomenda(Fornecedor* fornecedor,Produto* produto,T quantidade);
+	Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco);
 	Encomenda();
 	virtual ~Encomenda();
 	friend ostream &operator<<(ostream& os,const Encomenda<T>& enc);
 	void addLinha(Produto* produto,T quantidade,float preco);
-	Fornecedor* getFornecedor() const;
+	Fornecedor<T>* getFornecedor() const;
 	vector<LinhaEncomenda<T> > getLinhas() const;
 
 };

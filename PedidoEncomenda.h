@@ -10,7 +10,11 @@
 
 #include "Data.h"
 #include "Produto.h"
+#include "Hipermercado.h"
 #include <vector>
+#include <cmath>
+#include <math.h>
+#include <climits>
 
 using namespace std;
 
