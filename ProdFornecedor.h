@@ -10,38 +10,56 @@
 #include "Produto.h"
 #include "Patamar.h"
 
-template<typename T>
+
 struct melhorPreco{
-	T quantidade;
+	int quantidade;
 	float preco;
 };
 
 
-template<typename T>
 class ProdFornecedor {
 private:
 	Produto* produto;
-	T stock;
-	vector<Patamar<T>*> patamares;
+	int stock;
+protected:
+	vector<Patamar*> patamares;
 
 public:
 	ProdFornecedor();
-	ProdFornecedor(Produto* produto, T stock) : produto(produto), stock(stock) {};
-	ProdFornecedor(Produto* produto, T stock, vector<Patamar<T>*> patamares) :
-		produto(produto), stock(stock), patamares(patamares) {};
+	ProdFornecedor(Produto* produto, int stock) : produto(produto), stock(stock) {};
 	Produto* getProduto() const;
-	T getStock() const;
-	vector<Patamar<T>*> getPatamares() const;
+	int getStock() const;
+	vector<Patamar*> getPatamares() const;
 	void setProduto(Produto* produto);
-	void setStock(T stock);
-	void setPatamares(vector<Patamar<T>*> patamares);
-	void addPatamar(string min, string max, string preco);
+	void setStock(int stock);
+	void setPatamares(vector<Patamar*> patamares);
+	virtual void addPatamar(string min, string max, string preco) = 0;
 	void removePatamarIndice(int indice);
 	float getPrecoStock() const;
-	melhorPreco<T> getMelhorPreco(string nome, T quantidade);
-	friend ostream& operator<< <>(ostream& out, ProdFornecedor<T>* prodFornecedor);
+	melhorPreco getMelhorPreco(string nome, int quantidade);
+	friend ostream& operator<< (ostream& out, ProdFornecedor* prodFornecedor);
 	void displayPatamares();
-	~ProdFornecedor() {};
+	virtual ~ProdFornecedor() {};
 };
+
+class ProdFornecedorUnidade : public ProdFornecedor {
+public:
+	ProdFornecedorUnidade(Produto* produto, int stock, vector<Patamar*> patamares);
+	void addPatamar(string min, string max, string preco);
+};
+
+class ProdFornecedorEmpresa : public ProdFornecedor {
+public:
+	ProdFornecedorEmpresa(Produto* produto, int stock, vector<Patamar*> patamares) : ProdFornecedor(produto,stock), patamares(patamares) {};
+	void addPatamar(string min, string max, string preco);
+};
+
+class DemasiadosPatamares {};
+
+ostream& operator<< (ostream& out, ProdFornecedor* prodFornecedor) {
+
+	out << prodFornecedor->produto << endl << "Stock: " << prodFornecedor->stock << endl;
+	return out;
+}
 
 #endif /* PRODFORNECEDOR_H_ */

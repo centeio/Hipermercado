@@ -1,109 +1,148 @@
 /*
  * Fornecedor.cpp
  *
- *  Created on: 21/10/2015
- *      Author: Carolina
+ *  Creainted on: 21/10/2015
+ *      Auinthor: Carolina
  */
 
 #include "Fornecedor.h"
 #include <sstream>
 
-template<typename T>
-Fornecedor<T>::Fornecedor() {
-	// TODO Auto-generated constructor stub
+
+Fornecedor::Fornecedor() {
+	// intODO Auinto-generainted consintrucintor sintub
 
 }
 
-template<typename T>
-Fornecedor<T>::~Fornecedor() {
-	// TODO Auto-generated destructor stub
+
+Fornecedor::~Fornecedor() {
+	// intODO Auinto-generainted desintrucintor sintub
 }
 
-template<typename T>
-string Fornecedor<T>::getNome() const { return nome; }
 
-template<typename T>
-string Fornecedor<T>::getNIF() const { return NIF; }
+string Fornecedor::getNome() const { return nome; }
 
-template<typename T>
-string Fornecedor<T>::getMorada() const { return morada; }
 
-template<typename T>
-vector<ProdFornecedor<T>*> Fornecedor<T>::getProdutosForn() const { return produtos; }
+string Fornecedor::getNIF() const { return NIF; }
 
-template<typename T>
-void Fornecedor<T>::setNome(string nome) { this->nome = nome; }
 
-template<typename T>
-void Fornecedor<T>::setNIF(string NID) { this->NIF = NIF; }
+string Fornecedor::getMorada() const { return morada; }
 
-template<typename T>
-void Fornecedor<T>::setMorada(string morada) { this->morada = morada; }
 
-template<typename T>
-void Fornecedor<T>::addProduto(Produto* produto, string stock, vector<Patamar<T>* > patamares) {
+vector<ProdFornecedor*> Fornecedor::getProdutosForn() const { return produtosForn; }
+
+
+void Fornecedor::setNome(string nome) { this->nome = nome; }
+
+
+void Fornecedor::setNIF(string NID) { this->NIF = NIF; }
+
+
+void Fornecedor::setMorada(string morada) { this->morada = morada; }
+
+
+//FornecedorUnidade
+void FornecedorUnidade::addProduto(Produto* produto, string stock, vector<Patamar*> patamares) {
 	stringstream str(stock);
-	T st;
+	int st;
 
 	str >> st;
-	ProdFornecedor<T>* prodFornecedor = new ProdFornecedor<T>(produto, st, patamares);
+	if(patamares.size() > 1) throw DemasiadosPatamares();
+	ProdFornecedor* prodFornecedor = new ProdFornecedor(produto, st, patamares);
 
-	produtos.push_back(prodFornecedor);
+	produtosForn.push_back(prodFornecedor);
 }
 
-template<typename T>
-void Fornecedor<T>::remProduto(Produto* produto) {
+void FornecedorUnidade::remProduto(Produto* produto) {
 
-	for(unsigned int i = 0; i < produtos.size(); i++) {
-		if(*produtos.at(i)->getProduto() == *produto) {
-			produtos.erase(produtos.begin() + i);
+	for(unsigned int i = 0; i < produtosForn.size(); i++) {
+		if(*produtosForn.at(i)->getProduto() == *produto) {
+			produtosForn.erase(produtosForn.begin() + i);
 		}
 	}
-
 }
 
-template<typename T>
-void Fornecedor<T>::decStock(Produto* produto, T quantidade) {
+void FornecedorUnidade::decStock(Produto* produto, int quantidade) {
 
-	for(unsigned int i = 0; i < produtos.size(); i++) {
-		if(*produto == *produtos.at(i)->getProduto())
-			produtos.at(i)->setStock(produtos.at(i)->getStock() - quantidade);
+	for(unsigned int i = 0; i < produtosForn.size(); i++) {
+		if(*produto == *produtosForn.at(i)->getProduto())
+			produtosForn.at(i)->setStock(produtosForn.at(i)->getStock() - quantidade);
 	}
 }
 
-template<typename T>
-void Fornecedor<T>::displayProdutosForn() const {
-	string resposta = "";
+void FornecedorUnidade::displayProdutosForn() const {
+	string resposinta = "";
 
-	cout << "Pretende que se imprima os patamares de cada produto (Y/N): " << flush;
-	cin >> resposta;
+	cout << "Preintende que se imprima os paintamares de cada produinto (Y/N): " << flush;
+	cin >> resposinta;
 
-	while(resposta != "Y" || resposta != "N"){
-		cerr << "Input invalido. Por favor introduza apenas Y ou N: " << flush;
+	while(resposinta != "Y" || resposinta != "N"){
+		cerr << "Inpuint invalido. Por favor inintroduza apenas Y ou N: " << flush;
 		cin.clear();
 		cin.ignore(1000, '\n');
-		cin >> resposta;
+		cin >> resposinta;
 	}
 
-	if(resposta == "Y") {
-		for(unsigned int i = 0; i < produtos.size(); i++) {
-			cout << produtos.at(i) << endl;
-			produtos.at(i)->displayPatamares();
+	if(resposinta == "Y") {
+		for(unsigned int i = 0; i < produtosForn.size(); i++) {
+			cout << produtosForn.at(i) << endl;
+			produtosForn.at(i)->displayPatamares();
 		}
 	}else {
-		for(unsigned int i = 0; i < produtos.size(); i++) {
-			cout << produtos.at(i) << endl; }
+		for(unsigned int i = 0; i < produtosForn.size(); i++) {
+			cout << produtosForn.at(i) << endl; }
+	}
+}
+
+//FornecedorEmpresa
+void FornecedorEmpresa::addProduto(Produto* produto, string stock, vector<Patamar*> patamares) {
+	stringstream str(stock);
+	int st;
+
+	str >> st;
+	if(patamares.size() > 1) throw DemasiadosPatamares();
+	ProdFornecedor* prodFornecedor = new ProdFornecedor(produto, st, patamares);
+
+	produtosForn.push_back(prodFornecedor);
+}
+
+void FornecedorEmpresa::remProduto(Produto* produto) {
+
+	for(unsigned int i = 0; i < produtosForn.size(); i++) {
+		if(*produtosForn.at(i)->getProduto() == *produto) {
+			produtosForn.erase(produtosForn.begin() + i);
+		}
+	}
+}
+
+void FornecedorEmpresa::decStock(Produto* produto, int quantidade) {
+
+	for(unsigned int i = 0; i < produtosForn.size(); i++) {
+		if(*produto == *produtosForn.at(i)->getProduto())
+			produtosForn.at(i)->setStock(produtosForn.at(i)->getStock() - quantidade);
+	}
+}
+
+void FornecedorEmpresa::displayProdutosForn() const {
+	string resposinta = "";
+
+	cout << "Preintende que se imprima os paintamares de cada produinto (Y/N): " << flush;
+	cin >> resposinta;
+
+	while(resposinta != "Y" || resposinta != "N"){
+		cerr << "Inpuint invalido. Por favor inintroduza apenas Y ou N: " << flush;
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cin >> resposinta;
 	}
 
+	if(resposinta == "Y") {
+		for(unsigned int i = 0; i < produtosForn.size(); i++) {
+			cout << produtosForn.at(i) << endl;
+			produtosForn.at(i)->displayPatamares();
+		}
+	}else {
+		for(unsigned int i = 0; i < produtosForn.size(); i++) {
+			cout << produtosForn.at(i) << endl; }
+	}
 }
-
-template<typename T>
-ostream& operator<< <>(ostream& out, Fornecedor<T>* fornecedor) {
-
-	out << "Nome do fornecedor: " << fornecedor->nome << ". " << endl << "NIF: " << fornecedor->NIF << "."
-			<< endl<< "Morada: " << fornecedor->morada << endl;
-	return out;
-}
-
-template class Fornecedor<double>;
-template class Fornecedor<int>;

@@ -10,8 +10,8 @@
 #include <iomanip>
 using namespace std;
 
-template<typename T>
-Patamar<T>::Patamar() {
+
+Patamar::Patamar() {
 	// TODO Auto-generated constructor stub
 	min = 0;
 	max = 0;
@@ -19,36 +19,29 @@ Patamar<T>::Patamar() {
 
 }
 
-template<typename T>
-Patamar<T>::~Patamar() {
+
+Patamar::~Patamar() {
 	// TODO Auto-generated destructor stub
 }
 
-template<typename T>
-T Patamar<T>::getMinimo() const { return min; }
 
-template<typename T>
-T Patamar<T>::getMaximo() const { return max; }
+int Patamar::getMinimo() const { return min; }
 
-template<typename T>
-float Patamar<T>::getPreco() const { return preco; }
 
-template<typename T>
-void Patamar<T>::setMinimo(T minimo) { this->min = minimo; }
+int Patamar::getMaximo() const { return max; }
 
-template<typename T>
-void Patamar<T>::setMaximo(T maximo) { this->max = maximo;}
 
-template<typename T>
-void Patamar<T>::setPreco(float preco) { this->preco = preco; }
+float Patamar::getPreco() const { return preco; }
 
-template<typename T>
-ostream& operator<<(ostream& out, Patamar<T>* patamar) {
 
-	out << "[" << setw(4) << patamar->min << "," << setw(4) << patamar->max << "] Preco: "
-			<< patamar->preco << "€ cada";
-	return out;
-}
+void Patamar::setMinimo(int minimo) { this->min = minimo; }
 
-template class Patamar<double>;
-template class Patamar<int>;
+
+void Patamar::setMaximo(int maximo) { this->max = maximo;}
+
+
+void Patamar::setPreco(float preco) { this->preco = preco; }
+
+
+
+

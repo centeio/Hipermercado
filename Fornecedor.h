@@ -9,28 +9,54 @@
 #define FORNECEDOR_H_
 #include "ProdFornecedor.h"
 
-template<typename T>
+
 class Fornecedor {
 private:
 	string nome, NIF, morada;
-	vector<ProdFornecedor<T>*> produtos;
 public:
 	Fornecedor();
 	Fornecedor(string nome, string NIF, string morada) : nome(nome), NIF(NIF), morada(morada) {};
 	string getNome() const;
 	string getNIF() const;
 	string getMorada() const;
-	vector<ProdFornecedor<T>*> getProdutosForn() const;
+	vector<ProdFornecedor*> getProdutosForn() const;
 	void setNome(string nome);
 	void setNIF(string NIF);
 	void setMorada(string morada);
-	void addProduto(Produto* produto, string stock, vector<Patamar<T>* > patamares);
-	void remProduto(Produto* produto);
-	void decStock(Produto* produto, T quantidade);
-	friend ostream& operator<< <>(ostream& out, Fornecedor<T>* fornecedor);
-	void displayProdutosForn() const;
+	virtual void addProduto(Produto* produto, string stock, vector<Patamar* > patamares) = 0;
+	virtual void remProduto(Produto* produto) = 0;
+	virtual void decStock(Produto* produto, int quantidade) = 0;
+	friend ostream& operator<< (ostream& out, Fornecedor* fornecedor);
+	virtual void displayProdutosForn() const = 0;
 	virtual ~Fornecedor();
 };
+
+class FornecedorUnidade : public Fornecedor {
+private:
+	vector<ProdFornecedorUnidade*> produtosForn;
+public:
+	void addProduto(Produto* produto, string stock, vector<Patamar* > patamares);
+	void remProduto(Produto* produto);
+	void decStock(Produto* produto, int quantidade);
+	void displayProdutosForn() const;;
+};
+
+class FornecedorEmpresa : public Fornecedor {
+private:
+	vector<ProdFornecedorEmpresa*> produtosForn;
+public:
+	void addProduto(Produto* produto, string stock, vector<Patamar* > patamares);
+	void remProduto(Produto* produto);
+	void decStock(Produto* produto, int quantidade);
+	void displayProdutosForn() const;
+};
+
+ostream& operator<< (ostream& out, Fornecedor* fornecedor) {
+
+	out << "Nome do fornecedor: " << fornecedor->nome << ". " << endl << "NIF: " << fornecedor->NIF << "."
+			<< endl<< "Morada: " << fornecedor->morada << endl;
+	return out;
+}
 
 
 #endif /* FORNECEDOR_H_ */

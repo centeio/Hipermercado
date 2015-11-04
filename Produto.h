@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <iomanip>
 using namespace std;
 
 
@@ -29,5 +28,11 @@ public:
 	friend ostream& operator<< (ostream& out, Produto* produto);
 	virtual ~Produto();
 };
+
+ostream& operator<< (ostream& out, Produto* produto) {
+
+	out << "Nome do Produto: " << produto->nome << ". Medida utilizada: " << produto->medida << endl;
+	return out;
+}
 
 #endif /* PRODUTO_H_ */

@@ -11,35 +11,35 @@
 #include <sstream>
 
 //Constructor
-template<typename T>
-ProdFornecedor<T>::ProdFornecedor() {
+
+ProdFornecedor::ProdFornecedor() {
 	// TODO Auto-generated constructor stub
 	produto = NULL;
 	stock = 0;
 
 }
 
-template<typename T>
-Produto* ProdFornecedor<T>::getProduto() const { return produto; }
 
-template<typename T>
-T ProdFornecedor<T>::getStock() const { return stock; }
+Produto* ProdFornecedor::getProduto() const { return produto; }
 
-template<typename T>
-vector<Patamar<T>*> ProdFornecedor<T>::getPatamares() const { return patamares; }
 
-template<typename T>
-void ProdFornecedor<T>::setProduto(Produto* produto) { this->produto = produto; }
+int ProdFornecedor::getStock() const { return stock; }
 
-template<typename T>
-void ProdFornecedor<T>::setStock(T stock) { this->stock = stock; }
 
-template<typename T>
-void ProdFornecedor<T>::setPatamares(vector<Patamar<T>*> patamares) { this->patamares = patamares; }
+vector<Patamar*> ProdFornecedor::getPatamares() const { return patamares; }
 
-template<typename T>
-void ProdFornecedor<T>::addPatamar(string min, string max, string preco) {
-	T minimo,maximo;
+
+void ProdFornecedor::setProduto(Produto* produto) { this->produto = produto; }
+
+
+void ProdFornecedor::setStock(int stock) { this->stock = stock; }
+
+
+void ProdFornecedor::setPatamares(vector<Patamar*> patamares) { this->patamares = patamares; }
+
+
+void ProdFornecedor::addPatamar(string min, string max, string preco) {
+	int minimo,maximo;
 	float prec;
 	stringstream str(min);
 
@@ -47,29 +47,29 @@ void ProdFornecedor<T>::addPatamar(string min, string max, string preco) {
 	str << max;	str >> maximo; str.clear();
 	str << preco; str >> prec; str.clear();
 
-	Patamar<T>* patamar = new Patamar<T>(minimo,maximo,prec);
+	Patamar* patamar = new Patamar(minimo,maximo,prec);
 
 	patamares.push_back(patamar);
 }
 
-template<typename T>
-void ProdFornecedor<T>::removePatamarIndice(int indice) {
+
+void ProdFornecedor::removePatamarIndice(int indice) {
 
 	delete(*(patamares.begin() + indice));
 	patamares.erase(patamares.begin() + indice);
 }
 
 
-template<typename T>
-void ProdFornecedor<T>::displayPatamares() {
+
+void ProdFornecedor::displayPatamares() {
 
 	for(unsigned int i = 0; i < patamares.size(); i++) {
 		cout << patamares.at(i) << endl;
 	}
 }
 
-template<typename T>
-float ProdFornecedor<T>::getPrecoStock() const {
+
+float ProdFornecedor::getPrecoStock() const {
 
 	for(unsigned int i = 0; i < patamares.size(); i++) {
 		if(stock > patamares.at(i)->getMinimo() && stock < patamares.at(i)->getMaximo()) {
@@ -80,9 +80,9 @@ float ProdFornecedor<T>::getPrecoStock() const {
 }
 
 
-template<typename T>
-melhorPreco<T> ProdFornecedor<T>::getMelhorPreco(string nome, T quantidade) {
-	melhorPreco<T> melhorpreco;
+
+melhorPreco ProdFornecedor::getMelhorPreco(string nome, int quantidade) {
+	melhorPreco melhorpreco;
 
 	for(unsigned int i = 0; i < patamares.size(); i++) {
 		if(quantidade > patamares.at(i)->getMinimo() && quantidade < patamares.at(i)->getMaximo()) {
@@ -96,12 +96,42 @@ melhorPreco<T> ProdFornecedor<T>::getMelhorPreco(string nome, T quantidade) {
 	return melhorpreco;
 }
 
-template<typename T>
-ostream& operator<< (ostream& out, ProdFornecedor<T>* prodFornecedor) {
 
-	out << prodFornecedor->produto << endl << "Stock: " << prodFornecedor->stock << endl;
-	return out;
+//ProdForncedorUnidade
+ProdFornecedorUnidade::ProdFornecedorUnidade(Produto* produto, int stock, vector<Patamar*> patamares) : ProdFornecedor(produto,stock) {
+
+	if (patamares.size() > 1) throw DemasiadosPatamares();
+	this->patamares = patamares;
 }
 
-template class ProdFornecedor<double>;
-template class ProdFornecedor<int>;
+void ProdFornecedorUnidade::addPatamar(string min, string max, string preco) {
+	int minimo,maximo;
+	float prec;
+	stringstream str(min);
+
+	if(patamares.size() > 1) throw DemasiadosPatamares();
+
+	str >> minimo; str.clear();
+	str << max;	str >> maximo; str.clear();
+	str << preco; str >> prec; str.clear();
+
+	Patamar* patamar = new Patamar(minimo,maximo,prec);
+	patamares.push_back(patamar);
+}
+
+//ProdFornecedorEmpresa
+void ProdFornecedorEmpresa::addPatamar(string min, string max, string preco) {
+	int minimo,maximo;
+	float prec;
+	stringstream str(min);
+
+	str >> minimo; str.clear();
+	str << max;	str >> maximo; str.clear();
+	str << preco; str >> prec; str.clear();
+
+	Patamar* patamar = new Patamar(minimo,maximo,prec);
+	patamares.push_back(patamar);
+}
+
+
+
