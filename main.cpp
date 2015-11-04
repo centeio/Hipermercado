@@ -25,7 +25,7 @@ void leProdutos(ifstream hipermercadoprodutos) {
 	for (int i = 0; i < numprodutos; i++) {
 		hipermercadoprodutos >> nome >> unidade;
 		Produto* produtof = new Produto(nome, unidade);
-		Hipermercado<int>::getInstance()->addProduto(produtof);
+		Hipermercado::getInstance()->addProduto(produtof);
 	}
 }
 
@@ -38,7 +38,7 @@ void leFornecedores(ifstream hipermercadofornecedores) {
 	for (int i = 0; i < numfornecedores; i++) {
 		hipermercadofornecedores >> nome >> nif >> morada >> tipo
 				>> numprodutos;
-		Hipermercado<int>::getInstance()->addFornecedor(new Fornecedor<int>(nome, nif, morada));
+		Hipermercado::getInstance()->addFornecedor(new Fornecedor<int>(nome, nif, morada));
 		for (int j = 0; j < numprodutos; j++) {
 			hipermercadofornecedores >> numproduto >> produtos >> medida
 					>> stock >> numpatamares >> patminimo >> patmaximo >> preco;
@@ -48,10 +48,10 @@ void leFornecedores(ifstream hipermercadofornecedores) {
 							- 1)->addProduto(new Produto(produtos, medida),stock,patamares);
 			for (int k = 0; k < numpatamares - 1; k++) {
 				hipermercadofornecedores >> patminimo >> patmaximo >> preco;
-				Hipermercado<int>::getInstance()->getFornecedores().at(
+				Hipermercado::getInstance()->getFornecedores().at(
 						Hipermercado<int>::getInstance()->getFornecedores().size()
 								- 1)->getProdutosForn().at(
-						Hipermercado<int>::getInstance()->getFornecedores().at(
+						Hipermercado::getInstance()->getFornecedores().at(
 								Hipermercado<int>::getInstance()->getFornecedores().size()
 										- 1)->getProdutosForn().size() - 1)->addPatamar(
 						patminimo, patmaximo, preco);
@@ -61,14 +61,14 @@ void leFornecedores(ifstream hipermercadofornecedores) {
 }
 
 int procurafornecedor(string nome){
-	for(int i = 0; i < Hipermercado<int>::getInstance()->getFornecedores().size(); i++ ){
-		if(Hipermercado<int>::getInstance()->getFornecedores()[i]->getNome() == nome)
+	for(int i = 0; i < Hipermercado::getInstance()->getFornecedores().size(); i++ ){
+		if(Hipermercado::getInstance()->getFornecedores()[i]->getNome() == nome)
 			return i ;
 	}
 }
 
 int procuraproduto(string nome){
-	for(int i = 0; i < Hipermercado<int>::getInstance()->getProdutos().size(); i++ ){
+	for(int i = 0; i < Hipermercado::getInstance()->getProdutos().size(); i++ ){
 		if(Hipermercado<int>::getInstance()->getProdutos()[i]->getNome() == nome)
 					return i ;
 	}
@@ -88,12 +88,12 @@ void leEncomendas(ifstream hipermercadoencomendas) {
 		int indicef, indicep;
 		indicef = procurafornecedor(fornecedor);
 		indicep = procuraproduto(produto);
-		Hipermercado<int>::getInstance()->addEncomenda(Hipermercado::getInstance()->getFornecedores()[indicef],
+		Hipermercado::getInstance()->addEncomenda(Hipermercado::getInstance()->getFornecedores()[indicef],
 				Hipermercado::getInstance()->getProdutos()[indicep], quantidade, preco);
 		for (int j = 0; j < numlinhasencomendas - 1; j++) {
 			hipermercadoencomendas >> produto >> medida >> quantidade >> preco;
-			Hipermercado<int>::getInstance()->getEncomendas().at(
-					Hipermercado<int>::getInstance()->getEncomendas().size() - 1)->addLinha(
+			Hipermercado::getInstance()->getEncomendas().at(
+					Hipermercado::getInstance()->getEncomendas().size() - 1)->addLinha(
 							 new Produto(produto, medida), quantidade, preco);
 		}
 	}
@@ -159,14 +159,13 @@ void opcaoprodutos() {
 		cin >> nomeprod;
 		cin >> unidadesprod;
 		Produto* produtof = new Produto(nomeprod, unidadesprod);
-		Hipermercado<int>::getInstance()->addProduto(produtof);
+		Hipermercado::getInstance()->addProduto(produtof);
 	} else if (opcao == 3) {
 		Hipermercado<int>::getInstance()->displayProdutos();
 		cout << "Qual o numero do produto que quer eliminar ? ";
 		int numprodeliminar;
 		cin >> numprodeliminar;
-		Hipermercado<int>::getInstance()->eliminaProduto(numprodeliminar);
-
+		Hipermercado::getInstance()->eliminaProduto(numprodeliminar);
 	} else {
 		menuinicial();
 	}
@@ -193,11 +192,11 @@ void opcaofornecedores() {
 		cin >> opcao;
 	}
 	if (opcao == 1) {
-		Hipermercado<int>::getInstance()->displayFornecedores();
+		Hipermercado::getInstance()->displayFornecedores();
 	} else if (opcao == 2) {
 		cout << "Qual o nome , nif e morada do novo fornecedor? ";
 		cin >> nomef >> niff >> moradaf;
-		Hipermercado<int>::getInstance()->addFornecedor(new Fornecedor<int>(nomef, niff, moradaf));
+		Hipermercado::getInstance()->addFornecedor(new Fornecedor<int>(nomef, niff, moradaf));
 	} else if (opcao == 3) {
 		cout << setw(10) << "Introduza a opção pretendida pf" << endl;
 		cout << setw(10) << "1 - Alterar nome do Fornecedor" << endl;
@@ -221,27 +220,27 @@ void opcaofornecedores() {
 			int numfornecedor1;
 			cin >> numfornecedor1;
 			cin >> nomenovo;
-			Hipermercado<int>::getInstance()->getFornecedores()[numfornecedor1]->setNome(
+			Hipermercado::getInstance()->getFornecedores()[numfornecedor1]->setNome(
 					nomenovo);
 		} else if (opcao == 2) {
-			Hipermercado<int>::getInstance()->displayFornecedores();
+			Hipermercado::getInstance()->displayFornecedores();
 			cout << setw(10)
 					<< "Introduza numero do fornecedor que quer alterar e a nova morada do fornecedor pf"
 					<< endl;
 			int numfornecedor2;
 			cin >> numfornecedor2;
 			cin >> moradanova;
-			Hipermercado<int>::getInstance()->getFornecedores()[numfornecedor2]->setMorada(
+			Hipermercado::getInstance()->getFornecedores()[numfornecedor2]->setMorada(
 					moradanova);
 		} else if (opcao == 3) {
-			Hipermercado<int>::getInstance()->displayFornecedores();
+			Hipermercado::getInstance()->displayFornecedores();
 			cout << setw(10)
 					<< "Introduza numero do fornecedor que quer alterar e o novo nif do fornecedor pf"
 					<< endl;
 			int numfornecedor3;
 			cin >> numfornecedor3;
 			cin >> nifnovo;
-			Hipermercado<int>::getInstance()->getFornecedores()[numfornecedor3]->setNIF(
+			Hipermercado::getInstance()->getFornecedores()[numfornecedor3]->setNIF(
 					nifnovo);
 	} else if (opcao == 4) {
 		cout << setw(10)
@@ -249,7 +248,7 @@ void opcaofornecedores() {
 				<< endl;
 		int numforremover;
 		cin >> numforremover;
-		Hipermercado<int>::getInstance()->eliminaFornecedor(numforremover);
+		Hipermercado::getInstance()->eliminaFornecedor(numforremover);
 	} else {
 		menuinicial();
 	}
@@ -277,9 +276,9 @@ void opcaoencomendas() {
 		cin >> opcao;
 	}
 	if (opcao == 1) {
-		Hipermercado<int>::getInstance()->displayPedidos();
+		Hipermercado::getInstance()->displayPedidos();
 	} else if (opcao == 2) {
-		Hipermercado<int>::getInstance()->displayPedidosPorProcessar();
+		Hipermercado::getInstance()->displayPedidosPorProcessar();
 	} else if (opcao == 3) {
 		vector<Produto*> produtos;
 		vector<int> quantidade;
@@ -297,7 +296,7 @@ void opcaoencomendas() {
 			cout << "Qual a quantidade que quer encomendar deste produto?";
 			cin >> qnt;
 			Produto* produtof = new Produto(Hipermercado<int>::getInstance()->getProdutos()[num]->getNome(),
-					Hipermercado<int>::getInstance()->getProdutos()[num]->getMedida());
+					Hipermercado::getInstance()->getProdutos()[num]->getMedida());
 			produtosencomendas.push_back(produtof);
 			quantidades.push_back(qnt);
 			Hipermercado<int>::getInstance()->addPedido(new PedidoEncomenda<int>(dataactual, produtosencomendas, quantidades));
@@ -306,7 +305,7 @@ void opcaoencomendas() {
 	} else if (opcao == 4) {
 		//mostrar lista de pedidos por realizar
 		//funcao que altera pedido encomenda;
-		Hipermercado<int>::getInstance()->displayPedidosPorProcessar();
+		Hipermercado::getInstance()->displayPedidosPorProcessar();
 		cout << "Qual o numero do pedido de encomenda que quer alterar?" << endl;
 		int numalt;
 		cin >> numalt;
@@ -316,15 +315,15 @@ void opcaoencomendas() {
 		cout << "Qual a nova quantidade de produto do pedido de encomenda? " << endl;
 		int novaquantidade;
 		cin >> novaquantidade;
-		Hipermercado<int>::getInstance()->alteraPedidos(numalt,numproduto,novaquantidade);
+		Hipermercado::getInstance()->alteraPedidos(numalt,numproduto,novaquantidade);
 
 	} else if (opcao == 5) {
 		//funcao que elimina pedido encomenda;
-		Hipermercado<int>::getInstance()->displayPedidosPorProcessar();
+		Hipermercado::getInstance()->displayPedidosPorProcessar();
 		cout << "Qual o numero do pedido de encomenda que quer eliminar?";
 		unsigned int numprodeliminar;
 		cin >> numprodeliminar;
-		Hipermercado<int>::getInstance()->eliminaProduto(numprodeliminar);
+		Hipermercado::getInstance()->eliminaProduto(numprodeliminar);
 	} else {
 		menuinicial();
 	}
@@ -345,7 +344,7 @@ void opcaomudarnome() {
 		cin >> opcao;
 	}
 	if (opcao == 1) {
-		Hipermercado<int>::getInstance()->setNome(novonome);
+		Hipermercado::getInstance()->setNome(novonome);
 	} else if (opcao == 9) {
 		menuinicial();
 	}
@@ -377,14 +376,14 @@ void escreveProdutos(ifstream hipermercadoprodutos) {
 	remove("produtos.txt");
 	ofstream hipermercado;
 	hipermercado.open("produtos.txt");
-	hipermercado << Hipermercado<int>::getInstance()->getProdutos().size()
+	hipermercado << Hipermercado::getInstance()->getProdutos().size()
 			<< endl;
-	for (int i = 0; i < Hipermercado<int>::getInstance()->getProdutos().size();
+	for (int i = 0; i < Hipermercado::getInstance()->getProdutos().size();
 			i++) {
 		hipermercado
-				<< Hipermercado<int>::getInstance()->getProdutos()[i]->getNome()
+				<< Hipermercado::getInstance()->getProdutos()[i]->getNome()
 				<< endl
-				<< Hipermercado<int>::getInstance()->getProdutos()[i]->getMedida();
+				<< Hipermercado::getInstance()->getProdutos()[i]->getMedida();
 	}
 	hipermercado.close();
 }
@@ -395,37 +394,37 @@ void escreveFornecedores(ifstream hipermercadofornecedores) {
 	remove("fornecedores.txt");
 	ofstream hipermercado;
 	hipermercado.open("fornecedores.txt");
-	hipermercado << Hipermercado<int>::getInstance()->getFornecedores().size()
+	hipermercado << Hipermercado::getInstance()->getFornecedores().size()
 			<< endl;
 	for (int i = 0;
-			i < Hipermercado<int>::getInstance()->getFornecedores().size();
+			i < Hipermercado::getInstance()->getFornecedores().size();
 			i++) {
 		hipermercado
-				<< Hipermercado<int>::getInstance()->getFornecedores()[i]->getNome()
+				<< Hipermercado::getInstance()->getFornecedores()[i]->getNome()
 				<< endl
-				<< Hipermercado<int>::getInstance()->getFornecedores()[i]->getNIF()
+				<< Hipermercado::getInstance()->getFornecedores()[i]->getNIF()
 				<< endl
-				<< Hipermercado<int>::getInstance()->getFornecedores()[i]->getMorada()
+				<< Hipermercado::getInstance()->getFornecedores()[i]->getMorada()
 				<< endl
-				<< Hipermercado<int>::getInstance()->getFornecedores()[i]->getProdutosForn().size()
+				<< Hipermercado::getInstance()->getFornecedores()[i]->getProdutosForn().size()
 				<< endl;
 		for (int j = 0;
 				j
-						< Hipermercado<int>::getInstance()->getFornecedores()[i]->getProdutosForn().size();
+						< Hipermercado::getInstance()->getFornecedores()[i]->getProdutosForn().size();
 				j++) {
 			hipermercado
-					<< Hipermercado<int>::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getProduto()->getNome()
+					<< Hipermercado::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getProduto()->getNome()
 					<< endl
-					<< Hipermercado<int>::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getProduto()->getMedida()
+					<< Hipermercado::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getProduto()->getMedida()
 					<< endl
-					<< Hipermercado<int>::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getStock()
+					<< Hipermercado::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getStock()
 					<< endl;
 			for (int l = 0;
 					l
-							< Hipermercado<int>::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getPatamares().size();
+							< Hipermercado::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getPatamares().size();
 					l++) {
 				hipermercado
-						<< Hipermercado<int>::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getPatamares()[l]
+						<< Hipermercado::getInstance()->getFornecedores()[i]->getProdutosForn()[j]->getPatamares()[l]
 						<< endl;
 			}
 		}
@@ -437,24 +436,24 @@ void escreveEncomendas(ifstream hipermercadoencomendas) {
 	remove("encomendas.txt");
 	ofstream hipermercado;
 	hipermercado.open("encomendas.txt");
-	hipermercado << Hipermercado<int>::getInstance()->getPedidos().size()
+	hipermercado << Hipermercado::getInstance()->getPedidos().size()
 			<< endl;
-	for (int i = 0; i < Hipermercado<int>::getInstance()->getPedidos().size();
+	for (int i = 0; i < Hipermercado::getInstance()->getPedidos().size();
 			i++) {
 		hipermercado
-				<< Hipermercado<int>::getInstance()->getPedidos()[i]->getData();
-		<< endl << Hipermercado<int>::getInstance()->getPedidos()[i]->getFornecedor()
+				<< Hipermercado::getInstance()->getPedidos()[i]->getData();
+		<< endl << Hipermercado::getInstance()->getPedidos()[i]->getFornecedor()
 		<< endl;
 		for (int j = 0; j
-						< Hipermercado<int>::getInstance()->getPedidos()[i]->getProdutos().size();
+						< Hipermercado::getInstance()->getPedidos()[i]->getProdutos().size();
 				j++
 			) {
 				hipermercado
-				<< Hipermercado<int>::getInstance()->getPedidos()[i]->getProdutos()[j]->getNome()
+				<< Hipermercado::getInstance()->getPedidos()[i]->getProdutos()[j]->getNome()
 				<< endl
-				<< Hipermercado<int>::getInstance()->getPedidos()[i]->getProdutos()[j]->getMedida()
+				<< Hipermercado::getInstance()->getPedidos()[i]->getProdutos()[j]->getMedida()
 				<< endl
-				<< Hipermercado<int>::getInstance()->getPedidos()[i]->getQuantidade()[j]
+				<< Hipermercado::getInstance()->getPedidos()[i]->getQuantidade()[j]
 				<< endl;
 
 			}
