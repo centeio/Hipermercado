@@ -7,6 +7,8 @@
 
 #include "Data.h"
 
+Data::Data(){};
+
 Data::Data(unsigned int dia, unsigned int mes, unsigned int ano): dia(dia), mes(mes), ano(ano) {}
 
 Data::~Data() {

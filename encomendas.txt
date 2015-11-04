@@ -3,21 +3,17 @@
 fornecedor
 3
 arroz
-und
 300
 12
 massa
-und
 400
 13
 atum
-und
 4
 1
 25 07 2014
 fornecedores 
 1
 batatas	
-kg	
 400	
 27

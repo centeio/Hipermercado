@@ -25,7 +25,7 @@ void leProdutos(ifstream hipermercadoprodutos) {
 	for (int i = 0; i < numprodutos; i++) {
 		hipermercadoprodutos >> nome >> unidade;
 		Produto* produtof = new Produto(nome, unidade);
-		Hipermercado<int>::getInstance()->getProdutos()->addProduto(produtof);
+		Hipermercado<int>::getInstance()->addProduto(produtof);
 	}
 }
 
@@ -38,17 +38,14 @@ void leFornecedores(ifstream hipermercadofornecedores) {
 	for (int i = 0; i < numfornecedores; i++) {
 		hipermercadofornecedores >> nome >> nif >> morada >> tipo
 				>> numprodutos;
-		Hipermercado<int>::getInstance()->addFornecedor(nome, nif, morada);
+		Hipermercado<int>::getInstance()->addFornecedor(new Fornecedor<int>(nome, nif, morada));
 		for (int j = 0; j < numprodutos; j++) {
 			hipermercadofornecedores >> numproduto >> produtos >> medida
 					>> stock >> numpatamares >> patminimo >> patmaximo >> preco;
-			Produto* produtof = new Produto(produtos, medida);
-			vector<Patamar*> patamares;
-			Patamar* patamar = new Patamar(patminimo, patmaximo, preco);
-			patamares.push_back(patamar);
-			Hipermercado<int>::getInstance()->getFornecedores().at(
-					Hipermercado<int>::getInstance()->getProdutosForn().size()
-							- 1)->addProduto(produtof, stock, patamares);
+			vector<Patamar<int>*> patamares;
+			patamares.push_back(new Patamar<int>(patminimo, patmaximo, preco));
+			Hipermercado<int>::getInstance()->getFornecedores().at(Hipermercado<int>::getInstance()->getFornecedores().size()
+							- 1)->addProduto(new Produto(produtos, medida),stock,patamares);
 			for (int k = 0; k < numpatamares - 1; k++) {
 				hipermercadofornecedores >> patminimo >> patmaximo >> preco;
 				Hipermercado<int>::getInstance()->getFornecedores().at(
@@ -63,23 +60,41 @@ void leFornecedores(ifstream hipermercadofornecedores) {
 	}
 }
 
+int procurafornecedor(string nome){
+	for(int i = 0; i < Hipermercado<int>::getInstance()->getFornecedores().size(); i++ ){
+		if(Hipermercado<int>::getInstance()->getFornecedores()[i]->getNome() == nome)
+			return i ;
+	}
+}
+
+int procuraproduto(string nome){
+	for(int i = 0; i < Hipermercado<int>::getInstance()->getProdutos().size(); i++ ){
+		if(Hipermercado<int>::getInstance()->getProdutos()[i]->getNome() == nome)
+					return i ;
+	}
+}
+
 //LER ENCOMENDAS.TXT
 void leEncomendas(ifstream hipermercadoencomendas) {
-	string fornecedor, produto, quantidade, preco, dia, mes, ano, medida;
-	int numencomendas, numprodutos;
+	string fornecedor, produto, quantidade, dia, mes, ano, medida;
+	float preco;
+	int numencomendas, numlinhasencomendas;
+
 	hipermercadoencomendas >> numencomendas;
 	for (int i = 0; i < numencomendas; i++) {
 		hipermercadoencomendas >> dia >> mes >> ano >> fornecedor
-				>> numprodutos;
-		Data dataactual(dia, mes, ano);
-		Encomenda* encomendaf = new Encomenda(fornecedor, produto, quantidade);
-		Hipermercado<int>::getInstance()->addEncomenda(encomendaf);
-		for (int j = 0; j < numprodutos; j++) {
+				>> numlinhasencomendas >> produto >> quantidade >> preco;
+		Data data(dia, mes, ano);
+		int indicef, indicep;
+		indicef = procurafornecedor(fornecedor);
+		indicep = procuraproduto(produto);
+		Hipermercado<int>::getInstance()->addEncomenda(Hipermercado::getInstance()->getFornecedores()[indicef],
+				Hipermercado::getInstance()->getProdutos()[indicep], quantidade, preco);
+		for (int j = 0; j < numlinhasencomendas - 1; j++) {
 			hipermercadoencomendas >> produto >> medida >> quantidade >> preco;
-			Produto* produtof = new Produto(produto, medida);
-			Hipermercado<int>::getInstance()->getEncomendas.at(
-					Hipermercado<int>::getInstance()->getEncomendas.size() - 1)->addLinhaEncomenda(
-					produtof, quantidade, preco);
+			Hipermercado<int>::getInstance()->getEncomendas().at(
+					Hipermercado<int>::getInstance()->getEncomendas().size() - 1)->addLinha(
+							 new Produto(produto, medida), quantidade, preco);
 		}
 	}
 }
@@ -144,13 +159,14 @@ void opcaoprodutos() {
 		cin >> nomeprod;
 		cin >> unidadesprod;
 		Produto* produtof = new Produto(nomeprod, unidadesprod);
-		Hipermercado<int>::getInstance()->getProdutos()->addProduto(produtof);
+		Hipermercado<int>::getInstance()->addProduto(produtof);
 	} else if (opcao == 3) {
+		Hipermercado<int>::getInstance()->displayProdutos();
 		cout << "Qual o numero do produto que quer eliminar ? ";
 		int numprodeliminar;
 		cin >> numprodeliminar;
-		Hipermercado<int>::getInstance()->getProdutos()->eliminaProduto(
-				Hipermercado<int>::getInstance()->getProdutos()[numprodeliminar]);
+		Hipermercado<int>::getInstance()->eliminaProduto(numprodeliminar);
+
 	} else {
 		menuinicial();
 	}
@@ -177,18 +193,16 @@ void opcaofornecedores() {
 		cin >> opcao;
 	}
 	if (opcao == 1) {
-		//funcao que mostra lista de fornecedores;
+		Hipermercado<int>::getInstance()->displayFornecedores();
 	} else if (opcao == 2) {
 		cout << "Qual o nome , nif e morada do novo fornecedor? ";
 		cin >> nomef >> niff >> moradaf;
-		Fornecedor* fornecedorn = new Fornecedor(nomef, niff, moradaf);
-		Hipermercado<int>::getInstance()->addFornecedor(fornecedorn);
+		Hipermercado<int>::getInstance()->addFornecedor(new Fornecedor<int>(nomef, niff, moradaf));
 	} else if (opcao == 3) {
 		cout << setw(10) << "Introduza a opção pretendida pf" << endl;
 		cout << setw(10) << "1 - Alterar nome do Fornecedor" << endl;
 		cout << setw(10) << "2 - Alterar morada do Fornecedor" << endl;
 		cout << setw(10) << "3 - Alterar NIF do Fornecedor" << endl;
-		cout << setw(10) << "4 - Alterar produtos do Fornecedor" << endl;
 		cout << setw(10) << "9 - Voltar ao menu inicial" << endl;
 		cin >> opcao2;
 
@@ -200,6 +214,7 @@ void opcaofornecedores() {
 			cin >> opcao2;
 		}
 		if (opcao == 1) {
+			Hipermercado<int>::getInstance()->displayFornecedores();
 			cout << setw(10)
 					<< "Introduza o numero do fornecedor actual e o novo nome do fornecedor pf"
 					<< endl;
@@ -209,6 +224,7 @@ void opcaofornecedores() {
 			Hipermercado<int>::getInstance()->getFornecedores()[numfornecedor1]->setNome(
 					nomenovo);
 		} else if (opcao == 2) {
+			Hipermercado<int>::getInstance()->displayFornecedores();
 			cout << setw(10)
 					<< "Introduza numero do fornecedor que quer alterar e a nova morada do fornecedor pf"
 					<< endl;
@@ -218,66 +234,26 @@ void opcaofornecedores() {
 			Hipermercado<int>::getInstance()->getFornecedores()[numfornecedor2]->setMorada(
 					moradanova);
 		} else if (opcao == 3) {
+			Hipermercado<int>::getInstance()->displayFornecedores();
 			cout << setw(10)
 					<< "Introduza numero do fornecedor que quer alterar e o novo nif do fornecedor pf"
 					<< endl;
-			//LISTA DOS FORNECEDORES
 			int numfornecedor3;
 			cin >> numfornecedor3;
 			cin >> nifnovo;
 			Hipermercado<int>::getInstance()->getFornecedores()[numfornecedor3]->setNIF(
 					nifnovo);
-		} else if (opcao == 4) {
-			Hipermercado<int>::getInstance()->getFornecedores()[1]->displayProdutosForn();
-			cout << setw(10) << "Introduza a opção pretendida pf" << endl;
-			cout << setw(10) << "1 - Adiciona produto" << endl;
-			cout << setw(10) << "2 - Altera produto" << endl;
-			cout << setw(10) << "3 - Remove produto" << endl;
-			cout << setw(10) << "9 - Voltar ao menu inicial" << endl;
-			cin >> opcao3;
-			while ((opcao3 != 1) && (opcao3 != 2) && (opcao3 != 3)
-					&& (opcao != 9)) {
-				cout << setw(10)
-						<< "Opção inválida, volte a introduzir a opção pretendida pf"
-						<< endl;
-				cin >> opcao3;
-			}
-			if (opcao == 1) {
-				cout << setw(10)
-						<< "Introduza o nome do produto e o tipo de medida( unidades/kgs/lts/...)que quer adicionar pf"
-						<< endl;
-				cin >> produtoaadicionar;
-				cin >> unidades;
-				cin >> stock;
-				Produto* produton = new Produto(produtoaadicionar, unidades);
-				//Hipermercado<int>::getInstance()->addProduto(produton, stock, ?? );
-			} else if (opcao == 2) {
-				cout << setw(10)
-						<< "Introduza o novo nome do produto a alterar pf"
-						<< endl;
-				cin >> novoprod;
-				//FUNCAO QUE ADICIONA PRODUTO AO FORNECEDOR
-			} else if (opcao == 9) {
-				menuinicial();
-			} else {
-				cout << setw(10)
-						<< "Introduza o numero do produto que quer remover pf"
-						<< endl;
-				cin >> numprodremover;
-				Hipermercado<int>::getInstance()->remProduto(
-						Hipermercado<int>::getInstance()->getProdutos()[numprodremover]);
-			}
-		}
 	} else if (opcao == 4) {
 		cout << setw(10)
 				<< "Introduza o numero do fornecedor que quer eliminar pf"
 				<< endl;
 		int numforremover;
 		cin >> numforremover;
-		Hipermercado<int>::getInstance()->remFornecedor(Hipermercado<int>::getInstance()->getFornecedores()[numforremover]);
+		Hipermercado<int>::getInstance()->eliminaFornecedor(numforremover);
 	} else {
 		menuinicial();
 	}
+}
 }
 
 //OPCAO FORNECEDORES DO MENU
@@ -287,8 +263,8 @@ void opcaoencomendas() {
 	int quantidade, preco;
 	cout << setw(20) << "Encomendas: " << endl << endl;
 	cout << setw(10) << "Introduza a opção pretendida pf" << endl << endl;
-	cout << setw(10) << "1 - Ver encomendas realizadas" << endl;
-	cout << setw(10) << "2 - Ver encomendas por realizar" << endl;
+	cout << setw(10) << "1 - Ver pedidos de encomendas realizadas" << endl;
+	cout << setw(10) << "2 - Ver pedidos de encomendas por realizar" << endl;
 	cout << setw(10) << "3 - Pedir nova encomenda" << endl;
 	cout << setw(10) << "4 - Alterar encomenda (mudar o numero de produtos encomendados)" << endl;
 	cout << setw(10) << "5 - Cancelar encomenda" << endl;
@@ -301,9 +277,9 @@ void opcaoencomendas() {
 		cin >> opcao;
 	}
 	if (opcao == 1) {
-		Hipermercado<int>::getInstance()->getEncomendas()->displayEncomendas();
+		Hipermercado<int>::getInstance()->displayPedidos();
 	} else if (opcao == 2) {
-		Hipermercado<int>::getInstance()->getEncomendas()->displayEncomendasPorRealizar();
+		Hipermercado<int>::getInstance()->displayPedidosPorProcessar();
 	} else if (opcao == 3) {
 		vector<Produto*> produtos;
 		vector<int> quantidade;
@@ -324,26 +300,31 @@ void opcaoencomendas() {
 					Hipermercado<int>::getInstance()->getProdutos()[num]->getMedida());
 			produtosencomendas.push_back(produtof);
 			quantidades.push_back(qnt);
-			PedidoEncomenda* pedidoencomendaf = new PedidoEncomenda(dataactual, produtosencomendas, quantidades);
+			Hipermercado<int>::getInstance()->addPedido(new PedidoEncomenda<int>(dataactual, produtosencomendas, quantidades));
 			}
 
 	} else if (opcao == 4) {
+		//mostrar lista de pedidos por realizar
 		//funcao que altera pedido encomenda;
+		Hipermercado<int>::getInstance()->displayPedidosPorProcessar();
 		cout << "Qual o numero do pedido de encomenda que quer alterar?" << endl;
 		int numalt;
 		cin >> numalt;
+		cout <<"Qual o produto do pedido de encomenda que quer alterar a sua quantidade?" << endl;
+		string numproduto;
+		cin >> numproduto;
 		cout << "Qual a nova quantidade de produto do pedido de encomenda? " << endl;
 		int novaquantidade;
 		cin >> novaquantidade;
-		Hipermercado<int>::getInstance()->getPedidos()[numalt]->setQuantidade(novaquantidade);
+		Hipermercado<int>::getInstance()->alteraPedidos(numalt,numproduto,novaquantidade);
 
 	} else if (opcao == 5) {
 		//funcao que elimina pedido encomenda;
+		Hipermercado<int>::getInstance()->displayPedidosPorProcessar();
 		cout << "Qual o numero do pedido de encomenda que quer eliminar?";
-		int numprodeliminar;
+		unsigned int numprodeliminar;
 		cin >> numprodeliminar;
-		Hipermercado<int>::getInstance()->getPedidos()->eliminaProduto(
-				Hipermercado<int>::getInstance()->getPedidos()[numprodeliminar]);
+		Hipermercado<int>::getInstance()->eliminaProduto(numprodeliminar);
 	} else {
 		menuinicial();
 	}
@@ -364,7 +345,7 @@ void opcaomudarnome() {
 		cin >> opcao;
 	}
 	if (opcao == 1) {
-		Hipermercado<int>::getInstance()->setNomeHipermercado(novonome);
+		Hipermercado<int>::getInstance()->setNome(novonome);
 	} else if (opcao == 9) {
 		menuinicial();
 	}

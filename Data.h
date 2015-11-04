@@ -14,6 +14,7 @@ private:
 	unsigned int mes;
 	unsigned int ano;
 public:
+	Data();
 	Data(unsigned int dia, unsigned int mes, unsigned int ano);
 	virtual ~Data();
 };
