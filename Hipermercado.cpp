@@ -74,31 +74,30 @@ void Hipermercado<T>::addEncomenda(Fornecedor<T>* fornecedor,Produto* produto,T 
 
 template <class T>
 void Hipermercado<T>::displayFornecedores() const{
-	for(unsigned int i=0;i<fornecedores.size();i++){
-		cout << fornecedores.at(i);
-	}
+	for(unsigned int i=0;i<fornecedores.size();i++)
+		cout <<"FORNECEDOR "<< i << endl <<fornecedores.at(i)<<endl;
+
 }
 
 template <class T>
 void Hipermercado<T>::displayProdutos() const{
 	for(unsigned int i=0;i<produtos.size();i++){
-		cout << produtos.at(i);
+		cout <<"PRODUTO "<< i << endl <<produtos.at(i)<<endl;
 	}
 }
 
 template <class T>
 void Hipermercado<T>::displayPedidos() const{
-	for(unsigned int i=0;i<pedidos.size();i++){
-		cout << "PEDIDO "<<i<<endl;
-		cout << pedidos.at(i)<<endl;
-	}
+	for(unsigned int i=0;i<pedidos.size();i++)
+		cout << "PEDIDO "<<i<<endl<< pedidos.at(i)<<endl;
+
 }
 
 template <class T>
 void Hipermercado<T>::displayPedidosPorProcessar() const{
 	for(unsigned int i=0;i<pedidos.size();i++){
 		if(!pedidos.at(i)->getFinalizado())
-		cout << pedidos.at(i);
+		cout << "PEDIDO "<<i<<endl<< pedidos.at(i)<<endl;
 	}
 }
 
@@ -106,7 +105,7 @@ template <class T>
 void Hipermercado<T>::displayPedidosProcessados() const{
 	for(unsigned int i=0;i<pedidos.size();i++){
 		if(pedidos.at(i)->getFinalizado())
-		cout << pedidos.at(i);
+		cout << "PEDIDO "<<i<<endl<< pedidos.at(i)<<endl;
 	}
 }
 
