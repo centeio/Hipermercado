@@ -48,7 +48,7 @@ void FornecedorUnidade::addProduto(Produto* produto, string stock, vector<Patama
 
 	str >> st;
 	if(patamares.size() > 1) throw DemasiadosPatamares();
-	ProdFornecedor* prodFornecedor = new ProdFornecedor(produto, st, patamares);
+	ProdFornecedorUnidade* prodFornecedor = new ProdFornecedorUnidade(produto, st, patamares);
 
 	produtosForn.push_back(prodFornecedor);
 }
@@ -101,7 +101,7 @@ void FornecedorEmpresa::addProduto(Produto* produto, string stock, vector<Patama
 
 	str >> st;
 	if(patamares.size() > 1) throw DemasiadosPatamares();
-	ProdFornecedor* prodFornecedor = new ProdFornecedor(produto, st, patamares);
+	ProdFornecedorEmpresa* prodFornecedor = new ProdFornecedorEmpresa(produto, st, patamares);
 
 	produtosForn.push_back(prodFornecedor);
 }
