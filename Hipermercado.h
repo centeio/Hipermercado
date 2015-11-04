@@ -33,6 +33,7 @@ public:
 	void displayProdutos() const;
 	void displayPedidos() const;
 	void displayEncomendas() const;
+//	void displayEncomendasOrdenadas() const;
 	void displayPedidosPorProcessar() const;
 	void displayPedidosProcessados() const;
 	void addFornecedor(Fornecedor<T>* fornecedor);
