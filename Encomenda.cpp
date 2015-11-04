@@ -8,36 +8,36 @@
 #include "Encomenda.h"
 #include <iomanip>
 
-template <class T>
-Encomenda<T>::Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco): fornecedor(fornecedor) {
-	linhas.push_back(new LinhaEncomenda<T> (produto,quantidade,preco));
+
+Encomenda::Encomenda(Fornecedor* fornecedor,Produto* produto,int quantidade, float preco): fornecedor(fornecedor) {
+	linhas.push_back(new LinhaEncomenda (produto,quantidade,preco));
 	data=dataactual;
 }
 
-template <class T>
-Encomenda<T>::Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco, Data d):fornecedor(fornecedor),data(d){
-	linhas.push_back(new LinhaEncomenda<T> (produto,quantidade,preco));
+
+Encomenda::Encomenda(Fornecedor* fornecedor,Produto* produto,int quantidade, float preco, Data d):fornecedor(fornecedor),data(d){
+	linhas.push_back(new LinhaEncomenda (produto,quantidade,preco));
 }
 
 
-template <class T>
-Encomenda<T>::~Encomenda() {
+
+Encomenda::~Encomenda() {
 	// TODO Auto-generated destructor stub
 }
-template <class T>
-Fornecedor<T>* Encomenda<T>::getFornecedor() const{return fornecedor;}
 
-template <class T>
-vector<LinhaEncomenda<T> > Encomenda<T>::getLinhas() const{return linhas;}
+Fornecedor* Encomenda::getFornecedor() const{return fornecedor;}
 
-template <class T>
-void Encomenda<T>::addLinha(Produto* produto,T quantidade,float preco){
-	LinhaEncomenda<T> l(produto,quantidade,preco);
+
+vector<LinhaEncomenda > Encomenda::getLinhas() const{return linhas;}
+
+
+void Encomenda::addLinha(Produto* produto,T quantidade,float preco){
+	LinhaEncomenda l(produto,quantidade,preco);
 	linhas.push_back(l);
 }
 
-template <class T>
-ostream &operator<<(ostream& os, const Encomenda<T>& enc){
+
+ostream &operator<<(ostream& os, const Encomenda& enc){
 	os<<"Fornecedor: "<<enc.getFornecedor()<<"\n \n";
 	for (unsigned int i=0; i<enc.getLinhas().size();i++){
 		os<<"Produto: "<<enc.getLinhas().at(i).getProduto()<<setw(30)

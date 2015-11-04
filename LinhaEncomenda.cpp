@@ -7,9 +7,8 @@
 
 #include "LinhaEncomenda.h"
 
-template <class T>
-LinhaEncomenda<T>::LinhaEncomenda(Produto* produto, T quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
+
+LinhaEncomenda::LinhaEncomenda(Produto* produto, int quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
 }
 
-template <class T>
-LinhaEncomenda<T>::~LinhaEncomenda() {}
+LinhaEncomenda::~LinhaEncomenda() {}

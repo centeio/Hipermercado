@@ -9,38 +9,38 @@
 #include "Fornecedor.h"
 
 
-template<class T>
-PedidoEncomenda<T>::PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quantidade) :
+
+PedidoEncomenda::PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quantidade) :
 		data(data), produtos(produtos), quantidade(quantidade) {
 	finalizado = false;
 }
 
-template<class T>
-Data PedidoEncomenda<T>::getData() const{return data;}
 
-template<class T>
-bool PedidoEncomenda<T>::getFinalizado() const{return finalizado;}
+Data PedidoEncomenda::getData() const{return data;}
 
-template<class T>
-vector<Produto*> PedidoEncomenda<T>::getProdutos() const{return produtos;}
 
-template<class T>
-vector<unsigned int> PedidoEncomenda<T>::getQuantidade() const{return quantidade;}
+bool PedidoEncomenda::getFinalizado() const{return finalizado;}
 
-template<class T>
-void PedidoEncomenda<T>::setQuantProduto(unsigned int indiceProduto, unsigned int novaqt){
+
+vector<Produto*> PedidoEncomenda::getProdutos() const{return produtos;}
+
+
+vector<unsigned int> PedidoEncomenda::getQuantidade() const{return quantidade;}
+
+
+void PedidoEncomenda::setQuantProduto(unsigned int indiceProduto, unsigned int novaqt){
 	if(indiceProduto<produtos.size())
 		quantidade.at(indiceProduto)=novaqt;
 }
 
-template<class T>
-void PedidoEncomenda<T>::setProduto(unsigned int indice, string novonome){
+
+void PedidoEncomenda::setProduto(unsigned int indice, string novonome){
 	if(indice<produtos.size())
 		produtos.at(indice)->setNome(novonome);
 }
 
-template<class T>
-void PedidoEncomenda<T>::acrescenta(Produto* produto, T quantidade) {
+
+void PedidoEncomenda::acrescenta(Produto* produto, unsigned int quantidade) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {
 		if (produto->getNome() == produtos.at(i)->getNome())
@@ -57,20 +57,20 @@ void PedidoEncomenda<T>::acrescenta(Produto* produto, T quantidade) {
 }
 
 
-template<class T>
-void PedidoEncomenda<T>::processamento() {
+
+void PedidoEncomenda::processamento() {
 	unsigned int i, j, k;
-	melhorPreco<T> melhorPreco;
-	T q,qt;
+	melhorPreco melhorPreco;
+	int q,qt;
 	for (i = 0; i < produtos.size(); i++) {
 		q=quantidade.at(i);
 		while (q > 0) {
 			int melhorp = INT_MAX, fornecedor;
-			for (j = 0; j < Hipermercado<T>::getInstance().getFornecedores().size(); j++) {
+			for (j = 0; j < Hipermercado::getInstance().getFornecedores().size(); j++) {
 
-				for (k = 0;k< Hipermercado<T>::getInstance().getFornecedores.at(j).getProdutoForn().size();k++) {
-					if (Hipermercado<T>::getInstance().getFornecedores.at(j).getProdutoForn().at(k).getNome() == produtos.at(i)->getNome()){
-						melhorPreco<T> = getMelhorPreco(produtos.at(i)->getNome(),q);
+				for (k = 0;k< Hipermercado::getInstance().getFornecedores.at(j).getProdutoForn().size();k++) {
+					if (Hipermercado::getInstance().getFornecedores.at(j).getProdutoForn().at(k).getNome() == produtos.at(i)->getNome()){
+						melhorPreco = getMelhorPreco(produtos.at(i)->getNome(),q);
 					if (melhorp > melhorPreco.preco) {
 						melhorp = melhorPreco.preco;
 						fornecedor = j;
@@ -80,7 +80,7 @@ void PedidoEncomenda<T>::processamento() {
 			}
 
 
-			if(j>=Hipermercado<T>::getInstance().getFornecedores().size()){
+			if(j>=Hipermercado::getInstance().getFornecedores().size()){
 				if(q==quantidade.at(i))
 					throw ProdutoNaoEstaAVenda(produtos.at(i));
 				else
@@ -90,16 +90,16 @@ void PedidoEncomenda<T>::processamento() {
 			}
 			else{
 				bool existe=false;
-				for(unsigned int enc=0;enc<Hipermercado<T>::getInstance().getEncomendas().size();enc++){
-					if(Hipermercado<T>::getInstance().getEncomendas().at(enc).getFornecedor()==fornecedor)
-						if(Hipermercado<T>::getInstance().getEncomendas().at(enc).getData()==data){
-							Hipermercado<T>::getInstance().getEncomendas()->addLinha(produtos.at(i),qt,melhorp);
+				for(unsigned int enc=0;enc<Hipermercado::getInstance().getEncomendas().size();enc++){
+					if(Hipermercado::getInstance().getEncomendas().at(enc).getFornecedor()==fornecedor)
+						if(Hipermercado::getInstance().getEncomendas().at(enc).getData()==data){
+							Hipermercado::getInstance().getEncomendas()->addLinha(produtos.at(i),qt,melhorp);
 							existe=true;
 						}
 				}
 				if(!existe)
-					Hipermercado<T>::getInstance().addEncomenda(Hipermercado<T>::getInstance().getFornecedores().at(j),produtos.at(i),qt,melhorp);
-				Hipermercado<T>::getInstance().getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
+					Hipermercado::getInstance().addEncomenda(Hipermercado::getInstance().getFornecedores().at(j),produtos.at(i),qt,melhorp);
+				Hipermercado::getInstance().getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
 			}
 
 
@@ -109,8 +109,8 @@ void PedidoEncomenda<T>::processamento() {
 }
 
 
-template<class T>
-void PedidoEncomenda<T>::eliminaProduto(Produto* produto) {
+
+void PedidoEncomenda::eliminaProduto(Produto* produto) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {
 		if (produto->getNome() == produtos.at(i)->getNome())
@@ -124,8 +124,8 @@ void PedidoEncomenda<T>::eliminaProduto(Produto* produto) {
 	}
 }
 
-template <class T>
-ostream &operator<<(ostream& os,const PedidoEncomenda<T>& p){
+
+ostream &operator<<(ostream& os,const PedidoEncomenda& p){
 	os<<"Data "<<p.getData()<<"\n \n";
 	if(p.getFinalizado())
 		os<<"Finalizado"<<endl;
@@ -136,5 +136,5 @@ ostream &operator<<(ostream& os,const PedidoEncomenda<T>& p){
 	return os;
 }
 
-template<class T>
-PedidoEncomenda<T>::~PedidoEncomenda() {}
+
+PedidoEncomenda::~PedidoEncomenda() {}

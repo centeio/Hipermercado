@@ -18,13 +18,12 @@
 
 using namespace std;
 
-template <class T>
 class PedidoEncomenda {
 private:
 	Data data;
 	bool finalizado;
 	vector<Produto*> produtos;
-	vector<T> quantidade;
+	vector<unsigned int> quantidade;
 public:
 	PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quant);
 	PedidoEncomenda();
@@ -36,9 +35,9 @@ public:
 	vector<unsigned int> getQuantidade() const;
 	void setProduto(unsigned int indice, string novonome);
 	void setQuantProduto(unsigned int indiceProduto, unsigned int novaqt);
-	void acrescenta(Produto* produto, T quantidade);
+	void acrescenta(Produto* produto, unsigned int quantidade);
 	void eliminaProduto(Produto* produto);
-	friend ostream &operator<<(ostream& os,const PedidoEncomenda<T>& p);
+	friend ostream &operator<<(ostream& os,const PedidoEncomenda& p);
 	class ProdutoNaoExiste{
 	private:
 		Produto* produto;
