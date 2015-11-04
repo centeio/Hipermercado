@@ -49,5 +49,6 @@ private:
 	vector<Encomenda<T>*> encomendas;
 	static Hipermercado<T>* Instance = NULL;
 	void addEncomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade);
+	//setNomeHipermercad ??? CAROL?
 };
 #endif /* HIPERMERCADO_H_ */

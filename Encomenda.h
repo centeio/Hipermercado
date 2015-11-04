@@ -29,7 +29,6 @@ public:
 	void addLinha(Produto* produto,T quantidade,float preco);
 	Fornecedor<T>* getFornecedor() const;
 	vector<LinhaEncomenda<T> > getLinhas() const;
-
 };
 
 #endif /* ENCOMENDA_H_ */
