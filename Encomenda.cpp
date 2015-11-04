@@ -15,6 +15,12 @@ Encomenda<T>::Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade,
 }
 
 template <class T>
+Encomenda<T>::Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco, Data d):fornecedor(fornecedor),data(d){
+	linhas.push_back(new LinhaEncomenda<T> (produto,quantidade,preco));
+}
+
+
+template <class T>
 Encomenda<T>::~Encomenda() {
 	// TODO Auto-generated destructor stub
 }
