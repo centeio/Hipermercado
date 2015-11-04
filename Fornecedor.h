@@ -19,13 +19,12 @@ public:
 	string getNome() const;
 	string getNIF() const;
 	string getMorada() const;
-	vector<ProdFornecedor*> getProdutosForn() const;
 	void setNome(string nome);
 	void setNIF(string NIF);
 	void setMorada(string morada);
 	virtual void addProduto(Produto* produto, string stock, vector<Patamar* > patamares) = 0;
 	virtual void remProduto(Produto* produto) = 0;
-	virtual void decStock(Produto* produto, int quantidade) = 0;
+	virtual void decStock(Produto* produto,unsigned int quantidade) = 0;
 	friend ostream& operator<< (ostream& out, Fornecedor* fornecedor);
 	virtual void displayProdutosForn() const = 0;
 	virtual ~Fornecedor();
@@ -35,19 +34,21 @@ class FornecedorUnidade : public Fornecedor {
 private:
 	vector<ProdFornecedorUnidade*> produtosForn;
 public:
+	vector<ProdFornecedorUnidade*> getProdutosForn() const;
 	void addProduto(Produto* produto, string stock, vector<Patamar* > patamares);
 	void remProduto(Produto* produto);
-	void decStock(Produto* produto, int quantidade);
-	void displayProdutosForn() const;;
+	void decStock(Produto* produto,unsigned int quantidade);
+	void displayProdutosForn() const;
 };
 
 class FornecedorEmpresa : public Fornecedor {
 private:
 	vector<ProdFornecedorEmpresa*> produtosForn;
 public:
+	vector<ProdFornecedorEmpresa*> getProdutosForn() const;
 	void addProduto(Produto* produto, string stock, vector<Patamar* > patamares);
 	void remProduto(Produto* produto);
-	void decStock(Produto* produto, int quantidade);
+	void decStock(Produto* produto,unsigned int quantidade);
 	void displayProdutosForn() const;
 };
 

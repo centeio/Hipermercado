@@ -7,22 +7,23 @@
 
 #ifndef PATAMAR_H_
 #define PATAMAR_H_
+
 using namespace std;
 #include <iomanip>
 
 
 class Patamar {
 private:
-	 int min, max;
+	 unsigned int min, max;
 	 float preco;
 public:
 	Patamar();
-	Patamar(int min, int max, float preco) : min(min), max(max), preco(preco) {};
-	int getMinimo() const;
-	int getMaximo() const;
+	Patamar(unsigned int min, unsigned int max, float preco) : min(min), max(max), preco(preco) {};
+	unsigned int getMinimo() const;
+	unsigned int getMaximo() const;
 	float getPreco() const;
-	void setMinimo(int minimo);
-	void setMaximo(int maximo);
+	void setMinimo(unsigned int minimo);
+	void setMaximo(unsigned int maximo);
 	void setPreco(float preco);
 	friend std::ostream& operator<< (std::ostream& out, Patamar* patamar);
 	virtual ~Patamar();
