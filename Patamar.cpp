@@ -25,19 +25,19 @@ Patamar::~Patamar() {
 }
 
 
-int Patamar::getMinimo() const { return min; }
+unsigned int Patamar::getMinimo() const { return min; }
 
 
-int Patamar::getMaximo() const { return max; }
+unsigned int Patamar::getMaximo() const { return max; }
 
 
 float Patamar::getPreco() const { return preco; }
 
 
-void Patamar::setMinimo(int minimo) { this->min = minimo; }
+void Patamar::setMinimo(unsigned int minimo) { this->min = minimo; }
 
 
-void Patamar::setMaximo(int maximo) { this->max = maximo;}
+void Patamar::setMaximo(unsigned int maximo) { this->max = maximo;}
 
 
 void Patamar::setPreco(float preco) { this->preco = preco; }

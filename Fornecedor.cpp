@@ -29,9 +29,6 @@ string Fornecedor::getNIF() const { return NIF; }
 string Fornecedor::getMorada() const { return morada; }
 
 
-vector<ProdFornecedor*> Fornecedor::getProdutosForn() const { return produtosForn; }
-
-
 void Fornecedor::setNome(string nome) { this->nome = nome; }
 
 
@@ -42,6 +39,9 @@ void Fornecedor::setMorada(string morada) { this->morada = morada; }
 
 
 //FornecedorUnidade
+vector<ProdFornecedorUnidade*> FornecedorUnidade::getProdutosForn() const { return produtosForn; }
+
+
 void FornecedorUnidade::addProduto(Produto* produto, string stock, vector<Patamar*> patamares) {
 	stringstream str(stock);
 	int st;
@@ -62,7 +62,7 @@ void FornecedorUnidade::remProduto(Produto* produto) {
 	}
 }
 
-void FornecedorUnidade::decStock(Produto* produto, int quantidade) {
+void FornecedorUnidade::decStock(Produto* produto,unsigned int quantidade) {
 
 	for(unsigned int i = 0; i < produtosForn.size(); i++) {
 		if(*produto == *produtosForn.at(i)->getProduto())
@@ -95,6 +95,9 @@ void FornecedorUnidade::displayProdutosForn() const {
 }
 
 //FornecedorEmpresa
+vector<ProdFornecedorEmpresa*> FornecedorEmpresa::getProdutosForn() const { return produtosForn; }
+
+
 void FornecedorEmpresa::addProduto(Produto* produto, string stock, vector<Patamar*> patamares) {
 	stringstream str(stock);
 	int st;
@@ -115,7 +118,7 @@ void FornecedorEmpresa::remProduto(Produto* produto) {
 	}
 }
 
-void FornecedorEmpresa::decStock(Produto* produto, int quantidade) {
+void FornecedorEmpresa::decStock(Produto* produto,unsigned int quantidade) {
 
 	for(unsigned int i = 0; i < produtosForn.size(); i++) {
 		if(*produto == *produtosForn.at(i)->getProduto())

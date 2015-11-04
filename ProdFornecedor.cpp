@@ -23,7 +23,7 @@ ProdFornecedor::ProdFornecedor() {
 Produto* ProdFornecedor::getProduto() const { return produto; }
 
 
-int ProdFornecedor::getStock() const { return stock; }
+unsigned int ProdFornecedor::getStock() const { return stock; }
 
 
 vector<Patamar*> ProdFornecedor::getPatamares() const { return patamares; }
@@ -32,7 +32,7 @@ vector<Patamar*> ProdFornecedor::getPatamares() const { return patamares; }
 void ProdFornecedor::setProduto(Produto* produto) { this->produto = produto; }
 
 
-void ProdFornecedor::setStock(int stock) { this->stock = stock; }
+void ProdFornecedor::setStock(unsigned int stock) { this->stock = stock; }
 
 
 void ProdFornecedor::setPatamares(vector<Patamar*> patamares) { this->patamares = patamares; }
@@ -81,7 +81,7 @@ float ProdFornecedor::getPrecoStock() const {
 
 
 
-melhorPreco ProdFornecedor::getMelhorPreco(string nome, int quantidade) {
+melhorPreco ProdFornecedor::getMelhorPreco(string nome,unsigned int quantidade) {
 	melhorPreco melhorpreco;
 
 	for(unsigned int i = 0; i < patamares.size(); i++) {
@@ -98,7 +98,7 @@ melhorPreco ProdFornecedor::getMelhorPreco(string nome, int quantidade) {
 
 
 //ProdForncedorUnidade
-ProdFornecedorUnidade::ProdFornecedorUnidade(Produto* produto, int stock, vector<Patamar*> patamares) : ProdFornecedor(produto,stock) {
+ProdFornecedorUnidade::ProdFornecedorUnidade(Produto* produto,unsigned int stock, vector<Patamar*> patamares) : ProdFornecedor(produto,stock) {
 
 	if (patamares.size() > 1) throw DemasiadosPatamares();
 	this->patamares = patamares;
