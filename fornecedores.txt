@@ -2,14 +2,15 @@
 fornecedor1 	
 12345678	
 Porto	
-individual
 2	
+1
 batatas
 kg
 100
 2
 0	30	12
 31	45	4
+2
 arroz
 und
 200
@@ -17,8 +18,8 @@ und
 fornecedores2	
 12345679	
 Lisboa	
-empresa 
 2	
+1
 leite
 lt
 30
