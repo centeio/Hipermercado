@@ -15,21 +15,21 @@
 
 using namespace std;
 
-template <class T>
+
 class Encomenda {
 private:
-	Fornecedor<T>* fornecedor;
-	vector<LinhaEncomenda<T>* > linhas;
+	Fornecedor* fornecedor;
+	vector<LinhaEncomenda* > linhas;
 	Data data;
 public:
-	Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco);
-	Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco, Data d);
+	Encomenda(Fornecedor* fornecedor,Produto* produto, int quantidade, float preco);
+	Encomenda(Fornecedor* fornecedor,Produto* produto, int quantidade, float preco, Data d);
 	Encomenda();
 	virtual ~Encomenda();
-	friend ostream &operator<<(ostream& os,const Encomenda<T>& enc);
-	void addLinha(Produto* produto,T quantidade, float preco);
-	Fornecedor<T>* getFornecedor() const;
-	vector<LinhaEncomenda<T> > getLinhas() const;
+	friend ostream &operator<<(ostream& os,const Encomenda& enc);
+	void addLinha(Produto* produto, int quantidade, float preco);
+	Fornecedor* getFornecedor() const;
+	vector<LinhaEncomenda > getLinhas() const;
 };
 
 #endif /* ENCOMENDA_H_ */

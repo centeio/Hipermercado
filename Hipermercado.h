@@ -18,17 +18,17 @@
 
 using namespace std;
 
-template <class T>
+
 class Hipermercado {
 public:
 	static Hipermercado* getInstance() {
 		if(Instance == NULL) Instance = new Hipermercado("Super");
 		return Instance;
 	}
-	vector<Fornecedor<T>*> getFornecedores() const;
+	vector<Fornecedor*> getFornecedores() const;
 	vector<Produto*> getProdutos() const;
-	vector<PedidoEncomenda<T>*> getPedidos() const;
-	vector<Encomenda<T>*> getEncomendas() const;
+	vector<PedidoEncomenda*> getPedidos() const;
+	vector<Encomenda*> getEncomendas() const;
 	void ordenaFornecedores() const;
 	void ordenaProdutos() const;
 	void ordenaPedidos() const;
@@ -37,26 +37,22 @@ public:
 	void displayProdutos() const;
 	void displayPedidos() const;
 	void displayEncomendas() const;
-	void displayEncomendasOrdenadasFornecedor() const;
-	void displayEncomendasOrdenadasData() const;
 	void displayPedidosPorProcessar() const;
 	void displayPedidosProcessados() const;
-	void addFornecedor(Fornecedor<T>* fornecedor);
+	void addFornecedor(Fornecedor* fornecedor);
 	void eliminaFornecedor(unsigned int indice);
 	void addProduto(Produto* produto);
 	void eliminaProduto(unsigned int indice);
-	void addPedido(PedidoEncomenda<T>* pedido);
+	void addPedido(PedidoEncomenda* pedido);
 	void eliminaPedido(unsigned int indice);
-	void addEncomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade);
+	void addEncomenda(Fornecedor* fornecedor,Produto* produto,T quantidade);
 	void setNome(string novonome);
 private:
 	string nome;
-	vector<Fornecedor<T>*> fornecedores;
+	vector<Fornecedor*> fornecedores;
 	vector<Produto*> produtos;
-	vector<PedidoEncomenda<T>*> pedidos;
-	vector<Encomenda<T>*> encomendas;
-	static Hipermercado<T>* Instance = NULL;
-	void addEncomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade);
-	//setNomeHipermercad ??? CAROL?
+	vector<PedidoEncomenda*> pedidos;
+	vector<Encomenda*> encomendas;
+	static Hipermercado* Instance = NULL;
 };
 #endif /* HIPERMERCADO_H_ */
