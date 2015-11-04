@@ -26,16 +26,11 @@ void Hipermercado<T>::addFornecedor(Fornecedor<T>* fornecedor){
 }
 
 template <class T>
-void Hipermercado<T>::eliminaFornecedor(string NIF){
-	int j=-1;
-	for(unsigned int i=0;i<fornecedores.size();i++){
-		if(fornecedores.at(i)->getNIF()==NIF)
-			j=i;
-	}
-	if(j==-1)
-		cout<<"Nao existe esse fornecedor."<<endl;
+void Hipermercado<T>::eliminaFornecedor(unsigned int indice){
+	if(indice+1>=fornecedores.size())
+		cout<<"Nao existe esse pedido."<<endl;
 	else
-		fornecedores.erase(fornecedores.begin()+j);
+		fornecedores.erase(fornecedores.begin()+indice);
 }
 
 template <class T>
@@ -44,16 +39,11 @@ void Hipermercado<T>::addProduto(Produto* produto){
 }
 
 template <class T>
-void Hipermercado<T>::eliminaProduto(string nome){
-	int j=-1;
-	for(unsigned int i=0;i<produtos.size();i++){
-		if(produtos.at(i)->getNome()==nome)
-			j=i;
-	}
-	if(j==-1)
-		cout<<"Nao existe esse produto."<<endl;
+void Hipermercado<T>::eliminaProduto(unsigned int indice){
+	if(indice+1>=produtos.size())
+		cout<<"Nao existe esse pedido."<<endl;
 	else
-		produtos.erase(produtos.begin()+j);
+		produtos.erase(produtos.begin()+indice);
 }
 
 template <class T>

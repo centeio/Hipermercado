@@ -36,9 +36,9 @@ public:
 	void displayPedidosPorProcessar() const;
 	void displayPedidosProcessados() const;
 	void addFornecedor(Fornecedor<T>* fornecedor);
-	void eliminaFornecedor(string NIF);
+	void eliminaFornecedor(unsigned int indice);
 	void addProduto(Produto* produto);
-	void eliminaProduto(string nome);
+	void eliminaProduto(unsigned int indice);
 	void addPedido(PedidoEncomenda<T>* pedido);
 	void eliminaPedido(unsigned int indice);
 private:
