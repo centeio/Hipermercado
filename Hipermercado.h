@@ -41,6 +41,8 @@ public:
 	void eliminaProduto(unsigned int indice);
 	void addPedido(PedidoEncomenda<T>* pedido);
 	void eliminaPedido(unsigned int indice);
+	void addEncomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade);
+	void setNome(string novonome);
 private:
 	string nome;
 	vector<Fornecedor<T>*> fornecedores;

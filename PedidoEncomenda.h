@@ -34,6 +34,8 @@ public:
 	bool getFinalizado() const;
 	vector<Produto*> getProdutos() const;
 	vector<unsigned int> getQuantidade() const;
+	void setProduto(unsigned int indice, string novonome);
+	void setQuantProduto(unsigned int indiceProduto, unsigned int novaqt);
 	void acrescenta(Produto* produto, T quantidade);
 	void eliminaProduto(Produto* produto);
 	friend ostream &operator<<(ostream& os,const PedidoEncomenda<T>& p);

@@ -26,6 +26,13 @@ void Hipermercado<T>::addFornecedor(Fornecedor<T>* fornecedor){
 }
 
 template <class T>
+void Hipermercado<T>::setNome(string novonome){
+	nome=novonome;
+}
+
+
+
+template <class T>
 void Hipermercado<T>::eliminaFornecedor(unsigned int indice){
 	if(indice+1>=fornecedores.size())
 		cout<<"Nao existe esse pedido."<<endl;

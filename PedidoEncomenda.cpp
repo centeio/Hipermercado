@@ -29,6 +29,18 @@ template<class T>
 vector<unsigned int> PedidoEncomenda<T>::getQuantidade() const{return quantidade;}
 
 template<class T>
+void PedidoEncomenda<T>::setQuantProduto(unsigned int indiceProduto, unsigned int novaqt){
+	if(indiceProduto<produtos.size())
+		quantidade.at(indiceProduto)=novaqt;
+}
+
+template<class T>
+void PedidoEncomenda<T>::setProduto(unsigned int indice, string novonome){
+	if(indice<produtos.size())
+		produtos.at(indice)->setNome(novonome);
+}
+
+template<class T>
 void PedidoEncomenda<T>::acrescenta(Produto* produto, T quantidade) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {

@@ -26,7 +26,7 @@ public:
 	Encomenda();
 	virtual ~Encomenda();
 	friend ostream &operator<<(ostream& os,const Encomenda<T>& enc);
-	void addLinha(Produto* produto,T quantidade,float preco);
+	void addLinha(Produto* produto,T quantidade, float preco);
 	Fornecedor<T>* getFornecedor() const;
 	vector<LinhaEncomenda<T> > getLinhas() const;
 };
