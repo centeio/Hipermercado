@@ -10,8 +10,7 @@
 
 
 template<class T>
-PedidoEncomenda<T>::PedidoEncomenda(Data data, vector<Produto*> produtos,
-		vector<unsigned int> quantidade) :
+PedidoEncomenda<T>::PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quantidade) :
 		data(data), produtos(produtos), quantidade(quantidade) {
 	finalizado = false;
 }

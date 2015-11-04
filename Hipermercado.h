@@ -29,11 +29,16 @@ public:
 	vector<Produto*> getProdutos() const;
 	vector<PedidoEncomenda<T>*> getPedidos() const;
 	vector<Encomenda<T>*> getEncomendas() const;
+	void ordenaFornecedores() const;
+	void ordenaProdutos() const;
+	void ordenaPedidos() const;
+	void ordenaEncomendas() const;
 	void displayFornecedores() const;
 	void displayProdutos() const;
 	void displayPedidos() const;
 	void displayEncomendas() const;
-//	void displayEncomendasOrdenadas() const;
+	void displayEncomendasOrdenadasFornecedor() const;
+	void displayEncomendasOrdenadasData() const;
 	void displayPedidosPorProcessar() const;
 	void displayPedidosProcessados() const;
 	void addFornecedor(Fornecedor<T>* fornecedor);

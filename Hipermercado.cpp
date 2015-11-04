@@ -21,6 +21,43 @@ template <class T>
 vector<Encomenda<T>*> Hipermercado<T>::getEncomendas() const{return encomendas;}
 
 template <class T>
+bool of(Fornecedor<T>* f1,Fornecedor<T> f2){
+	if(f1->getNome()<f2->getNome())
+		return true;
+	else
+		return false;
+}
+
+template <class T>
+void Hipermercado<T>::ordenaFornecedores() const{}
+
+template <class T>
+bool op(Produto* p1,Produto* p2){
+	if(p1->getNome()<p2->getNome())
+		return true;
+	else
+		return false;
+}
+
+template <class T>
+bool opd(PedidoEncomenda<T>* p1,PedidoEncomenda<T>* p2){
+	if(p1->getData()<p2->getNome())
+		return true;
+	else
+		return false;
+}
+
+template <class T>
+void Hipermercado<T>::ordenaProdutos() const{}
+
+template <class T>
+void Hipermercado<T>::ordenaPedidos() const{}
+
+
+template <class T>
+void Hipermercado<T>::ordenaEncomendas() const{}
+
+template <class T>
 void Hipermercado<T>::addFornecedor(Fornecedor<T>* fornecedor){
 	fornecedores.push_back(fornecedor);
 }
@@ -29,8 +66,6 @@ template <class T>
 void Hipermercado<T>::setNome(string novonome){
 	nome=novonome;
 }
-
-
 
 template <class T>
 void Hipermercado<T>::eliminaFornecedor(unsigned int indice){

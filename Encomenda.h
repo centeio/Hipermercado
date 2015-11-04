@@ -23,6 +23,7 @@ private:
 	Data data;
 public:
 	Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco);
+	Encomenda(Fornecedor<T>* fornecedor,Produto* produto,T quantidade, float preco, Data d);
 	Encomenda();
 	virtual ~Encomenda();
 	friend ostream &operator<<(ostream& os,const Encomenda<T>& enc);
