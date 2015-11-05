@@ -18,10 +18,9 @@ struct melhorPreco{
 
 
 class ProdFornecedor {
-private:
+protected:
 	Produto* produto;
 	unsigned int stock;
-protected:
 	vector<Patamar*> patamares;
 
 public:
@@ -44,13 +43,13 @@ public:
 
 class ProdFornecedorUnidade : public ProdFornecedor {
 public:
-	ProdFornecedorUnidade(Produto* produto, unsigned int stock, vector<Patamar*> patamares);
+	ProdFornecedorUnidade(Produto* produto, unsigned int stock) : ProdFornecedor(produto, stock) {};
 	void addPatamar(string min, string max, string preco);
 };
 
 class ProdFornecedorEmpresa : public ProdFornecedor {
 public:
-	ProdFornecedorEmpresa(Produto* produto,unsigned int stock, vector<Patamar*> patamares) : ProdFornecedor(produto,stock), patamares(patamares) {};
+	ProdFornecedorEmpresa(Produto* produto,unsigned int stock) : ProdFornecedor(produto,stock){};
 	void addPatamar(string min, string max, string preco);
 };
 

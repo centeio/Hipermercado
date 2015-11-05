@@ -37,23 +37,25 @@ void Fornecedor::setNIF(string NID) { this->NIF = NIF; }
 
 void Fornecedor::setMorada(string morada) { this->morada = morada; }
 
+bool Fornecedor::operator== (Fornecedor &fornecedor) const {
+	return this->nome == fornecedor.nome;
+}
 
-//FornecedorUnidade
-vector<ProdFornecedorUnidade*> FornecedorUnidade::getProdutosForn() const { return produtosForn; }
 
+//FornecedorIndividual
+vector<ProdFornecedorUnidade*> FornecedorIndividual::getProdutosForn() const { return produtosForn;}
 
-void FornecedorUnidade::addProduto(Produto* produto, string stock, vector<Patamar*> patamares) {
+void FornecedorIndividual::addProduto(Produto* produto, string stock) {
 	stringstream str(stock);
 	int st;
 
 	str >> st;
-	if(patamares.size() > 1) throw DemasiadosPatamares();
-	ProdFornecedorUnidade* prodFornecedor = new ProdFornecedorUnidade(produto, st, patamares);
+	ProdFornecedorUnidade* prodFornecedor = new ProdFornecedorUnidade(produto, st);
 
 	produtosForn.push_back(prodFornecedor);
 }
 
-void FornecedorUnidade::remProduto(Produto* produto) {
+void FornecedorIndividual::remProduto(Produto* produto) {
 
 	for(unsigned int i = 0; i < produtosForn.size(); i++) {
 		if(*produtosForn.at(i)->getProduto() == *produto) {
@@ -62,7 +64,7 @@ void FornecedorUnidade::remProduto(Produto* produto) {
 	}
 }
 
-void FornecedorUnidade::decStock(Produto* produto,unsigned int quantidade) {
+void FornecedorIndividual::decStock(Produto* produto,unsigned int quantidade) {
 
 	for(unsigned int i = 0; i < produtosForn.size(); i++) {
 		if(*produto == *produtosForn.at(i)->getProduto())
@@ -70,7 +72,7 @@ void FornecedorUnidade::decStock(Produto* produto,unsigned int quantidade) {
 	}
 }
 
-void FornecedorUnidade::displayProdutosForn() const {
+void FornecedorIndividual::displayProdutosForn() const {
 	string resposinta = "";
 
 	cout << "Preintende que se imprima os paintamares de cada produinto (Y/N): " << flush;
@@ -95,16 +97,14 @@ void FornecedorUnidade::displayProdutosForn() const {
 }
 
 //FornecedorEmpresa
-vector<ProdFornecedorEmpresa*> FornecedorEmpresa::getProdutosForn() const { return produtosForn; }
+vector<ProdFornecedorEmpresa*> FornecedorEmpresa::getProdutosForn() const { return produtosForn;}
 
-
-void FornecedorEmpresa::addProduto(Produto* produto, string stock, vector<Patamar*> patamares) {
+void FornecedorEmpresa::addProduto(Produto* produto, string stock) {
 	stringstream str(stock);
 	int st;
 
 	str >> st;
-	if(patamares.size() > 1) throw DemasiadosPatamares();
-	ProdFornecedorEmpresa* prodFornecedor = new ProdFornecedorEmpresa(produto, st, patamares);
+	ProdFornecedorEmpresa* prodFornecedor = new ProdFornecedorEmpresa(produto, st);
 
 	produtosForn.push_back(prodFornecedor);
 }

@@ -19,7 +19,6 @@ ProdFornecedor::ProdFornecedor() {
 
 }
 
-
 Produto* ProdFornecedor::getProduto() const { return produto; }
 
 
@@ -59,8 +58,6 @@ void ProdFornecedor::removePatamarIndice(int indice) {
 	patamares.erase(patamares.begin() + indice);
 }
 
-
-
 void ProdFornecedor::displayPatamares() {
 
 	for(unsigned int i = 0; i < patamares.size(); i++) {
@@ -79,8 +76,6 @@ float ProdFornecedor::getPrecoStock() const {
 	return -1;
 }
 
-
-
 melhorPreco ProdFornecedor::getMelhorPreco(string nome,unsigned int quantidade) {
 	melhorPreco melhorpreco;
 
@@ -98,12 +93,6 @@ melhorPreco ProdFornecedor::getMelhorPreco(string nome,unsigned int quantidade) 
 
 
 //ProdForncedorUnidade
-ProdFornecedorUnidade::ProdFornecedorUnidade(Produto* produto,unsigned int stock, vector<Patamar*> patamares) : ProdFornecedor(produto,stock) {
-
-	if (patamares.size() > 1) throw DemasiadosPatamares();
-	this->patamares = patamares;
-}
-
 void ProdFornecedorUnidade::addPatamar(string min, string max, string preco) {
 	int minimo,maximo;
 	float prec;
@@ -132,6 +121,3 @@ void ProdFornecedorEmpresa::addPatamar(string min, string max, string preco) {
 	Patamar* patamar = new Patamar(minimo,maximo,prec);
 	patamares.push_back(patamar);
 }
-
-
-
