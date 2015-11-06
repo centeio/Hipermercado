@@ -6,7 +6,6 @@
  */
 
 #include "ProdFornecedor.h"
-#include <iterator>
 #include <climits>
 #include <sstream>
 
@@ -37,17 +36,9 @@ void ProdFornecedor::setStock(unsigned int stock) { this->stock = stock; }
 void ProdFornecedor::setPatamares(vector<Patamar*> patamares) { this->patamares = patamares; }
 
 
-void ProdFornecedor::addPatamar(string min, string max, string preco) {
-	int minimo,maximo;
-	float prec;
-	stringstream str(min);
+void ProdFornecedor::addPatamar(unsigned int min, unsigned int max, unsigned int preco) {
 
-	str >> minimo; str.clear();
-	str << max;	str >> maximo; str.clear();
-	str << preco; str >> prec; str.clear();
-
-	Patamar* patamar = new Patamar(minimo,maximo,prec);
-
+	Patamar* patamar = new Patamar(min,max,preco);
 	patamares.push_back(patamar);
 }
 
@@ -91,33 +82,8 @@ melhorPreco ProdFornecedor::getMelhorPreco(string nome,unsigned int quantidade) 
 	return melhorpreco;
 }
 
+ostream& operator<< (ostream& out, ProdFornecedor* prodFornecedor) {
 
-//ProdForncedorUnidade
-void ProdFornecedorUnidade::addPatamar(string min, string max, string preco) {
-	int minimo,maximo;
-	float prec;
-	stringstream str(min);
-
-	if(patamares.size() > 1) throw DemasiadosPatamares();
-
-	str >> minimo; str.clear();
-	str << max;	str >> maximo; str.clear();
-	str << preco; str >> prec; str.clear();
-
-	Patamar* patamar = new Patamar(minimo,maximo,prec);
-	patamares.push_back(patamar);
-}
-
-//ProdFornecedorEmpresa
-void ProdFornecedorEmpresa::addPatamar(string min, string max, string preco) {
-	int minimo,maximo;
-	float prec;
-	stringstream str(min);
-
-	str >> minimo; str.clear();
-	str << max;	str >> maximo; str.clear();
-	str << preco; str >> prec; str.clear();
-
-	Patamar* patamar = new Patamar(minimo,maximo,prec);
-	patamares.push_back(patamar);
+	out << prodFornecedor->produto << endl << "Stock: " << prodFornecedor->stock << endl;
+	return out;
 }
