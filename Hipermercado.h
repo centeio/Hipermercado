@@ -45,14 +45,17 @@ public:
 	void eliminaProduto(unsigned int indice);
 	void addPedido(PedidoEncomenda* pedido);
 	void eliminaPedido(unsigned int indice);
-	void addEncomenda(Fornecedor* fornecedor,Produto* produto,T quantidade);
+	void addEncomenda(Fornecedor* fornecedor,Produto* produto, unsigned int quantidade, float preco);
 	void setNome(string novonome);
+	void alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt);
+	void alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome);
 private:
 	string nome;
 	vector<Fornecedor*> fornecedores;
 	vector<Produto*> produtos;
 	vector<PedidoEncomenda*> pedidos;
 	vector<Encomenda*> encomendas;
-	static Hipermercado* Instance = NULL;
+	Hipermercado(string nome);
+	static Hipermercado* Instance;
 };
 #endif /* HIPERMERCADO_H_ */

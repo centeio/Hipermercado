@@ -7,6 +7,7 @@
 
 #include "PedidoEncomenda.h"
 #include "Fornecedor.h"
+#include "Encomenda.h"
 
 
 
@@ -40,7 +41,7 @@ void PedidoEncomenda::setProduto(unsigned int indice, string novonome){
 }
 
 
-void PedidoEncomenda::acrescenta(Produto* produto, unsigned int quantidade) {
+void PedidoEncomenda::acrescenta(Produto* produto, unsigned int qt) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {
 		if (produto->getNome() == produtos.at(i)->getNome())
@@ -48,10 +49,10 @@ void PedidoEncomenda::acrescenta(Produto* produto, unsigned int quantidade) {
 	}
 
 	if (j >= produtos.size())
-		quantidade.at(j) += quantidade;
+		quantidade.at(j) += qt;
 	else {
 		produtos.push_back(produto);
-		quantidade.push_back(quantidade);
+		quantidade.push_back(qt);
 	//	actualizaData();
 	}
 }
@@ -60,19 +61,18 @@ void PedidoEncomenda::acrescenta(Produto* produto, unsigned int quantidade) {
 
 void PedidoEncomenda::processamento() {
 	unsigned int i, j, k;
-	melhorPreco melhorPreco;
 	int q,qt;
 	for (i = 0; i < produtos.size(); i++) {
 		q=quantidade.at(i);
 		while (q > 0) {
 			int melhorp = INT_MAX, fornecedor;
-			for (j = 0; j < Hipermercado::getInstance().getFornecedores().size(); j++) {
+			for (j = 0; j < Hipermercado::getInstance()->getFornecedores().size(); j++) {
 
-				for (k = 0;k< Hipermercado::getInstance().getFornecedores.at(j).getProdutoForn().size();k++) {
-					if (Hipermercado::getInstance().getFornecedores.at(j).getProdutoForn().at(k).getNome() == produtos.at(i)->getNome()){
-						melhorPreco = getMelhorPreco(produtos.at(i)->getNome(),q);
-					if (melhorp > melhorPreco.preco) {
-						melhorp = melhorPreco.preco;
+				for (k = 0;k< Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().size();k++) {
+					if (Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().at(k)->getNome() == produtos.at(i)->getNome()){
+						melhorPreco melhorpreco = Hipermercado::getInstance()->getFornecedores().at(j)->getMelhorPreco(produtos.at(i)->getNome(),q);
+					if (melhorp > melhorpreco.preco) {
+						melhorp = melhorpreco.preco;
 						fornecedor = j;
 						qt = melhorPreco.quantidade;
 					}}
@@ -80,7 +80,7 @@ void PedidoEncomenda::processamento() {
 			}
 
 
-			if(j>=Hipermercado::getInstance().getFornecedores().size()){
+			if(j>=Hipermercado::getInstance()->getFornecedores().size()){
 				if(q==quantidade.at(i))
 					throw ProdutoNaoEstaAVenda(produtos.at(i));
 				else
@@ -90,16 +90,16 @@ void PedidoEncomenda::processamento() {
 			}
 			else{
 				bool existe=false;
-				for(unsigned int enc=0;enc<Hipermercado::getInstance().getEncomendas().size();enc++){
-					if(Hipermercado::getInstance().getEncomendas().at(enc).getFornecedor()==fornecedor)
-						if(Hipermercado::getInstance().getEncomendas().at(enc).getData()==data){
-							Hipermercado::getInstance().getEncomendas()->addLinha(produtos.at(i),qt,melhorp);
+				for(unsigned int enc=0;enc<Hipermercado::getInstance()->getEncomendas().size();enc++){
+					if(Hipermercado::getInstance()->getEncomendas().at(enc)->getFornecedor()==fornecedor)
+						if(Hipermercado::getInstance()->getEncomendas().at(enc)->getData()==data){
+							Hipermercado::getInstance()->getEncomendas().at(enc)->addLinha(produtos.at(i),qt,melhorp);
 							existe=true;
 						}
 				}
 				if(!existe)
-					Hipermercado::getInstance().addEncomenda(Hipermercado::getInstance().getFornecedores().at(j),produtos.at(i),qt,melhorp);
-				Hipermercado::getInstance().getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
+					Hipermercado::getInstance()->addEncomenda(Hipermercado::getInstance()->getFornecedores().at(j),produtos.at(i),qt,melhorp);
+				Hipermercado::getInstance()->getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
 			}
 
 

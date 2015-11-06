@@ -5,9 +5,11 @@
  *      Author: Carolina
  */
 #include "Hipermercado.h"
+#include <algorithm>
 
-// TODO STATIC DATA
+static Hipermercado* Hipermercado::Instance = NULL;
 
+Hipermercado::Hipermercado(string nome): nome(nome){}
 
 vector<Fornecedor*> Hipermercado::getFornecedores() const{return fornecedores;}
 
@@ -20,8 +22,22 @@ vector<PedidoEncomenda*> Hipermercado::getPedidos() const{return pedidos;}
 
 vector<Encomenda*> Hipermercado::getEncomendas() const{return encomendas;}
 
+void Hipermercado::alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt){
+	pedidos.at(indicepedido)->setQuantProduto(indiceproduto,novaqt);
+}
 
-bool of(Fornecedor* f1,Fornecedor f2){
+
+void Hipermercado::alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome){
+	if(indicepedido+1>=pedidos.size())
+		cout<<"Nao existe esse pedido."<<endl;
+	else
+		if(indiceproduto+1>=pedidos.at(indiceproduto)->getProdutos().size())
+			cout<<"Nao existe esse produto nesse pedido."<<endl;
+		else
+			pedidos.at(indicepedido)->setProduto(indiceproduto,novonome);
+}
+
+bool of(Fornecedor* f1,Fornecedor* f2){
 	if(f1->getNome()<f2->getNome())
 		return true;
 	else
@@ -29,7 +45,9 @@ bool of(Fornecedor* f1,Fornecedor f2){
 }
 
 
-void Hipermercado::ordenaFornecedores() const{}
+void Hipermercado::ordenaFornecedores() const{
+	sort(fornecedores.begin(),fornecedores.end(),of);
+}
 
 
 bool op(Produto* p1,Produto* p2){
@@ -40,22 +58,32 @@ bool op(Produto* p1,Produto* p2){
 }
 
 
+void Hipermercado::ordenaProdutos() const{
+	sort(produtos.begin(),produtos.end(),op);
+}
+
+
 bool opd(PedidoEncomenda* p1,PedidoEncomenda* p2){
-	if(p1->getData()<p2->getNome())
+	if(p1->getData()<p2->getData())
 		return true;
 	else
 		return false;
 }
 
+void Hipermercado::ordenaPedidos() const{
+	sort(pedidos.begin(),pedidos.end(),opd);
+}
 
-void Hipermercado::ordenaProdutos() const{}
+bool oe(Encomenda* e1, Encomenda* e2){
+	if(e1->getData()<e2->getData())
+		return true;
+	else
+		return false;
+}
 
-
-void Hipermercado::ordenaPedidos() const{}
-
-
-
-void Hipermercado::ordenaEncomendas() const{}
+void Hipermercado::ordenaEncomendas() const{
+	sort(encomendas.begin(),encomendas.end(),oe);
+}
 
 
 void Hipermercado::addFornecedor(Fornecedor* fornecedor){
@@ -102,8 +130,8 @@ void Hipermercado::addPedido(PedidoEncomenda* pedido){
 }
 
 
-void Hipermercado::addEncomenda(Fornecedor* fornecedor,Produto* produto,T quantidade){
-	Encomenda enc(fornecedor,produto,quantidade);
+void Hipermercado::addEncomenda(Fornecedor* fornecedor,Produto* produto,unsigned int quantidade, float preco){
+	Encomenda enc(fornecedor,produto,quantidade, preco);
 	encomendas.push_back(enc);
 }
 

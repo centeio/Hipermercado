@@ -20,7 +20,6 @@ Encomenda::Encomenda(Fornecedor* fornecedor,Produto* produto,int quantidade, flo
 }
 
 
-
 Encomenda::~Encomenda() {
 	// TODO Auto-generated destructor stub
 }
@@ -30,8 +29,9 @@ Fornecedor* Encomenda::getFornecedor() const{return fornecedor;}
 
 vector<LinhaEncomenda > Encomenda::getLinhas() const{return linhas;}
 
+Data Encomenda::getData() const{return data;}
 
-void Encomenda::addLinha(Produto* produto,T quantidade,float preco){
+void Encomenda::addLinha(Produto* produto,int quantidade,float preco){
 	LinhaEncomenda l(produto,quantidade,preco);
 	linhas.push_back(l);
 }

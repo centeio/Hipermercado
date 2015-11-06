@@ -8,7 +8,7 @@
 #include "LinhaEncomenda.h"
 
 
-LinhaEncomenda::LinhaEncomenda(Produto* produto, int quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
+LinhaEncomenda::LinhaEncomenda(Produto* produto, unsigned int quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
 }
 
 LinhaEncomenda::~LinhaEncomenda() {}
