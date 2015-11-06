@@ -31,3 +31,8 @@ bool Produto::operator== (Produto &produto) {
 }
 
 
+ostream& operator<< (ostream& out, Produto* produto) {
+
+	out << "Nome do Produto: " << produto->nome << ". Medida utilizada: " << produto->medida << endl;
+	return out;
+}

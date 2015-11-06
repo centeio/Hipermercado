@@ -14,7 +14,7 @@ using namespace std;
 
 
 class Produto {
-private:
+protected:
 	string nome;
 	string medida;
 public:
@@ -28,11 +28,5 @@ public:
 	friend ostream& operator<< (ostream& out, Produto* produto);
 	virtual ~Produto();
 };
-
-ostream& operator<< (ostream& out, Produto* produto) {
-
-	out << "Nome do Produto: " << produto->nome << ". Medida utilizada: " << produto->medida << endl;
-	return out;
-}
 
 #endif /* PRODUTO_H_ */
