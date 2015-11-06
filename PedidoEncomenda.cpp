@@ -131,7 +131,7 @@ ostream &operator<<(ostream& os,const PedidoEncomenda& p){
 		os<<"Finalizado"<<endl;
 	os<<"Produto: "<<setw(15)<<"Quantidade:"<<endl;
 	for (unsigned int i=0; i<p.getProdutos().size();i++){
-		os<<p.getProdutos().at(i)<<setw(15)<<p.getQuantidades().at(i)<<endl;
+		os<<p.getProdutos().at(i)<<setw(15)<<p.getQuantidade().at(i)<<endl;
 	}
 	return os;
 }
