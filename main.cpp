@@ -175,39 +175,42 @@ void opcoesmenu(Hipermercado* hipermercado) {
 
 //OPCAO PRODUTOS DO MENU
 void opcaoprodutos(Hipermercado* hipermercado) {
-	string nomeprod, unidadesprod, nomeprodeliminar;
+	string nomeprod, unidadesprod;
 	int opcao, numprodeliminar;
 
-	cout << setw(20) << "Produtos: " << endl << endl;
-	cout << setw(10) << "1 - Ver lista de produtos" << endl;
-	cout << setw(10) << "2 - Adicionar produto" << endl;
-	cout << setw(10) << "3 - Eliminar produto" << endl;
-	cout << setw(10) << "9 - Voltar ao menu inicial" << endl;
-	cin >> opcao;
-
-	while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
-			&& (opcao != 9)) {
-		cout << "Opcao invalida, volte a introduzir a opcao pretendida: "
-				<< endl;
+	do {
+		cout << setw(20) << "Produtos: " << endl << endl;
+		cout << setw(10) << "1 - Ver lista de produtos" << endl;
+		cout << setw(10) << "2 - Adicionar produto" << endl;
+		cout << setw(10) << "3 - Eliminar produto" << endl;
+		cout << setw(10) << "9 - Voltar ao menu inicial" << endl;
 		cin >> opcao;
-	}
 
-	if (opcao == 1) {
-		hipermercado->displayProdutos();
-	} else if (opcao == 2) {
-		cout << "Qual o nome e a medida do novo produto?" << endl;
-		cin >> nomeprod;
-		cin >> unidadesprod;
-		Produto* produtof = new Produto(nomeprod, unidadesprod);
-		hipermercado->addProduto(produtof);
-	} else if (opcao == 3) {
-		hipermercado->displayProdutos();
-		cout << "Qual o numero do produto que quer eliminar ? ";
-		cin >> numprodeliminar;
-		hipermercado->eliminaProduto(numprodeliminar);
-	} else {
-		menuinicial(hipermercado);
-	}
+		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
+			   && (opcao != 9)) {
+			cout << "Opcao invalida, volte a introduzir a opcao pretendida: "
+			<< endl;
+			cin >> opcao;
+		}
+
+		if (opcao == 1) {hipermercado->displayProdutos();}
+		else if (opcao == 2) {
+
+			cout << "Qual o nome e a medida do novo produto?" << endl;
+			cin >> nomeprod;
+			cin >> unidadesprod;
+			Produto *produtof = new Produto(nomeprod, unidadesprod);
+			hipermercado->addProduto(produtof);
+
+		} else if (opcao == 3) {
+
+			hipermercado->displayProdutos();
+			cout << "Qual o numero do produto que quer eliminar ? ";
+			cin >> numprodeliminar;
+			hipermercado->eliminaProduto(numprodeliminar);
+
+		} else {menuinicial(hipermercado);}
+	}while(opcao != 9);
 }
 
 //OPCAO FORNECEDORES DO MENU
