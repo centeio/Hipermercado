@@ -10,12 +10,16 @@
 #include <iomanip>
 #include <vector>
 #include <fstream>
+#include <sstream>
 #include "Hipermercado.h"
 #include "Data.h"
 using namespace std;
 
 static Data dataactual;
 
+void leProdutos(Hipermercado* hipermercado, ifstream hipermercadoprodutos);
+void leFornecedores(Hipermercado* hipermercado, ifstream hipermercadoFornecedores);
+void leEncomendas(Hipermercado* hipermercado, ifstream hipermercadoencomendas);
 
 //LER FICHEIROS DE TEXTO
 void leFicheiros(Hipermercado* hipermercado) {
@@ -43,7 +47,7 @@ void leFicheiros(Hipermercado* hipermercado) {
 }
 
 //LER PRODUTOS.TXT
-void leProdutos(Hipermercado* hipermercado, ifstream hipermercadoprodutos) {
+void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoprodutos) {
 	string nome, unidade;
 	int numprodutos;
 
@@ -56,8 +60,10 @@ void leProdutos(Hipermercado* hipermercado, ifstream hipermercadoprodutos) {
 }
 
 //LER FORNECEDORES.TXT
-void leFornecedores(Hipermercado* hipermercado, ifstream hipermercadoFornecedores) {
-	string nome, nif, morada, tipo, produto, patminimo, patmaximo, preco, stock, medida;
+void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedores) {
+	string nome, nif, morada, tipo, produto, medida;
+	unsigned int stock, patminimo, patmaximo;
+	float preco;
 	int numfornecedores, numprodutos, numpatamares;
 
 	hipermercadoFornecedores >> numfornecedores;
@@ -98,10 +104,11 @@ unsigned int procuraProduto(Hipermercado* hipermercado, string nome){
 }
 
 //LER ENCOMENDAS.TXT
-void leEncomendas(Hipermercado* hipermercado, ifstream hipermercadoencomendas) {
-	string fornecedor, produto, quantidade, dia, mes, ano, medida;
+void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoencomendas) {
+	string fornecedor, produto, medida;
+	unsigned int dia, mes, ano;
 	float preco;
-	int numencomendas, numlinhasencomendas, indiceFornecedor, indiceProduto;
+	int numencomendas, numlinhasencomendas, indiceFornecedor, indiceProduto, quantidade;
 
 	hipermercadoencomendas >> numencomendas;
 	for (int i = 0; i < numencomendas; i++) {
@@ -109,16 +116,12 @@ void leEncomendas(Hipermercado* hipermercado, ifstream hipermercadoencomendas) {
 		hipermercadoencomendas >> dia >> mes >> ano >> fornecedor
 			>> numlinhasencomendas >> produto >> quantidade >> preco;
 
-		//Construtor da Data precisa de receber os parametros como string e mais tarde
-		//alterá-los para unsigned int
 		Data data(dia, mes, ano);
 		indiceFornecedor = procuraFornecedor(hipermercado, fornecedor);
 		indiceProduto = procuraProduto(hipermercado, produto);
 
-		//Função addEncomenda precisa de ser alterada, tirar o T do template e adicionar
-		//um argumento preço
-		hipermercado->addEncomenda(hipermercado->getFornecedores().at(indiceFornecedor),
-				hipermercado->getProdutos().at(indiceProduto), quantidade, preco);
+		Encomenda* encomenda = new Encomenda(hipermercado->getFornecedores().at(indiceFornecedor),hipermercado->getProdutos().at(indiceProduto),quantidade, preco,data);
+		hipermercado->addEncomenda(encomenda);
 		for (int j = 0; j < numlinhasencomendas - 1; j++) {
 			hipermercadoencomendas >> produto >> medida >> quantidade >> preco;
 			hipermercado->getEncomendas().at(i)->addLinha(new Produto(produto, medida), quantidade, preco);
@@ -126,6 +129,7 @@ void leEncomendas(Hipermercado* hipermercado, ifstream hipermercadoencomendas) {
 		}
 	}
 }
+void opcoesmenu(Hipermercado* hipermercado);
 
 //MENU INICIAL
 void menuinicial(Hipermercado* hipermercado) {
@@ -138,6 +142,11 @@ void menuinicial(Hipermercado* hipermercado) {
 	cout << setw(10) << "9 - Terminar o programa" << endl;
 	opcoesmenu(hipermercado);
 }
+
+void opcaoprodutos(Hipermercado* hipermercado);
+void opcaofornecedores(Hipermercado* hipermercado);
+void opcaoencomendas(Hipermercado* hipermercado);
+void opcaomudarnome(Hipermercado* hipermercado);
 
 //MENU DE OPCOES
 void opcoesmenu(Hipermercado* hipermercado) {
@@ -364,7 +373,7 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			int novaquantidade;
 			cin >> novaquantidade;
 			//esta função não existe
-			hipermercado->alteraPedidos(numalt,nomeproduto,novaquantidade);
+			//hipermercado->alteraPedidos(numalt,nomeproduto,novaquantidade);
 
 		} else if (opcao == 5) {
 			//funcao que elimina pedido encomenda;
@@ -400,6 +409,10 @@ void opcaomudarnome(Hipermercado* hipermercado) {
 		} else if (opcao == 9) { menuinicial(hipermercado); }
 	}while(opcao != 9);
 }
+
+void escreveProdutos(Hipermercado* hipermercado);
+void escreveFornecedores(Hipermercado* hipermercado);
+void escreveEncomendas(Hipermercado* hipermercado);
 
 void escreveFicheiros(Hipermercado* hipermercado) {
 
