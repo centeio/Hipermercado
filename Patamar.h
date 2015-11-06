@@ -13,7 +13,7 @@ using namespace std;
 
 
 class Patamar {
-private:
+protected:
 	 unsigned int min, max;
 	 float preco;
 public:
@@ -29,10 +29,4 @@ public:
 	virtual ~Patamar();
 };
 
-ostream& operator<<(ostream& out, Patamar* patamar) {
-
-	out << "[" << setw(4) << patamar->min << "," << setw(4) << patamar->max << "] Preco: "
-			<< patamar->preco << "€ cada";
-	return out;
-}
 #endif /* PATAMAR_H_ */

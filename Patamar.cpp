@@ -42,6 +42,11 @@ void Patamar::setMaximo(unsigned int maximo) { this->max = maximo;}
 
 void Patamar::setPreco(float preco) { this->preco = preco; }
 
+ostream& operator<<(ostream& out, Patamar* patamar) {
 
+	out << "[" << setw(4) << patamar->min << "," << setw(4) << patamar->max << "] Preco: "
+	<< patamar->preco << "€ cada";
+	return out;
+}
 
 
