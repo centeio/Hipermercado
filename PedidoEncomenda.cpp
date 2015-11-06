@@ -98,7 +98,7 @@ void PedidoEncomenda::processamento() {
 						}
 				}
 				if(!existe)
-					Hipermercado::getInstance()->addEncomenda(Hipermercado::getInstance()->getFornecedores().at(j),produtos.at(i),qt,melhorp);
+					Hipermercado::getInstance()->addEncomenda(new Encomenda(Hipermercado::getInstance()->getFornecedores().at(j),produtos.at(i),qt,melhorp));
 				Hipermercado::getInstance()->getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
 			}
 

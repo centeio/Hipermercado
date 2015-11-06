@@ -130,9 +130,8 @@ void Hipermercado::addPedido(PedidoEncomenda* pedido){
 }
 
 
-void Hipermercado::addEncomenda(Fornecedor* fornecedor,Produto* produto,unsigned int quantidade, float preco){
-	Encomenda enc(fornecedor,produto,quantidade, preco);
-	encomendas.push_back(enc);
+void Hipermercado::addEncomenda(Encomenda* encomenda){
+	encomendas.push_back(encomenda);
 }
 
 

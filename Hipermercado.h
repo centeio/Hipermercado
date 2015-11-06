@@ -45,7 +45,7 @@ public:
 	void eliminaProduto(unsigned int indice);
 	void addPedido(PedidoEncomenda* pedido);
 	void eliminaPedido(unsigned int indice);
-	void addEncomenda(Fornecedor* fornecedor,Produto* produto, unsigned int quantidade, float preco);
+	void addEncomenda(Encomenda* encomenda);
 	void setNome(string novonome);
 	void alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt);
 	void alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome);
