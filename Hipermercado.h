@@ -47,8 +47,8 @@ public:
 	void eliminaPedido(unsigned int indice);
 	void addEncomenda(Encomenda* encomenda);
 	void setNome(string novonome);
-	void alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt);
-	void alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome);
+	void alteraQuantProdPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt);
+	void alteraNomeProdPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome);
 private:
 	string nome;
 	vector<Fornecedor*> fornecedores;

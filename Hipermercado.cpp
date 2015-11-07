@@ -22,12 +22,12 @@ vector<PedidoEncomenda*> Hipermercado::getPedidos() const{return pedidos;}
 
 vector<Encomenda*> Hipermercado::getEncomendas() const{return encomendas;}
 
-void Hipermercado::alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt){
+void Hipermercado::alteraQuantProdPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt){
 	pedidos.at(indicepedido)->setQuantProduto(indiceproduto,novaqt);
 }
 
 
-void Hipermercado::alteraPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome){
+void Hipermercado::alteraNomeProdPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome){
 	if(indicepedido+1>=pedidos.size())
 		cout<<"Nao existe esse pedido."<<endl;
 	else
