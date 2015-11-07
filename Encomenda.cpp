@@ -27,7 +27,7 @@ Encomenda::~Encomenda() {
 Fornecedor* Encomenda::getFornecedor() const{return fornecedor;}
 
 
-vector<LinhaEncomenda > Encomenda::getLinhas() const{return linhas;}
+vector<LinhaEncomenda*> Encomenda::getLinhas() const{return linhas;}
 
 Data Encomenda::getData() const{return data;}
 

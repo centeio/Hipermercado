@@ -7,6 +7,8 @@
 
 #include "Data.h"
 
+
+
 Data::Data(){};
 
 Data::Data(unsigned int dia, unsigned int mes, unsigned int ano): dia(dia), mes(mes), ano(ano) {}
@@ -33,11 +35,22 @@ bool Data::operator<(Data d2){
 			return true;
 }
 
-void Data::setDia(unsigned int dia){dia(dia);}
+void Data::setDia(unsigned int novodia){dia=novodia;}
 
-void Data::setMes(unsigned int mes){mes(mes);}
+void Data::setMes(unsigned int novomes){mes=novomes;}
 
-void Data::setAno(unsigned int ano){ano(ano);}
+void Data::setAno(unsigned int novoano){ano=novoano;}
+
+bool Data::operator==(Data d2){
+	if(dia==d2.dia && mes==d2.mes && ano==d2.ano)
+		return true;
+	return false;
+}
+
+ostream &operator<<(ostream& os,const Data& d){
+	os<<d.dia<<"-"<<d.mes<<"-"<<<d.ano;
+	return os;
+}
 
 Data::~Data() {
 	// TODO Auto-generated destructor stub

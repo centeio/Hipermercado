@@ -27,8 +27,8 @@ public:
 	}
 	vector<Fornecedor*> getFornecedores() const;
 	vector<Produto*> getProdutos() const;
-	vector<PedidoEncomenda*> getPedidos() const;
 	vector<Encomenda*> getEncomendas() const;
+	vector<PedidoEncomenda*> getPedidos() const;
 	void ordenaFornecedores() const;
 	void ordenaProdutos() const;
 	void ordenaPedidos() const;

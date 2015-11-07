@@ -126,7 +126,7 @@ void PedidoEncomenda::eliminaProduto(Produto* produto) {
 
 
 ostream &operator<<(ostream& os,const PedidoEncomenda& p){
-	os<<"Data "<<p.getData().getDia()<<"-"<<p.getData().getMes()<<"-"<<p.getData().getAno()<<"\n \n";
+	os<<"Data "<<p.getData()<<"\n \n";
 	if(p.getFinalizado())
 		os<<"Finalizado"<<endl;
 	os<<"Produto: "<<setw(15)<<"Quantidade:"<<endl;

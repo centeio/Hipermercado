@@ -29,7 +29,7 @@ public:
 	friend ostream &operator<<(ostream& os,const Encomenda& enc);
 	void addLinha(Produto* produto, int quantidade, float preco);
 	Fornecedor* getFornecedor() const;
-	vector<LinhaEncomenda > getLinhas() const;
+	vector<LinhaEncomenda*> getLinhas() const;
 	Data getData() const;
 };
 
