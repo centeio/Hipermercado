@@ -11,8 +11,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Fornecedor.h"
-#include "Produto.h"
 #include "Encomenda.h"
 #include "PedidoEncomenda.h"
 
@@ -29,10 +27,10 @@ public:
 	vector<Produto*> getProdutos() const;
 	vector<Encomenda*> getEncomendas() const;
 	vector<PedidoEncomenda*> getPedidos() const;
-	void ordenaFornecedores() const;
+	/*void ordenaFornecedores() const;
 	void ordenaProdutos() const;
 	void ordenaPedidos() const;
-	void ordenaEncomendas() const;
+	void ordenaEncomendas() const;*/
 	void displayFornecedores() const;
 	void displayProdutos() const;
 	void displayPedidos() const;

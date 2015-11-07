@@ -52,7 +52,7 @@ ostream &operator<<(ostream& os,const Data& d){
 	return os;
 }
 
-Data::~Data() {2
+Data::~Data() {
 	// TODO Auto-generated destructor stub
 }
 

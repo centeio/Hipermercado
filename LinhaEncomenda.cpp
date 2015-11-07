@@ -12,3 +12,9 @@ LinhaEncomenda::LinhaEncomenda(Produto* produto, unsigned int quantidade,float p
 }
 
 LinhaEncomenda::~LinhaEncomenda() {}
+
+Produto* LinhaEncomenda::getProduto() const { return produto; }
+
+unsigned int LinhaEncomenda::getQuantidade() const {return quantidade; }
+
+float LinhaEncomenda::getPreco() const { return preco; }

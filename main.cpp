@@ -15,11 +15,9 @@
 #include "Data.h"
 using namespace std;
 
-static Data dataactual;
-
-void leProdutos(Hipermercado* hipermercado, ifstream hipermercadoprodutos);
-void leFornecedores(Hipermercado* hipermercado, ifstream hipermercadoFornecedores);
-void leEncomendas(Hipermercado* hipermercado, ifstream hipermercadoencomendas);
+void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoprodutos);
+void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedores);
+void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoencomendas);
 
 //LER FICHEIROS DE TEXTO
 void leFicheiros(Hipermercado* hipermercado) {
@@ -114,7 +112,7 @@ void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoencomendas) 
 	for (int i = 0; i < numencomendas; i++) {
 
 		hipermercadoencomendas >> dia >> mes >> ano >> fornecedor
-			>> numlinhasencomendas >> produto >> quantidade >> preco;
+			>> numlinhasencomendas >> produto >> medida >> quantidade >> preco;
 
 		Data data(dia, mes, ano);
 		indiceFornecedor = procuraFornecedor(hipermercado, fornecedor);
@@ -309,8 +307,8 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 void opcaoencomendas(Hipermercado* hipermercado) {
 	int opcao;
 	string nomeproduto, unidades;
-	int quantidade, preco;
-
+	unsigned int quantidade;
+	float preco;
 	do {
 		cout << setw(20) << "Encomendas: " << endl << endl;
 		cout << setw(10) << "Introduza a opcao pretendida: " << endl << endl;
@@ -338,7 +336,7 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			unsigned int indiceProduto;
 			int num, qnt;
 			vector<Produto *> produtosencomendas;
-			vector<int> quantidades;
+			vector<unsigned int> quantidades;
 
 			cout << "Insira o numero de produtos que quer encomendar: ";
 			cin >> num;
@@ -472,15 +470,17 @@ void escreveEncomendas(Hipermercado* hipermercado) {
 
 	hipermercadoEncomendas.open("encomendas.txt");
 
-	hipermercadoEncomendas << hipermercado->getPedidos().size() << endl;
+	hipermercadoEncomendas << hipermercado->getEncomendas().size() << endl;
 
-	for (int i = 0; i < hipermercado->getPedidos().size(); i++) {
-		hipermercadoEncomendas << hipermercado->getPedidos().at(i)->getData() << endl
-				<< hipermercado->getPedidos().at(i)->getFornecedor() << endl;
-		for (int j = 0; j < hipermercado->getPedidos().at(i)->getProdutos().size(); j++) {
-			hipermercadoEncomendas << hipermercado->getPedidos().at(i)->getProdutos().at(j)->getNome() << endl
-			<< hipermercado->getPedidos().at(i)->getProdutos().at(j)->getMedida() << endl
-			<< hipermercado->getPedidos().at(i)->getQuantidade().at(j) << endl;
+	for (int i = 0; i < hipermercado->getEncomendas().size(); i++) {
+		hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getData() << endl
+				<< hipermercado->getEncomendas().at(i)->getFornecedor() << endl
+				<< hipermercado->getEncomendas().at(i)->getLinhas().size() << endl;
+		for (int j = 0; j < hipermercado->getEncomendas().at(i)->getLinhas().size(); j++) {
+			hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getProduto()->getNome() << endl
+			<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getProduto()->getMedida() << endl
+			<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getQuantidade() << endl
+					<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getPreco() << endl;
 		}
 	}
 	hipermercadoEncomendas.close();

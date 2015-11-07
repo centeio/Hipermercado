@@ -7,14 +7,14 @@
 
 #ifndef ENCOMENDA_H_
 #define ENCOMENDA_H_
-#include <iostream>
-#include <vector>
 #include "Fornecedor.h"
 #include "LinhaEncomenda.h"
 #include "Data.h"
 
 using namespace std;
 
+
+static Data dataactual;
 
 class Encomenda {
 protected:

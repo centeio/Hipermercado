@@ -6,7 +6,6 @@
  */
 
 #include "Encomenda.h"
-#include <iomanip>
 
 
 Encomenda::Encomenda(Fornecedor* fornecedor,Produto* produto,int quantidade, float preco): fornecedor(fornecedor) {
@@ -38,7 +37,8 @@ void Encomenda::addLinha(Produto* produto,int quantidade,float preco){
 
 
 ostream &operator<<(ostream& os, const Encomenda& enc){
-	os<<"Fornecedor: "<<enc.fornecedor()<<"\n \n";
+
+	os<<"Fornecedor: "<< enc.getFornecedor() <<"\n \n";
 	for (unsigned int i=0; i<enc.getLinhas().size();i++){
 		os<<"Produto: "<<enc.linhas.at(i)->getProduto()<<setw(30)
 				<<"Quantidade: "<<enc.linhas.at(i)->getQuantidade()<<setw(46)
