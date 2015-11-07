@@ -14,7 +14,7 @@
 using namespace std;
 
 class Data {
-private:
+protected:
 	unsigned int dia;
 	unsigned int mes;
 	unsigned int ano;

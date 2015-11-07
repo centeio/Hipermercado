@@ -48,11 +48,11 @@ bool Data::operator==(Data d2){
 }
 
 ostream &operator<<(ostream& os,const Data& d){
-	os<<d.dia<<"-"<<d.mes<<"-"<<<d.ano;
+	os<<d.dia<<"-"<<d.mes<<"-"<<d.ano;
 	return os;
 }
 
-Data::~Data() {
+Data::~Data() {2
 	// TODO Auto-generated destructor stub
 }
 

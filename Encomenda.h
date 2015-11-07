@@ -17,7 +17,7 @@ using namespace std;
 
 
 class Encomenda {
-private:
+protected:
 	Fornecedor* fornecedor;
 	vector<LinhaEncomenda* > linhas;
 	Data data;
