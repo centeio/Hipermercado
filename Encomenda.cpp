@@ -33,7 +33,7 @@ Data Encomenda::getData() const{return data;}
 
 void Encomenda::addLinha(Produto* produto,int quantidade,float preco){
 	LinhaEncomenda l(produto,quantidade,preco);
-	linhas.push_back(l);
+	linhas.push_back(&l);
 }
 
 

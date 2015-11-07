@@ -74,7 +74,7 @@ void PedidoEncomenda::processamento() {
 					if (melhorp > melhorpreco.preco) {
 						melhorp = melhorpreco.preco;
 						fornecedor = j;
-						qt = melhorPreco.quantidade;
+						qt = melhorpreco.quantidade;
 					}}
 				}
 			}
