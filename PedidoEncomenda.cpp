@@ -26,6 +26,8 @@ vector<Produto*> PedidoEncomenda::getProdutos() const{return produtos;}
 
 vector<unsigned int> PedidoEncomenda::getQuantidade() const{return quantidade;}
 
+void PedidoEncomenda::setFinalizado(bool finalizado) { this->finalizado = finalizado; }
+
 
 void PedidoEncomenda::setQuantProduto(unsigned int indiceProduto, unsigned int novaqt){
 	if(indiceProduto<produtos.size())

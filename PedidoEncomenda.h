@@ -32,6 +32,7 @@ public:
 	bool getFinalizado() const;
 	vector<Produto*> getProdutos() const;
 	vector<unsigned int> getQuantidade() const;
+	void setFinalizado(bool finalizado);
 	void setProduto(unsigned int indice, string novonome);
 	void setQuantProduto(unsigned int indiceProduto, unsigned int novaqt);
 	void acrescenta(Produto* produto, unsigned int quantidade);

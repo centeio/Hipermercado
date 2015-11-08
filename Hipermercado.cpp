@@ -138,44 +138,47 @@ void Hipermercado::addEncomenda(Encomenda* encomenda){
 
 void Hipermercado::displayFornecedores() const{
 	for(unsigned int i=0;i<fornecedores.size();i++)
-		cout <<"FORNECEDOR "<< i << endl <<fornecedores.at(i)<<endl;
+		cout <<"Fornecedores " << endl << i+1 << " - " <<fornecedores.at(i)<<endl;
 
 }
 
 
 void Hipermercado::displayProdutos() const{
 	for(unsigned int i=0;i<produtos.size();i++){
-		cout <<"PRODUTO "<< i << endl <<produtos.at(i)<<endl;
+		cout <<"Produtos: " << endl << i+1 << " - " << produtos.at(i)<<endl;
 	}
 }
 
 
 void Hipermercado::displayPedidos() const{
 	for(unsigned int i=0;i<pedidos.size();i++)
-		cout << "PEDIDO "<<i<<endl<< pedidos.at(i)<<endl;
+		cout << "Pedidos: " << endl << i+1 << " - " << pedidos.at(i)<<endl;
 
 }
 
 
 void Hipermercado::displayPedidosPorProcessar() const{
+
 	for(unsigned int i=0;i<pedidos.size();i++){
 		if(!pedidos.at(i)->getFinalizado())
-		cout << "PEDIDO "<<i<<endl<< pedidos.at(i)<<endl;
+		cout << "Pedidos: "<< endl << i+1 << " - " << pedidos.at(i) << endl;
 	}
 }
 
 
 void Hipermercado::displayPedidosProcessados() const{
+
 	for(unsigned int i=0;i<pedidos.size();i++){
 		if(pedidos.at(i)->getFinalizado())
-		cout << "PEDIDO "<<i<<endl<< pedidos.at(i)<<endl;
+			cout << "Pedidos: "<< endl << i+1 << " - " << pedidos.at(i) << endl;
 	}
 }
 
 
 void Hipermercado::displayEncomendas() const{
+
 	for(unsigned int i=0;i<encomendas.size();i++){
-		cout << encomendas.at(i);
+		cout << "Encomendas: " << endl << i+1 << " - " << encomendas.at(i) << endl;
 	}
 }
 
