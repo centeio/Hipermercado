@@ -6,9 +6,7 @@
  */
 
 #include "PedidoEncomenda.h"
-#include "Fornecedor.h"
-#include "Encomenda.h"
-
+#include "Hipermercado.h"
 
 
 PedidoEncomenda::PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quantidade) :
@@ -69,8 +67,8 @@ void PedidoEncomenda::processamento() {
 			for (j = 0; j < Hipermercado::getInstance()->getFornecedores().size(); j++) {
 
 				for (k = 0;k< Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().size();k++) {
-					if (Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().at(k)->getNome() == produtos.at(i)->getNome()){
-						melhorPreco melhorpreco = Hipermercado::getInstance()->getFornecedores().at(j)->getMelhorPreco(produtos.at(i)->getNome(),q);
+					if (Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().at(k)->getProduto()->getNome() == produtos.at(i)->getNome()){
+						melhorPreco melhorpreco = Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().at(k)->getMelhorPreco(produtos.at(i)->getNome(),q);
 					if (melhorp > melhorpreco.preco) {
 						melhorp = melhorpreco.preco;
 						fornecedor = j;
@@ -91,7 +89,7 @@ void PedidoEncomenda::processamento() {
 			else{
 				bool existe=false;
 				for(unsigned int enc=0;enc<Hipermercado::getInstance()->getEncomendas().size();enc++){
-					if(Hipermercado::getInstance()->getEncomendas().at(enc)->getFornecedor()==fornecedor)
+					if(Hipermercado::getInstance()->getEncomendas().at(enc)->getFornecedor()==Hipermercado::getInstance()->getFornecedores().at(fornecedor))
 						if(Hipermercado::getInstance()->getEncomendas().at(enc)->getData()==data){
 							Hipermercado::getInstance()->getEncomendas().at(enc)->addLinha(produtos.at(i),qt,melhorp);
 							existe=true;

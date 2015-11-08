@@ -10,7 +10,6 @@
 
 #include "Data.h"
 #include "Produto.h"
-#include "Hipermercado.h"
 #include <vector>
 #include <cmath>
 #include <math.h>
@@ -37,7 +36,7 @@ public:
 	void setQuantProduto(unsigned int indiceProduto, unsigned int novaqt);
 	void acrescenta(Produto* produto, unsigned int quantidade);
 	void eliminaProduto(Produto* produto);
-	friend ostream &operator<<(ostream& os,const PedidoEncomenda& p);
+	friend ostream &operator<<(ostream& os, const PedidoEncomenda& p);
 	class ProdutoNaoExiste{
 	private:
 		Produto* produto;
