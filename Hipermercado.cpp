@@ -38,52 +38,52 @@ void Hipermercado::alteraNomeProdPedido(unsigned int indicepedido, unsigned int 
 }
 
 bool of(Fornecedor* f1,Fornecedor* f2){
-	if(f1->getNome()<f2->getNome())
+	if(f1->getNome() < f2->getNome())
 		return true;
 	else
 		return false;
 }
 
 
-/*void Hipermercado::ordenaFornecedores() const{
+void Hipermercado::ordenaFornecedores(){
 	sort(fornecedores.begin(),fornecedores.end(),of);
-}*/
+}
 
 
 bool op(Produto* p1,Produto* p2){
-	if(p1->getNome()<p2->getNome())
+	if(p1->getNome() < p2->getNome())
 		return true;
 	else
 		return false;
 }
 
 
-/*void Hipermercado::ordenaProdutos() const{
+void Hipermercado::ordenaProdutos(){
 	sort(produtos.begin(),produtos.end(),op);
-}*/
+}
 
 
 bool opd(PedidoEncomenda* p1,PedidoEncomenda* p2){
-	if(p1->getData()<p2->getData())
+	if(p1->getData() < p2->getData())
 		return true;
 	else
 		return false;
 }
 
-/*void Hipermercado::ordenaPedidos() const{
+void Hipermercado::ordenaPedidos(){
 	sort(pedidos.begin(),pedidos.end(),opd);
-}*/
+}
 
 bool oe(Encomenda* e1, Encomenda* e2){
-	if(e1->getData()<e2->getData())
+	if(e1->getData() < e2->getData())
 		return true;
 	else
 		return false;
 }
 
-/*void Hipermercado::ordenaEncomendas() const{
+void Hipermercado::ordenaEncomendas(){
 	sort(encomendas.begin(),encomendas.end(),oe);
-}*/
+}
 
 
 void Hipermercado::addFornecedor(Fornecedor* fornecedor){

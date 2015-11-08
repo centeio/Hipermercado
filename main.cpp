@@ -13,6 +13,7 @@
 #include <typeinfo>
 #include <cctype>
 #include <algorithm>
+#include <ctime>
 #include "Hipermercado.h"
 using namespace std;
 
@@ -243,6 +244,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			cin >> unidadesprod;
 			Produto *produtof = new Produto(nomeprod, unidadesprod);
 			hipermercado->addProduto(produtof);
+			hipermercado->ordenaProdutos();
 
 		} else if (opcao == 3) {
 
@@ -300,6 +302,7 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 			if(tipo == "individual") hipermercado->addFornecedor(new FornecedorIndividual(nomeFornecedor, niff, moradaFornecedor));
 			else hipermercado->addFornecedor(new FornecedorEmpresa(nomeFornecedor, niff, moradaFornecedor));
 
+			hipermercado->ordenaFornecedores();
 		} else if (opcao == 3) {
 
 			do {
@@ -328,6 +331,7 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 					cin >> nomeFornecedor;
 
 					hipermercado->getFornecedores().at(indice)->setNome(nomeFornecedor);
+					hipermercado->ordenaFornecedores();
 
 				} else if (opcao == 2) {
 
@@ -417,6 +421,7 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 				quantidades.push_back(quantidade);
 			}
 			hipermercado->addPedido(new PedidoEncomenda(dataactual, produtosencomendas, quantidades));
+			hipermercado->ordenaPedidos();
 
 		} else if (opcao == 4) {
 			//mostrar lista de pedidos por realizar
@@ -586,6 +591,13 @@ void escrevePedidosEncomendas(Hipermercado* hipermercado) {
 
 int main() {
 	Hipermercado* hipermercado = Hipermercado::getInstance();
+
+	//inicializando a data
+	time_t now = time(0);
+	tm *date = localtime(&now);
+	dataactual.setDia(date->tm_mday);
+	dataactual.setMes(1 + date->tm_mon);
+	dataactual.setAno(1900 + date->tm_year);
 
 	leFicheiros(hipermercado);
 	menuinicial(hipermercado);

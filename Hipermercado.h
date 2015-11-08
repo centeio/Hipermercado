@@ -27,10 +27,10 @@ public:
 	vector<Produto*> getProdutos() const;
 	vector<Encomenda*> getEncomendas() const;
 	vector<PedidoEncomenda*> getPedidos() const;
-	/*void ordenaFornecedores() const;
-	void ordenaProdutos() const;
-	void ordenaPedidos() const;
-	void ordenaEncomendas() const;*/
+	void ordenaFornecedores();
+	void ordenaProdutos();
+	void ordenaPedidos();
+	void ordenaEncomendas();
 	void displayFornecedores() const;
 	void displayProdutos() const;
 	void displayPedidos() const;
