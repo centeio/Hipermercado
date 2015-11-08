@@ -25,6 +25,7 @@ public:
 	void setMorada(string morada);
 	vector<ProdFornecedor*> getProdutosForn() const;
 	virtual void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
+	virtual string getTipo() const = 0;
 	void addProduto(Produto* produto, unsigned int stock);
 	void remProduto(Produto* produto);
 	void decStock(Produto* produto,unsigned int quantidade);
@@ -35,15 +36,22 @@ public:
 };
 
 class FornecedorIndividual : public Fornecedor {
+protected:
+	string tipo = "individual";
 public:
 	FornecedorIndividual(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
 	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
+	string getTipo() const;
+
 };
 
 class FornecedorEmpresa : public Fornecedor {
+protected:
+	string tipo = "empresa";
 public:
 	FornecedorEmpresa(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
 	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
+	string getTipo() const;
 };
 
 class DemasiadosPatamares{};

@@ -6,7 +6,7 @@
  */
 #include "Hipermercado.h"
 #include <algorithm>
-#include <typeinfo>
+
 
 Hipermercado* Hipermercado::Instance = NULL;
 
@@ -27,6 +27,7 @@ void Hipermercado::alteraQuantProdPedido(unsigned int indicepedido, unsigned int
 	pedidos.at(indicepedido)->setQuantProduto(indiceproduto,novaqt);
 }
 
+string Hipermercado::getNome() const{return nome;}
 
 void Hipermercado::alteraNomeProdPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome){
 	if(indicepedido+1>=pedidos.size())
@@ -98,11 +99,8 @@ void Hipermercado::setNome(string novonome){
 
 
 void Hipermercado::eliminaFornecedor(unsigned int indice){
-
-	if(indice+1>=fornecedores.size())
-		cout<<"Nao existe esse pedido."<<endl;
-	else
-		fornecedores.erase(fornecedores.begin()+indice);
+	delete(fornecedores.at(indice));
+	fornecedores.erase(fornecedores.begin()+indice);
 }
 
 
@@ -112,15 +110,27 @@ void Hipermercado::addProduto(Produto* produto){
 
 
 void Hipermercado::eliminaProduto(unsigned int indice){
-		produtos.erase(produtos.begin()+indice);
+	delete(produtos.at(indice));
+	produtos.erase(produtos.begin()+indice);
 }
 
+void Hipermercado::alteraNomeProduto(unsigned int indice, string novonome){
+	if(indice+1>=produtos.size())
+		cout<<"Nao existe esse produto."<<endl;
+	else
+		produtos.at(indice)->setNome(novonome);
+}
+
+void Hipermercado::alteraMedidaProduto(unsigned int indice, string novamedida){
+	if(indice+1>=produtos.size())
+		cout<<"Nao existe esse produto."<<endl;
+	else
+		produtos.at(indice)->setMedida(novamedida);
+}
 
 void Hipermercado::eliminaPedido(unsigned int indice){
-	if(indice+1>=pedidos.size())
-		cout<<"Nao existe esse pedido."<<endl;
-	else
-		pedidos.erase(pedidos.begin()+indice);
+	delete(pedidos.at(indice));
+	pedidos.erase(pedidos.begin()+indice);
 }
 
 
@@ -145,7 +155,7 @@ void Hipermercado::displayFornecedores() const{
 
 void Hipermercado::displayProdutos() const{
 	if(produtos.size() != 0) {
-		cout << "Produtos: " << endl;
+		cout << "Produtos: " << endl << setw(15)<<"Nome"<<setw(15)<<"Medida"<<endl;
 		for (unsigned int i = 0; i < produtos.size(); i++) {
 			cout << i + 1 << " - " << produtos.at(i) << endl;
 		}
@@ -164,13 +174,13 @@ void Hipermercado::displayPedidos() const{
 void Hipermercado::displayFornecedoresEmp() const{
 	unsigned int j=1;
 	cout << "Fornecedores - Empresa: " << endl ;
-	for(unsigned int i=0;i<pedidos.size();i++){
-		if(typeid(fornecedores.at(i)).name()=="FornecedorEmpresa"){
-			cout << j << " - "<< fornecedores.at(i)<<endl;
+
+	for(unsigned int i=0;i<fornecedores.size();i++){
+		if(fornecedores.at(i)->getTipo() == "empresa"){
+			cout << j << " - "<< fornecedores.at(i) << endl;
 			j++;
 		}
 	}
-
 }
 
 void Hipermercado::displayPedidosPorProcessar() const{

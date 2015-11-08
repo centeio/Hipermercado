@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <typeinfo>
 #include "Encomenda.h"
 #include "PedidoEncomenda.h"
 
@@ -27,6 +28,7 @@ public:
 	vector<Produto*> getProdutos() const;
 	vector<Encomenda*> getEncomendas() const;
 	vector<PedidoEncomenda*> getPedidos() const;
+	string getNome() const;
 	void ordenaFornecedores();
 	void ordenaProdutos();
 	void ordenaPedidos();
@@ -43,6 +45,8 @@ public:
 	void eliminaFornecedor(unsigned int indice);
 	void addProduto(Produto* produto);
 	void eliminaProduto(unsigned int indice);
+	void alteraNomeProduto(unsigned int indice, string novonome);
+	void alteraMedidaProduto(unsigned int indice, string novamedida);
 	void addPedido(PedidoEncomenda* pedido);
 	void eliminaPedido(unsigned int indice);
 	void addEncomenda(Encomenda* encomenda);

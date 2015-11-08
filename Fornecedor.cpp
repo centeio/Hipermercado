@@ -6,7 +6,7 @@
  */
 
 #include "Fornecedor.h"
-#include <sstream>
+#include <algorithm>
 
 
 Fornecedor::Fornecedor() {
@@ -70,19 +70,21 @@ void Fornecedor::displayProdutosForn() const {
 	string resposta = "";
 
 	cout << "Pretende que se imprima os patamares de cada produto (Y/N): " << flush;
-	cin >> resposta;
+	getline(cin,resposta);
 
-	while(resposta != "Y" || resposta != "N"){
+	transform(resposta.begin(), resposta.end(), resposta.begin(), ptr_fun <int, int> (tolower));
+	while(resposta != "y" && resposta != "n"){
 		cerr << "Input invalido. Por favor introduza apenas Y ou N: " << flush;
 		cin.clear();
 		cin.ignore(1000, '\n');
-		cin >> resposta;
+		getline(cin,resposta);
+		transform(resposta.begin(), resposta.end(), resposta.begin(), ptr_fun <int, int> (tolower));
 	}
 
 	if(produtosForn.size() != 0) {
 		cout << "Produtos do fornecedor: " << endl;
 
-		if (resposta == "Y") {
+		if (resposta == "y") {
 			for (unsigned int i = 0; i < produtosForn.size(); i++) {
 				cout << i + 1 << produtosForn.at(i) << endl;
 				produtosForn.at(i)->displayPatamares();
@@ -114,9 +116,12 @@ void FornecedorIndividual::addPatamar(unsigned int indiceProduto, unsigned int m
 	Fornecedor::addPatamar(indiceProduto,min,max,preco);
 }
 
+string FornecedorIndividual::getTipo() const { return tipo; }
+
 //FornecedorEmpresa
 void FornecedorEmpresa::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco) {
 	Fornecedor::addPatamar(indiceProduto,min,max,preco);
 }
 
+string FornecedorEmpresa::getTipo() const { return tipo; }
 

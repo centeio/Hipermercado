@@ -6,6 +6,7 @@
  */
 
 #include "Produto.h"
+#include <iomanip>
 
 //Produto
 Produto::Produto() {
@@ -33,6 +34,6 @@ bool Produto::operator== (Produto &produto) {
 
 ostream& operator<< (ostream& out, Produto* produto) {
 
-	out << "Nome do Produto: " << produto->nome << ". Medida utilizada: " << produto->medida << endl;
+	out << setw(15) << produto->nome << setw(15) << produto->medida << endl;
 	return out;
 }

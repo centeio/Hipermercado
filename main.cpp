@@ -61,11 +61,16 @@ void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoprodutos) {
 	int numprodutos;
 
 	hipermercadoprodutos >> numprodutos;
+
 	for (int i = 0; i < numprodutos; i++) {
-		hipermercadoprodutos >> nome >> unidade;
+		cin.clear();
+		cin.ignore(1000,'\n');
+		getline(hipermercadoprodutos,nome);
+		getline(hipermercadoprodutos, unidade);
 		Produto* produto = new Produto(nome, unidade);
 		hipermercado->addProduto(produto);
 	}
+	cin.clear();
 }
 
 //LER FORNECEDORES.TXT
@@ -78,13 +83,19 @@ void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedor
 	hipermercadoFornecedores >> numfornecedores;
 
 	for (int i = 0; i < numfornecedores; i++) {
-		hipermercadoFornecedores >> nome >> nif >> morada >> tipo >> numprodutos;
+		getline(hipermercadoFornecedores, nome);
+		getline(hipermercadoFornecedores, nif);
+		getline(hipermercadoFornecedores, morada);
+		getline(hipermercadoFornecedores, tipo);
+		hipermercadoFornecedores >> numprodutos;
 
-		if(tipo == "FornecedorIndividual") hipermercado->addFornecedor(new FornecedorIndividual(nome, nif, morada));
+		if(tipo == "individual") hipermercado->addFornecedor(new FornecedorIndividual(nome, nif, morada));
 		else hipermercado->addFornecedor(new FornecedorEmpresa(nome,nif,morada));
 
 		for (int j = 0; j < numprodutos; j++) {
-			hipermercadoFornecedores >> nomeProduto >> medida >> stock >> numpatamares;
+			getline(hipermercadoFornecedores, nomeProduto);
+			getline(hipermercadoFornecedores, medida);
+			hipermercadoFornecedores >> stock >> numpatamares;
 			hipermercado->getFornecedores().at(i)->addProduto(new Produto(nomeProduto, medida),stock);
 
 			for (int k = 0; k < numpatamares ; k++) {
@@ -181,7 +192,8 @@ void menuinicial(Hipermercado* hipermercado) {
 	unsigned int opcao;
 
 	do {
-		cout << setw(40) << "HIPERMERCADO" << endl << endl;
+		//system("cls");
+		cout << setw(40) << "HIPERMERCADO" << " " << hipermercado->getNome() << endl << endl;
 		cout << setw(20) << "Ecra principal: " << endl << endl;
 		cout << setw(10) << "1 - Ver produtos." << endl;
 		cout << setw(10) << "2 - Ver fornecedores." << endl;
@@ -189,8 +201,6 @@ void menuinicial(Hipermercado* hipermercado) {
 		cout << setw(10) << "4 - Mudar nome do Hipermercado." << endl;
 		cout << setw(10) << "9 - Terminar o programa." << endl;
 
-
-		//system("cls");
 		cout << "Introduza a opcao pretendida: " << endl;
 		cin >> opcao;
 
@@ -209,7 +219,7 @@ void menuinicial(Hipermercado* hipermercado) {
 		} else if (opcao == 4) {
 			opcaomudarnome(hipermercado);
 		} else {
-			cout << "Terminou o programa , obrigada pela sua visita!";
+			cout << "Terminou o programa, obrigados pela sua visita!";
 		}
 	}while(opcao != 9);
 }
@@ -221,43 +231,92 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 
 	do {
 		//system("cls");
-		cout << setw(20) << "Produtos: " << endl << endl;
+		cout << setw(20) << "Menu Produtos: " << endl << endl;
 		cout << setw(10) << "1 - Ver lista de produtos." << endl;
-		cout << setw(10) << "2 - Adicionar produto." << endl;
-		cout << setw(10) << "3 - Eliminar produto." << endl;
+		cout << setw(10) << "2 - Ver lista de produtos ordenados." << endl;
+		cout << setw(10) << "3 - Adicionar produto." << endl;
+		cout << setw(10) << "4 - Alterar nome de um produto." << endl;
+		cout << setw(10) << "5 - Alterar medida usada para um produto." << endl;
+		cout << setw(10) << "6 - Eliminar produto." << endl;
 		cout << setw(10) << "9 - Voltar ao menu inicial." << endl;
 		cin >> opcao;
 
-		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 9)) {
+		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5) && (opcao != 6) && (opcao != 9)) {
 			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: "
 			<< flush;
 			cin >> opcao;
 		}
 
-		if (opcao == 1) { hipermercado->displayProdutos(); }
-		else if (opcao == 2) {
+		if (opcao == 1) {
+			hipermercado->displayProdutos();
+			//system("pause");
+		} else if (opcao == 2) {
+			hipermercado->ordenaProdutos();
+			hipermercado->displayProdutos();
+			//system("pause");
+		}
+		else if (opcao == 3) {
 
-			cout << "Introduza o indice do produto: " << flush;
-			cin >> nomeProd;
+			cout << "Introduza o nome do produto: " << flush;
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin,nomeProd);
 			cout << "Introduza a medida usada para o produto: " << flush;
-			cin >> unidadesprod;
+			getline(cin,unidadesprod);
+
 			Produto *produtof = new Produto(nomeProd, unidadesprod);
 			hipermercado->addProduto(produtof);
-			hipermercado->ordenaProdutos();
 
-		} else if (opcao == 3) {
+		} else if (opcao == 4) {
+
+			hipermercado->displayProdutos();
+			cout << "Qual o indice do produto que quer alterar: " << flush;
+			cin >> indiceProduto;
+
+			while((indiceProduto < 0) || (indiceProduto > hipermercado->getProdutos().size())) {
+				if(indiceProduto == 0) opcaoprodutos(hipermercado);
+				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
+				cin >> indiceProduto;
+			}
+
+			cout << "Introduza o novo nome: " << flush;
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin, nomeProd);
+
+			hipermercado->alteraNomeProduto(indiceProduto - 1, nomeProd);
+		} else if (opcao == 5) {
+
+			hipermercado->displayProdutos();
+			cout << "Qual o indice do produto que quer alterar: " << flush;
+			cin >> indiceProduto;
+
+			while((indiceProduto < 0) || (indiceProduto > hipermercado->getProdutos().size())) {
+				if(indiceProduto == 0) opcaoprodutos(hipermercado);
+				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
+				cin >> indiceProduto;
+			}
+
+			cout << "Introduza a nova medida: " << flush;
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin, unidadesprod);
+
+			hipermercado->alteraMedidaProduto(indiceProduto - 1, unidadesprod);
+		} else if (opcao == 6) {
 
 			hipermercado->displayProdutos();
 			cout << "Qual o indice do produto que quer eliminar: " << flush;
 			cin >> indiceProduto;
 
-			while((indiceProduto <= 0) || (indiceProduto > hipermercado->getProdutos().size())) {
+			while((indiceProduto < 0) || (indiceProduto > hipermercado->getProdutos().size())) {
+				if(indiceProduto == 0) opcaoprodutos(hipermercado);
 				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
 				cin >> indiceProduto;
 			}
 			hipermercado->eliminaProduto(indiceProduto - 1);
 
-		} else { menuinicial(hipermercado); }
+		} else { return; }
 	}while(opcao != 9);
 }
 
@@ -265,60 +324,66 @@ void alteraFornecedor(Hipermercado* hipermercado);
 
 //OPCAO FORNECEDORES DO MENU
 void opcaofornecedores(Hipermercado* hipermercado) {
-	string nomeFornecedor, niff, moradaFornecedor, tipo;
-	unsigned int opcao, stock, indiceFornecedor;
+	string nomeFornecedor, nif, moradaFornecedor, tipo;
+	unsigned int opcao, indiceFornecedor;
 
 	do {
 		//system("cls");
-		cout << setw(20) << "Fornecedores: " << endl << endl;
+		cout << setw(20) << "Menu Fornecedores: " << endl << endl;
 		cout << setw(10) << "1 - Ver lista de fornecedores." << endl;
-		cout << setw(10) << "2 - Adicionar fornecedor." << endl;
-		cout << setw(10) << "3 - Alterar fornecedor." << endl;
-		cout << setw(10) << "4 - Eliminar fornecedor." << endl;
+		cout << setw(10) << "2 - Ver lista de fornecedores ordenados." << endl;
+		cout << setw(10) << "3 - Adicionar fornecedor." << endl;
+		cout << setw(10) << "4 - Alterar fornecedor." << endl;
+		cout << setw(10) << "5 - Eliminar fornecedor." << endl;
 		cout << setw(10) << "9 - Voltar ao menu inicial." << endl;
 		cin >> opcao;
 
-		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
+		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5)
 			&& (opcao != 9)) {
 			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: " << flush;
 			cin >> opcao;
 		}
 
 		if (opcao == 1) { hipermercado->displayFornecedores(); }
-		else if (opcao == 2) {
+		else if(opcao == 2) {
+			hipermercado->ordenaFornecedores();
+			hipermercado->displayFornecedores();
+		}
+		else if (opcao == 3) {
 
 			cout << "Introduza o tipo de fornecedor (Individual ou Empresa): " << flush;
-			cin >> tipo;
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin, tipo);
 
 			transform(tipo.begin(), tipo.end(), tipo.begin(), ptr_fun <int, int> (tolower));
 			while((tipo != "individual") && (tipo != "empresa")) {
 				cout << "Tipo de fornecedor invalido. Por favor, introduza novamente o tipo de fornecedor (Individual ou Empresa): " << flush;
-				cin >> tipo;
+				getline(cin, tipo);
 				transform(tipo.begin(), tipo.end(), tipo.begin(), ptr_fun <int, int> (tolower));
 			}
 
 			cout << "Introduza o nome do novo fornecedor: " << flush;
-			cin >> nomeFornecedor;
-			cout << "Introduza o NIFF do novo fornecedor: " << flush;
-			cin >> niff;
+			getline(cin, nomeFornecedor);
+			cout << "Introduza o NIF do novo fornecedor: " << flush;
+			getline(cin, nif);
 			cout << "Introduza o morada do novo fornecedor: " << flush;
-			cin >> moradaFornecedor;
+			getline(cin, moradaFornecedor);
 
-			if(tipo == "individual") hipermercado->addFornecedor(new FornecedorIndividual(nomeFornecedor, niff, moradaFornecedor));
-			else hipermercado->addFornecedor(new FornecedorEmpresa(nomeFornecedor, niff, moradaFornecedor));
+			if(tipo == "individual") hipermercado->addFornecedor(new FornecedorIndividual(nomeFornecedor, nif, moradaFornecedor));
+			else hipermercado->addFornecedor(new FornecedorEmpresa(nomeFornecedor, nif, moradaFornecedor));
 
-			hipermercado->ordenaFornecedores();
-		} else if (opcao == 3) {
-
+		} else if (opcao == 4) {
 			alteraFornecedor(hipermercado);
 		}
-		else if (opcao == 4) {
+		else if (opcao == 5) {
 
 			hipermercado->displayFornecedores();
 			cout << setw(10) << "Introduza o indice do fornecedor que quer eliminar: " << flush;
 			cin >> indiceFornecedor;
 
-			while((indiceFornecedor <= 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+			while((indiceFornecedor < 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+				if(indiceFornecedor == 0) opcaofornecedores(hipermercado);
 				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
 				cin >> indiceFornecedor;
 			}
@@ -331,11 +396,11 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 
 void alteraFornecedor(Hipermercado* hipermercado) {
 	unsigned int opcao2,indiceFornecedor, stock, patminimo, patmaximo;
-	string nomeFornecedor, niff, unidades, moradaFornecedor, produtoAdicionar, tipo;
+	string nomeFornecedor, nif, unidades, moradaFornecedor, produtoAdicionar, tipo;
 	float preco;
 
 	do {
-		cout << setw(10) << "Alterar Fornecedor:" << endl;
+		cout << setw(10) << "Menu Alterar Fornecedor:" << endl;
 		cout << setw(10) << "1 - Alterar nome do Fornecedor" << endl;
 		cout << setw(10) << "2 - Alterar NIF do Fornecedor" << endl;
 		cout << setw(10) << "3 - Alterar morada do Fornecedor" << endl;
@@ -344,7 +409,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 		cout << setw(10) << "9 - Voltar ao menu fornecedores" << endl;
 		cin >> opcao2;
 
-		while ((opcao2 != 1) && (opcao2 != 2) && (opcao2 != 3) && (opcao2 != 8)
+		while ((opcao2 != 1) && (opcao2 != 2) && (opcao2 != 3) && (opcao2 != 4) && (opcao2 != 5)
 			   && (opcao2 != 9)) {
 			cout << setw(10) << "Opcao invalida. Volte a introduzir a opcao pretendida: " << flush;
 			cin >> opcao2;
@@ -356,16 +421,18 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 			cout << setw(10) << "Introduza o indice do fornecedor que pretende alterar o nome: " << flush;
 			cin >> indiceFornecedor;
 
-			while((indiceFornecedor <= 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+			while((indiceFornecedor < 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+				if(indiceFornecedor == 0) alteraFornecedor(hipermercado);
 				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
 				cin >> indiceFornecedor;
 			}
 
 			cout << setw(10) << "Introduza o novo nome: " << flush;
-			cin >> nomeFornecedor;
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin, nomeFornecedor);
 
 			hipermercado->getFornecedores().at(indiceFornecedor - 1)->setNome(nomeFornecedor);
-			hipermercado->ordenaFornecedores();
 
 		} else if (opcao2 == 2) {
 
@@ -373,14 +440,17 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 			cout << setw(10) << "Introduza o indice do fornecedor que pretende alterar o NIFF: " << flush;
 			cin >> indiceFornecedor;
 
-			while((indiceFornecedor <= 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+			while((indiceFornecedor < 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+				if(indiceFornecedor == 0) alteraFornecedor(hipermercado);
 				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
 				cin >> indiceFornecedor;
 			}
 
 			cout << setw(10) << "Introduza o novo NIFF: " << flush;
-			cin >> niff;
-			hipermercado->getFornecedores().at(indiceFornecedor - 1)->setNIF(niff);
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin, nif);
+			hipermercado->getFornecedores().at(indiceFornecedor - 1)->setNIF(nif);
 
 		} else if (opcao2 == 3) {
 
@@ -388,14 +458,17 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 			cout << setw(10) << "Introduza o indice do fornecedor que pretende alterar a morada: " << flush;
 			cin >> indiceFornecedor;
 
-			while((indiceFornecedor <= 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+			while((indiceFornecedor < 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+				if(indiceFornecedor == 0) alteraFornecedor(hipermercado);
 				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
 				cin >> indiceFornecedor;
 			}
 
 			cout << setw(10) << "Introduza a nova morada: " << flush;
-			cin >> moradaFornecedor;
-			hipermercado->getFornecedores().at(indiceFornecedor - 1)->setNIF(moradaFornecedor);
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin, moradaFornecedor);
+			hipermercado->getFornecedores().at(indiceFornecedor - 1)->setMorada(moradaFornecedor);
 
 		} else if (opcao2 == 4) {
 
@@ -403,15 +476,18 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 			cout << setw(10) << "Introduza o indice do fornecedor ao qual pretende adicionar produto: " << flush;
 			cin >> indiceFornecedor;
 
-			while((indiceFornecedor <= 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+			while((indiceFornecedor < 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
+				if(indiceFornecedor == 0) alteraFornecedor(hipermercado);
 				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
 				cin >> indiceFornecedor;
 			}
 
 			cout << "Introduza o nome do produto: " << flush;
-			cin >> produtoAdicionar;
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin, produtoAdicionar);
 			cout << "Introduza a medida utilizada: " << flush;
-			cin >> unidades;
+			getline(cin, unidades);
 			cout << "Introduza o stock: " << flush;
 			cin >> stock;
 
@@ -420,22 +496,23 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 		} else if (opcao2 == 5) {
 
 			hipermercado->displayFornecedoresEmp();
+			cout << "Introduza o indice do produto ao qual pretende adicionar um patamar: " << flush;
 			cin >> indiceFornecedor;
 			unsigned int indiceReal = 0, indiceProduto;
 
 			while(indiceFornecedor != 0) {
-				tipo = typeid(hipermercado->getFornecedores().at(indiceReal)).name();
-				if(tipo == "FornecedorEmpresa") {
+				if(hipermercado->getFornecedores().at(indiceReal)->getTipo() == "empresa") {
 					indiceFornecedor--;
 				}
 				indiceReal++;
 			}
 
-			hipermercado->getFornecedores().at(indiceReal)->displayProdutosForn();
+			hipermercado->getFornecedores().at(indiceReal - 1)->displayProdutosForn();
 			cout << "Introduza o indice do produto ao qual quer adicionar o patamar: " << flush;
 			cin >> indiceProduto;
 
-			while((indiceProduto <= 0) || (indiceProduto > hipermercado->getFornecedores().at(indiceReal)->getProdutosForn().size())) {
+			while((indiceProduto < 0) || (indiceProduto > hipermercado->getFornecedores().at(indiceReal - 1)->getProdutosForn().size())) {
+				if(indiceFornecedor == 0) alteraFornecedor(hipermercado);
 				cerr << "Indice invalido. Por favor, introduza um indice valido: " << flush;
 				cin >> indiceProduto;
 			}
@@ -447,7 +524,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 			cout << "Introduza o preco: " << flush;
 			cin >> preco;
 
-			hipermercado->getFornecedores().at(indiceReal)->addPatamar(indiceProduto - 1, patminimo, patmaximo, preco);
+			hipermercado->getFornecedores().at(indiceReal - 1)->addPatamar(indiceProduto - 1, patminimo, patmaximo, preco);
 		} else { return; }
 	}while((opcao2 != 9));
 }
@@ -607,7 +684,7 @@ void escreveFornecedores(Hipermercado* hipermercado) {
 		hipermercadoFornecedores << hipermercado->getFornecedores().at(i)->getNome() << endl
 				<< hipermercado->getFornecedores().at(i)->getNIF() << endl
 				<< hipermercado->getFornecedores().at(i)->getMorada() << endl
-				<< typeid(hipermercado->getFornecedores().at(i)).name() << endl
+				<< hipermercado->getFornecedores().at(i)->getTipo() << endl
 				<< hipermercado->getFornecedores().at(i)->getProdutosForn().size() << endl;
 
 		for (unsigned int j = 0;	j < hipermercado->getFornecedores().at(i)->getProdutosForn().size();j++) {
