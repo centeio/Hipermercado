@@ -23,6 +23,7 @@ protected:
 	vector<Patamar*> patamares;
 
 public:
+	/** Declaracao das funcoes */
 	ProdFornecedor();
 	ProdFornecedor(Produto* produto, unsigned int stock) : produto(produto), stock(stock) {};
 	Produto* getProduto() const;

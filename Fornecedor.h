@@ -15,6 +15,7 @@ protected:
 	string nome, NIF, morada;
 	vector<ProdFornecedor*> produtosForn;
 public:
+	/** Declaracao das funcoes */
 	Fornecedor();
 	Fornecedor(string nome, string NIF, string morada) : nome(nome), NIF(NIF), morada(morada) {};
 	string getNome() const;
@@ -37,7 +38,7 @@ public:
 
 class FornecedorIndividual : public Fornecedor {
 protected:
-	string tipo = "individual";
+	string tipo = "Individual";
 public:
 	FornecedorIndividual(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
 	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
@@ -47,7 +48,7 @@ public:
 
 class FornecedorEmpresa : public Fornecedor {
 protected:
-	string tipo = "empresa";
+	string tipo = "Empresa";
 public:
 	FornecedorEmpresa(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
 	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);

@@ -24,6 +24,7 @@ private:
 	vector<Produto*> produtos;
 	vector<unsigned int> quantidade;
 public:
+	/** Declaracao das funcoes */
 	PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quant);
 	PedidoEncomenda();
 	virtual ~PedidoEncomenda();
@@ -37,7 +38,7 @@ public:
 	void setQuantProduto(unsigned int indiceProduto, unsigned int novaqt);
 	void acrescenta(Produto* produto, unsigned int quantidade);
 	void eliminaProduto(Produto* produto);
-	friend ostream &operator<<(ostream& os, const PedidoEncomenda& p);
+	friend ostream &operator<<(ostream& os, PedidoEncomenda* p);
 
 	class ProdutoNaoExiste{
 	private:

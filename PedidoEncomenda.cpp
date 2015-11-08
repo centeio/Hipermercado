@@ -12,32 +12,77 @@
 PedidoEncomenda::PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quantidade) :
 		data(data), produtos(produtos), quantidade(quantidade) {
 	finalizado = false;
+	/**
+		 *	@brief Construtor do Pedido de Encomenda
+		 *
+		 *	@param produtos Produtos do pedido de encomenda
+		 *	@param quantidade Quantidade da encomenda
+		 */
 }
 
 
-Data PedidoEncomenda::getData() const{return data;}
+Data PedidoEncomenda::getData() const{
+	return data;
+	/**
+	*	@return Retorna a data
+	*/
+}
 
 
-bool PedidoEncomenda::getFinalizado() const{return finalizado;}
+bool PedidoEncomenda::getFinalizado() const{
+	return finalizado;
+	/**
+	*	@return Retorna Verdadeiro se o pedido de encomenda estiver finalizado, caso contrario retorna falso
+	*/
+}
 
 
-vector<Produto*> PedidoEncomenda::getProdutos() const{return produtos;}
+vector<Produto*> PedidoEncomenda::getProdutos() const{
+	return produtos;
+	/**
+	*	@return Retorna os produtos do pedido de encomenda
+	*/
+}
 
 
-vector<unsigned int> PedidoEncomenda::getQuantidade() const{return quantidade;}
+vector<unsigned int> PedidoEncomenda::getQuantidade() const{
+	return quantidade;
+	/**
+	*	@return Retorna as quantidades do produtos do pedido de encomenda
+	*/
+}
 
-void PedidoEncomenda::setFinalizado(bool finalizado) { this->finalizado = finalizado; }
+void PedidoEncomenda::setFinalizado(bool finalizado) {
+	this->finalizado = finalizado;
+	/**
+	*	@brief Define o se o pedido de encomenda esta finalizado ou nao
+	*
+	* @param finalizado Finalizado
+	*/
+}
 
 
 void PedidoEncomenda::setQuantProduto(unsigned int indiceProduto, unsigned int novaqt){
 	if(indiceProduto<produtos.size())
 		quantidade.at(indiceProduto)=novaqt;
+	/**
+		*	@brief Define a quantidade do produto do pedido de encomenda
+		*
+		* @param indiceProduto Indice do Produto
+		* @param novaqt Nova quantidade
+		*/
 }
 
 
 void PedidoEncomenda::setProduto(unsigned int indice, string novonome){
 	if(indice<produtos.size())
 		produtos.at(indice)->setNome(novonome);
+	/**
+		*	@brief Define o novo nome do produto do pedido de encomenda
+		*
+		* @param indice Indice do Produto
+		* @param novonome Novo nome
+		*/
 }
 
 
@@ -55,6 +100,13 @@ void PedidoEncomenda::acrescenta(Produto* produto, unsigned int qt) {
 		quantidade.push_back(qt);
 	//	actualizaData();
 	}
+	/**
+			*	@brief Acrescenta um pedido de encomenda
+			*
+			* @param produto Produto a acrescentar
+			* @param qt Quantidade
+			*/
+}
 }
 
 
@@ -102,13 +154,13 @@ void PedidoEncomenda::processamento() {
 				Hipermercado::getInstance()->getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
 			}
 
-
 			}
 		}
 	finalizado=true;
+	/**
+				*	@brief Processa o pedido de encomenda
+				*/
 }
-
-
 
 void PedidoEncomenda::eliminaProduto(Produto* produto) {
 	unsigned int i, j;
@@ -122,19 +174,33 @@ void PedidoEncomenda::eliminaProduto(Produto* produto) {
 		produtos.erase(produtos.begin() + j);
 		quantidade.erase(quantidade.begin() + j);
 	}
+	/**
+				*	@brief Elimina um produto de um pedido de encomenda
+				*
+				* @param produto Produto a eliminar
+				*/
 }
 
+ostream &operator<<(ostream& os,PedidoEncomenda* p){
 
-ostream &operator<<(ostream& os,const PedidoEncomenda& p){
-	os<<"Data "<<p.getData()<<"\n \n";
-	if(p.getFinalizado())
-		os<<"Finalizado"<<endl;
-	os<<"Produto: "<<setw(15)<<"Quantidade:"<<endl;
-	for (unsigned int i=0; i<p.getProdutos().size();i++){
-		os<<p.getProdutos().at(i)<<setw(15)<<p.getQuantidade().at(i)<<endl;
+	os << "Data " << p->getData() << "\n \n";
+	if(p->getFinalizado()) os << "Finalizado" << endl;
+	os << "Produto: " << setw(15) << "Quantidade:" << endl;
+	for (unsigned int i=0; i<p->getProdutos().size();i++){
+		os << p->getProdutos().at(i)->getNome() << setw(15) << p->getQuantidade().at(i) << endl;
 	}
 	return os;
+	/** @brief Imprime no ecra os atributos da classe por overload do operator<<
+				*
+				*	@param os Objeto da iostream
+				*	@param p Pedido de Encomenda
+				*
+				*	@return Retorna ostream
+				*/
 }
 
 
-PedidoEncomenda::~PedidoEncomenda() {}
+PedidoEncomenda::~PedidoEncomenda() {
+	/** @brief Destrutor do Pedido de Encomenda
+	*/
+}

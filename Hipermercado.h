@@ -20,6 +20,7 @@ using namespace std;
 
 class Hipermercado {
 public:
+	/** Declaracao das funcoes */
 	static Hipermercado* getInstance() {
 		if(Instance == NULL) Instance = new Hipermercado("Super");
 		return Instance;
@@ -39,7 +40,7 @@ public:
 	void displayEncomendas() const;
 	void displayPedidosPorProcessar() const;
 	void displayPedidosProcessados() const;
-	void displayFornecedoresEmp() const;
+	void displayProdutosFornecedor() const;
 	void processaPedido();
 	void addFornecedor(Fornecedor* fornecedor);
 	void eliminaFornecedor(unsigned int indice);
