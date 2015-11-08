@@ -99,18 +99,20 @@ void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedor
 
 unsigned int procuraFornecedor(Hipermercado* hipermercado, string nome){
 
-	for(int i = 0; i < hipermercado->getFornecedores().size(); i++ ){
+	for(unsigned int i = 0; i < hipermercado->getFornecedores().size(); i++ ){
 		if(hipermercado->getFornecedores().at(i)->getNome() == nome)
 			return i ;
 	}
+	throw -1;
 }
 
 unsigned int procuraProduto(Hipermercado* hipermercado, string nome){
 
-	for(int i = 0; i < hipermercado->getProdutos().size(); i++ ){
+	for(unsigned int i = 0; i < hipermercado->getProdutos().size(); i++ ){
 		if(hipermercado->getProdutos().at(i)->getNome() == nome)
 					return i ;
 	}
+	throw -1;
 }
 
 //LER ENCOMENDAS.TXT
@@ -252,7 +254,13 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			cout << "Qual o nome do produto que quer eliminar: " << flush;
 			cin >> nomeprod;
 
-			unsigned int indice = procuraProduto(hipermercado, nomeprod);
+			unsigned int indice;
+			try {
+				indice = procuraProduto(hipermercado, nomeprod);
+			}catch (int erro) {
+				cerr << "O produto que introduziu não existe." << endl;
+				opcaoprodutos(hipermercado);
+			}
 			hipermercado->eliminaProduto(indice);
 
 		} else { menuinicial(hipermercado); }
@@ -380,7 +388,6 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 	do {
 		//system("cls");
 		cout << setw(20) << "Encomendas: " << endl << endl;
-		//o que queres dizer com realizadas? Pedidos feitos e processados ou só pedidos feitos?
 		cout << setw(10) << "1 - Ver pedidos de encomendas realizadas." << endl;
 		cout << setw(10) << "2 - Ver pedidos de encomendas por realizar." << endl;
 		cout << setw(10) << "3 - Pedir nova encomenda." << endl;
@@ -410,8 +417,13 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 				//ADICIONAR PEDIDO DE ENCOMENDA
 				cout << "Insira o nome do produto que quer encomendar: " << flush;
 				cin >> nomeProduto;
-				//criar excepção caso o nome introduzido para o produto não exista
-				indiceProduto = procuraProduto(hipermercado, nomeProduto);
+
+				try {
+					indiceProduto = procuraProduto(hipermercado, nomeProduto);
+				}catch (int erro) {
+					cerr << "O produto que introduziu não existe." << endl;
+					opcaoencomendas(hipermercado);
+				}
 
 				cout << "Introduza a quantidade que quer encomendar deste produto: " << flush;
 				cin >> quantidade;

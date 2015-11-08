@@ -38,6 +38,7 @@ public:
 	void acrescenta(Produto* produto, unsigned int quantidade);
 	void eliminaProduto(Produto* produto);
 	friend ostream &operator<<(ostream& os, const PedidoEncomenda& p);
+
 	class ProdutoNaoExiste{
 	private:
 		Produto* produto;
@@ -47,6 +48,7 @@ public:
 		};
 
 	};
+
 	class ProdutoNaoEstaAVenda{
 	private:
 		Produto* produto;
@@ -55,6 +57,7 @@ public:
 			cout<<"O produto "<<produto->getNome()<<" nao se encontra a venda em nenhum fornecedor.\n";
 		};
 	};
+
 	class ProdutoParcialmenteComprado{
 	private:
 		Produto* produto;
