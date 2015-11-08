@@ -112,9 +112,6 @@ void Hipermercado::addProduto(Produto* produto){
 
 
 void Hipermercado::eliminaProduto(unsigned int indice){
-	if(indice+1>=produtos.size())
-		cout<<"Nao existe esse pedido."<<endl;
-	else
 		produtos.erase(produtos.begin()+indice);
 }
 
@@ -138,25 +135,30 @@ void Hipermercado::addEncomenda(Encomenda* encomenda){
 
 
 void Hipermercado::displayFornecedores() const{
-	cout <<"Fornecedores: " << endl;
-	for(unsigned int i=0;i<fornecedores.size();i++)
-		cout << i+1 << " - " <<fornecedores.at(i)<<endl;
+	if(fornecedores.size() != 0) {
+		cout << "Fornecedores: " << endl;
+		for (unsigned int i = 0; i < fornecedores.size(); i++)
+			cout << i + 1 << " - " << fornecedores.at(i) << endl;
+	}
 }
 
 
 void Hipermercado::displayProdutos() const{
-	cout <<"Produtos: " << endl ;
-	for(unsigned int i=0;i<produtos.size();i++){
-		cout << i+1 << " - " << produtos.at(i)<<endl;
+	if(produtos.size() != 0) {
+		cout << "Produtos: " << endl;
+		for (unsigned int i = 0; i < produtos.size(); i++) {
+			cout << i + 1 << " - " << produtos.at(i) << endl;
+		}
 	}
 }
 
 
 void Hipermercado::displayPedidos() const{
-	cout << "Pedidos: " << endl ;
-	for(unsigned int i=0;i<pedidos.size();i++)
-		cout<< i+1 << " - " << pedidos.at(i)<<endl;
-
+	if(pedidos.size() != 0) {
+		cout << "Pedidos: " << endl;
+		for (unsigned int i = 0; i < pedidos.size(); i++)
+			cout << i + 1 << " - " << pedidos.at(i) << endl;
+	}
 }
 
 void Hipermercado::displayFornecedoresEmp() const{
@@ -190,9 +192,11 @@ void Hipermercado::displayPedidosProcessados() const{
 
 
 void Hipermercado::displayEncomendas() const{
-	cout << "Encomendas: " << endl ;
-	for(unsigned int i=0;i<encomendas.size();i++){
-		cout << i+1 << " - " << encomendas.at(i) << endl;
+	if(encomendas.size() != 0) {
+		cout << "Encomendas: " << endl;
+		for (unsigned int i = 0; i < encomendas.size(); i++) {
+			cout << i + 1 << " - " << encomendas.at(i) << endl;
+		}
 	}
 }
 

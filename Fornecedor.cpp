@@ -34,7 +34,7 @@ vector<ProdFornecedor*> Fornecedor::getProdutosForn() const { return produtosFor
 void Fornecedor::setNome(string nome) { this->nome = nome; }
 
 
-void Fornecedor::setNIF(string NID) { this->NIF = NIF; }
+void Fornecedor::setNIF(string NIF) { this->NIF = NIF; }
 
 
 void Fornecedor::setMorada(string morada) { this->morada = morada; }
@@ -67,26 +67,31 @@ void Fornecedor::decStock(Produto* produto,unsigned int quantidade) {
 }
 
 void Fornecedor::displayProdutosForn() const {
-	string resposinta = "";
+	string resposta = "";
 
 	cout << "Pretende que se imprima os patamares de cada produto (Y/N): " << flush;
-	cin >> resposinta;
+	cin >> resposta;
 
-	while(resposinta != "Y" || resposinta != "N"){
+	while(resposta != "Y" || resposta != "N"){
 		cerr << "Input invalido. Por favor introduza apenas Y ou N: " << flush;
 		cin.clear();
 		cin.ignore(1000, '\n');
-		cin >> resposinta;
+		cin >> resposta;
 	}
 
-	if(resposinta == "Y") {
-		for(unsigned int i = 0; i < produtosForn.size(); i++) {
-			cout << produtosForn.at(i) << endl;
-			produtosForn.at(i)->displayPatamares();
+	if(produtosForn.size() != 0) {
+		cout << "Produtos do fornecedor: " << endl;
+
+		if (resposta == "Y") {
+			for (unsigned int i = 0; i < produtosForn.size(); i++) {
+				cout << i + 1 << produtosForn.at(i) << endl;
+				produtosForn.at(i)->displayPatamares();
+			}
+		} else {
+			for (unsigned int i = 0; i < produtosForn.size(); i++) {
+				cout << i + 1 << produtosForn.at(i) << endl;
+			}
 		}
-	}else {
-		for(unsigned int i = 0; i < produtosForn.size(); i++) {
-			cout << produtosForn.at(i) << endl; }
 	}
 }
 
