@@ -39,6 +39,10 @@ void Fornecedor::setNIF(string NID) { this->NIF = NIF; }
 
 void Fornecedor::setMorada(string morada) { this->morada = morada; }
 
+void Fornecedor::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco) {
+	produtosForn.at(indiceProduto)->addPatamar(min,max,preco);
+}
+
 void Fornecedor::addProduto(Produto* produto, unsigned int stock) {
 
 	ProdFornecedor* prodFornecedor = new ProdFornecedor(produto, stock);
@@ -99,13 +103,15 @@ ostream& operator<< (ostream& out, Fornecedor* fornecedor) {
 
 //FornecedorIndividual
 
-void FornecedorIndividual::addProduto(Produto* produto, unsigned int stock) {
-	Fornecedor::addProduto(produto, stock);
+void FornecedorIndividual::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco) {
+
+	if(produtosForn.size() == 1) throw DemasiadosPatamares();
+	Fornecedor::addPatamar(indiceProduto,min,max,preco);
 }
 
 //FornecedorEmpresa
-void FornecedorEmpresa::addProduto(Produto* produto, unsigned int stock) {
-	Fornecedor::addProduto(produto, stock);
+void FornecedorEmpresa::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco) {
+	Fornecedor::addPatamar(indiceProduto,min,max,preco);
 }
 
 

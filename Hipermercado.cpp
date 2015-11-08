@@ -6,6 +6,7 @@
  */
 #include "Hipermercado.h"
 #include <algorithm>
+#include <typeinfo>
 
 Hipermercado* Hipermercado::Instance = NULL;
 
@@ -137,50 +138,67 @@ void Hipermercado::addEncomenda(Encomenda* encomenda){
 
 
 void Hipermercado::displayFornecedores() const{
+	cout <<"Fornecedores: " << endl;
 	for(unsigned int i=0;i<fornecedores.size();i++)
-		cout <<"Fornecedores " << endl << i+1 << " - " <<fornecedores.at(i)<<endl;
-
+		cout << i+1 << " - " <<fornecedores.at(i)<<endl;
 }
 
 
 void Hipermercado::displayProdutos() const{
+	cout <<"Produtos: " << endl ;
 	for(unsigned int i=0;i<produtos.size();i++){
-		cout <<"Produtos: " << endl << i+1 << " - " << produtos.at(i)<<endl;
+		cout << i+1 << " - " << produtos.at(i)<<endl;
 	}
 }
 
 
 void Hipermercado::displayPedidos() const{
+	cout << "Pedidos: " << endl ;
 	for(unsigned int i=0;i<pedidos.size();i++)
-		cout << "Pedidos: " << endl << i+1 << " - " << pedidos.at(i)<<endl;
+		cout<< i+1 << " - " << pedidos.at(i)<<endl;
 
 }
 
+void Hipermercado::displayFornecedoresEmp() const{
+	unsigned int j=1;
+	cout << "Fornecedores - Empresa: " << endl ;
+	for(unsigned int i=0;i<pedidos.size();i++){
+		if(typeid(fornecedores.at(i)).name()=="FornecedorEmpresa"){
+			cout << j << " - "<< fornecedores.at(i)<<endl;
+			j++;
+		}
+	}
+
+}
 
 void Hipermercado::displayPedidosPorProcessar() const{
-
+	cout << "Pedidos: "<< endl;
 	for(unsigned int i=0;i<pedidos.size();i++){
 		if(!pedidos.at(i)->getFinalizado())
-		cout << "Pedidos: "<< endl << i+1 << " - " << pedidos.at(i) << endl;
+			cout<< i+1 << " - " << pedidos.at(i) << endl;
 	}
 }
 
 
 void Hipermercado::displayPedidosProcessados() const{
-
+	cout << "Pedidos: "<<endl;
 	for(unsigned int i=0;i<pedidos.size();i++){
 		if(pedidos.at(i)->getFinalizado())
-			cout << "Pedidos: "<< endl << i+1 << " - " << pedidos.at(i) << endl;
+			cout<< endl << i+1 << " - " << pedidos.at(i) << endl;
 	}
 }
 
 
 void Hipermercado::displayEncomendas() const{
-
+	cout << "Encomendas: " << endl ;
 	for(unsigned int i=0;i<encomendas.size();i++){
-		cout << "Encomendas: " << endl << i+1 << " - " << encomendas.at(i) << endl;
+		cout << i+1 << " - " << encomendas.at(i) << endl;
 	}
 }
 
+void Hipermercado::processaPedido() {
 
-
+	for(unsigned int i = 0; i < pedidos.size(); i++) {
+		if(!pedidos.at(i)->getFinalizado()) pedidos.at(i)->processamento();
+	}
+}

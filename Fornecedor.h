@@ -24,7 +24,8 @@ public:
 	void setNIF(string NIF);
 	void setMorada(string morada);
 	vector<ProdFornecedor*> getProdutosForn() const;
-	virtual void addProduto(Produto* produto, unsigned int stock);
+	virtual void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
+	void addProduto(Produto* produto, unsigned int stock);
 	void remProduto(Produto* produto);
 	void decStock(Produto* produto,unsigned int quantidade);
 	friend ostream& operator<< (ostream& out, Fornecedor* fornecedor);
@@ -36,13 +37,13 @@ public:
 class FornecedorIndividual : public Fornecedor {
 public:
 	FornecedorIndividual(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
-	void addProduto(Produto* produto, unsigned int stock);
+	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
 };
 
 class FornecedorEmpresa : public Fornecedor {
 public:
 	FornecedorEmpresa(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
-	void addProduto(Produto* produto, unsigned int stock);
+	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
 };
 
 class DemasiadosPatamares{};

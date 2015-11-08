@@ -37,6 +37,8 @@ public:
 	void displayEncomendas() const;
 	void displayPedidosPorProcessar() const;
 	void displayPedidosProcessados() const;
+	void displayFornecedoresEmp() const;
+	void processaPedido();
 	void addFornecedor(Fornecedor* fornecedor);
 	void eliminaFornecedor(unsigned int indice);
 	void addProduto(Produto* produto);

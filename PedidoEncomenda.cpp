@@ -60,8 +60,8 @@ void PedidoEncomenda::acrescenta(Produto* produto, unsigned int qt) {
 
 
 void PedidoEncomenda::processamento() {
-	unsigned int i, j, k;
-	int q,qt;
+	unsigned int i, j, k, q, qt;
+
 	for (i = 0; i < produtos.size(); i++) {
 		q=quantidade.at(i);
 		while (q > 0) {
