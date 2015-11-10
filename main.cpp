@@ -645,10 +645,10 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			//funcao que altera pedido encomenda;
 			hipermercado->displayPedidosPorProcessar();
 
-			cout << "Introduza o numero do pedido de encomenda que quer alterar: " << flush;
+			cout << "Introduza o indice do pedido de encomenda que quer alterar: " << flush;
 			cin >> numPedido;
 
-			cout <<"Introduza o nome do produto do pedido de encomenda que quer alterar a sua quantidade: " << flush;
+			cout <<"Introduza o indice do produto do pedido de encomenda que quer alterar a sua quantidade: " << flush;
 			cin >> nomeProduto;
 
 			cout << "Qual a nova quantidade de produto do pedido de encomenda: " << flush;;
@@ -665,8 +665,13 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			hipermercado->eliminaPedido(numPedido-1);
 
 		}else if (opcao == 6) {
-			hipermercado->processaPedido();
-		} else { return; }
+			try {hipermercado->processaPedido();}
+			catch(PedidoEncomenda::ProdutoNaoEstaAVenda& p1){
+				opcaoencomendas(hipermercado);
+			}
+			catch(PedidoEncomenda::ProdutoParcialmenteComprado& p2){
+				opcaoencomendas(hipermercado);
+			}		} else { return; }
 	} while(opcao != 9);
 }
 
