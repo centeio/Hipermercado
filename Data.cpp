@@ -11,7 +11,11 @@
 
 Data::Data(){};
 
-Data::Data(unsigned int dia, unsigned int mes, unsigned int ano): dia(dia), mes(mes), ano(ano) {}
+Data::Data(unsigned int dia, unsigned int mes, unsigned int ano): dia(dia), mes(mes), ano(ano) {
+	/**
+	 *	@brief Cria a data
+	 */
+}
 
 bool Data::operator<(Data d2){
 	if(ano==d2.ano)
@@ -33,26 +37,72 @@ bool Data::operator<(Data d2){
 			return false;
 		else
 			return true;
+	/**
+	 	 *
+		 *
+		 *	@param d2 Data
+		 *
+		 *	@return Retorna verdadeiro se a data a ser comparada e mais antiga
+		 */
 }
 
-void Data::setDia(unsigned int novodia){dia=novodia;}
+void Data::setDia(unsigned int novodia){
+	dia=novodia;
+	/**
+	*	@brief Define o dia
+	*
+	* @param novodia Novo dia
+	*/
+}
 
-void Data::setMes(unsigned int novomes){mes=novomes;}
+void Data::setMes(unsigned int novomes){
+	mes=novomes;
+	/**
+	*	@brief Define o mes
+	*
+	* @param novomes Novo mes
+	*/
+}
 
-void Data::setAno(unsigned int novoano){ano=novoano;}
+void Data::setAno(unsigned int novoano){
+	ano=novoano;
+	/**
+	*	@brief Define o ano
+	*
+	* @param novoano Novo ano
+	*/
+}
 
 bool Data::operator==(Data d2){
 	if(dia==d2.dia && mes==d2.mes && ano==d2.ano)
 		return true;
 	return false;
+	/**
+			*
+			*	@param d2 Data
+			*
+			*	@return Retorna verdadeiro se as duas datas comparadas sao iguais; caso contrario, retorna falso.
+			*/
 }
 
 ostream &operator<<(ostream& os,const Data& d){
 	os<<d.dia<<"-"<<d.mes<<"-"<<d.ano;
 	return os;
+	/**
+				*
+				* @brief Imprime no ecra os atributos da classe por overload do operator<<
+				*	@param os Objeto da iostream
+				*	@param d Data
+				*
+				*	@return Retorna ostream
+				*/
 }
 
 Data::~Data() {
 	// TODO Auto-generated destructor stub
+	/**
+			*	@brief Destroi a data
+			*
+			*/
 }
 

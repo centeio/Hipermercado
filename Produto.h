@@ -18,6 +18,7 @@ protected:
 	string nome;
 	string medida;
 public:
+	/** Declaracao das funcoes */
 	Produto();
 	Produto(string nome, string medida) : nome(nome), medida(medida) {};
 	string getNome() const;

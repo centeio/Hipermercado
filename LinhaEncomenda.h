@@ -15,6 +15,7 @@ private:
 	unsigned int quantidade;
 	float preco;
 public:
+	/** Declaracao das funcoes */
 	LinhaEncomenda(Produto* produto, unsigned int quantidade, float preco);
 	LinhaEncomenda();
 	virtual ~LinhaEncomenda();

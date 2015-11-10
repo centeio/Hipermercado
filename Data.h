@@ -19,6 +19,7 @@ protected:
 	unsigned int mes;
 	unsigned int ano;
 public:
+	/** Declaracao das funcoes */
 	Data();
 	Data(unsigned int dia, unsigned int mes, unsigned int ano);
 	virtual ~Data();

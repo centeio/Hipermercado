@@ -9,12 +9,39 @@
 
 
 LinhaEncomenda::LinhaEncomenda(Produto* produto, unsigned int quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
+    /**
+				*	@brief Constroi a linha de encomenda
+				*
+				*	@param produto Produto da linha de encomenda
+				*	@param quantidade Quantidade da linha de encomenda
+				*	@param preco Preco da linha de encomenda
+				*/
 }
 
-LinhaEncomenda::~LinhaEncomenda() {}
+LinhaEncomenda::~LinhaEncomenda() {
+    /**
+				*	@brief Destroi a linha de encomenda
+				*
+				*/
+}
 
-Produto* LinhaEncomenda::getProduto() const { return produto; }
+Produto* LinhaEncomenda::getProduto() const {
+    return produto;
+    /**
+	*	@return Retorna o produto da linha de encomenda
+	*/
+}
 
-unsigned int LinhaEncomenda::getQuantidade() const {return quantidade; }
+unsigned int LinhaEncomenda::getQuantidade() const {
+    return quantidade;
+    /**
+	*	@return Retorna a quantidade da linha de encomenda
+	*/
+}
 
-float LinhaEncomenda::getPreco() const { return preco; }
+float LinhaEncomenda::getPreco() const {
+    return preco;
+    /**
+	*	@return Retorna o preco
+	*/
+}
