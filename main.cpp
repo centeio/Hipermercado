@@ -79,9 +79,10 @@ void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedor
 	int numfornecedores, numprodutos, numpatamares;
 
 	hipermercadoFornecedores >> numfornecedores;
-	hipermercadoFornecedores.clear();
-	hipermercadoFornecedores.ignore(1000,'\n');
+
 	for (int i = 0; i < numfornecedores; i++) {
+		hipermercadoFornecedores.clear();
+		hipermercadoFornecedores.ignore(1000,'\n');
 		getline(hipermercadoFornecedores, nome);
 		getline(hipermercadoFornecedores, nif);
 		getline(hipermercadoFornecedores, morada);

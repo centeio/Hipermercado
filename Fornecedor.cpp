@@ -88,7 +88,7 @@ void Fornecedor::setMorada(string morada) {
 	 */
 }
 
-void Fornecedor::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco) {
+void Fornecedor::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco) {
 	produtosForn.at(indiceProduto)->addPatamar(min,max,preco);
 	/**
 	 *@brief Adiciona patamar
@@ -202,7 +202,7 @@ ostream& operator<< (ostream& out, Fornecedor* fornecedor) {
 //FornecedorIndividual
 
 void FornecedorIndividual::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco) {
-
+	cout << "Chego aqui 1. " << endl;
 	if(produtosForn.at(indiceProduto)->getPatamares().size() == 1) throw DemasiadosPatamares();
 	Fornecedor::addPatamar(indiceProduto,min,max,preco);
 	/**
@@ -224,6 +224,7 @@ string FornecedorIndividual::getTipo() const {
 
 //FornecedorEmpresa
 void FornecedorEmpresa::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco) {
+	cout << "Chego aqui 2" << endl;
 	Fornecedor::addPatamar(indiceProduto,min,max,preco);
 	/**
 	 *@brief Adiciona patamar

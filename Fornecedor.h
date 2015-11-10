@@ -25,7 +25,7 @@ public:
 	void setNIF(string NIF);
 	void setMorada(string morada);
 	vector<ProdFornecedor*> getProdutosForn() const;
-	virtual void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
+	virtual void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco);
 	virtual string getTipo() const = 0;
 	void addProduto(Produto* produto, unsigned int stock);
 	void remProduto(Produto* produto);
