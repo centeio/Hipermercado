@@ -670,34 +670,6 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 	} while(opcao != 9);
 }
 
-/*//OPCAO MUDAR NOME DO MENU
-void opcaomudarnome(Hipermercado* hipermercado) {
-	int opcao;
-	string novonome;
-
-	do {
-		//system("cls");
-		cout << setw(10) << "Insira a opcao pretendida: " << endl
-				<< "1 - Mudar nome do Hipermercado. " << endl
-				<< "9 - Voltar ao menu inicial." << endl;
-		cin >> opcao;
-
-		while ((opcao != 1) && (opcao != 9)) {
-
-			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: " << flush;
-			cin >> opcao;
-		}
-
-		if (opcao == 1) {
-
-			cout << "Introduza o novo nome do Hipermercado: " << flush;
-			cin >> novonome;
-			hipermercado->setNome(novonome);
-
-		} else if (opcao == 9) { menuinicial(hipermercado); }
-	}while(opcao != 9);
-}*/
-
 void escreveProdutos(Hipermercado* hipermercado);
 void escreveFornecedores(Hipermercado* hipermercado);
 void escreveEncomendas(Hipermercado* hipermercado);
