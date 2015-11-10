@@ -46,7 +46,7 @@ void leFicheiros(Hipermercado* hipermercado) {
 	}
 
 	ifstream hipermercadopedidosencomendas("pedidosencomendas.txt");
-	if (hipermercadoencomendas.is_open()) {
+	if (hipermercadopedidosencomendas.is_open()) {
 		lePedidosEncomendas(hipermercado, hipermercadopedidosencomendas);
 		hipermercadopedidosencomendas.close();
 		remove("pedidosencomendas.txt");
@@ -136,8 +136,15 @@ void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoencomendas) 
 	hipermercadoencomendas >> numencomendas;
 	for (int i = 0; i < numencomendas; i++) {
 
-		hipermercadoencomendas >> dia >> mes >> ano >> nomeFornecedor
-			>> numlinhasencomendas >> nomeProduto >> quantidade >> preco;
+		hipermercadoencomendas >> dia >> mes >> ano;
+		hipermercadoencomendas.clear();
+		hipermercadoencomendas.ignore(1000,'\n');
+		getline(hipermercadoencomendas,nomeFornecedor);
+		hipermercadoencomendas >> numlinhasencomendas;
+		hipermercadoencomendas.clear();
+		hipermercadoencomendas.ignore(1000,'\n');
+		getline(hipermercadoencomendas,nomeProduto);
+		hipermercadoencomendas >> quantidade >> preco;
 
 		Data data(dia, mes, ano);
 		indiceFornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
@@ -146,7 +153,10 @@ void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoencomendas) 
 		Encomenda* encomenda = new Encomenda(hipermercado->getFornecedores().at(indiceFornecedor),hipermercado->getProdutos().at(indiceProduto),quantidade, preco,data);
 		hipermercado->addEncomenda(encomenda);
 		for (int j = 0; j < numlinhasencomendas - 1; j++) {
-			hipermercadoencomendas >> nomeProduto >> quantidade >> preco;
+			hipermercadoencomendas.clear();
+			hipermercadoencomendas.ignore(1000,'\n');
+			getline(hipermercadoencomendas,nomeProduto);
+			hipermercadoencomendas >> quantidade >> preco;
 			hipermercado->getEncomendas().at(i)->addLinha(hipermercado->getProdutos().at(indiceProduto), quantidade, preco);
 		}
 	}
@@ -166,7 +176,10 @@ void lePedidosEncomendas(Hipermercado* hipermercado, ifstream& hipermercadopedid
 
 		for(unsigned int j = 0; j < numProdutos; j++) {
 
-			hipermercadopedidosencomendas >> nomeProduto >> quantidade;
+			hipermercadopedidosencomendas.clear();
+			hipermercadopedidosencomendas.ignore(1000,'\n');
+			getline(hipermercadopedidosencomendas, nomeProduto);
+			hipermercadopedidosencomendas >> quantidade;
 			indiceProduto = procuraProduto(hipermercado, nomeProduto);
 			produtos.push_back(hipermercado->getProdutos().at(indiceProduto));
 			quantidades.push_back(quantidade);
@@ -778,8 +791,10 @@ void escrevePedidosEncomendas(Hipermercado* hipermercado) {
 
 		hipermercadoPedidosEncomendas << hipermercado->getPedidos().at(i)->getData().getDia() << endl
 					<< hipermercado->getPedidos().at(i)->getData().getMes() << endl
-					<< hipermercado->getPedidos().at(i)->getData().getAno() << endl
-					<< (hipermercado->getPedidos().at(i)->getFinalizado()) ? (hipermercadoPedidosEncomendas << "true") : (hipermercadoPedidosEncomendas << "false") << endl
+					<< hipermercado->getPedidos().at(i)->getData().getAno() << endl;
+		if(hipermercado->getPedidos().at(i)->getFinalizado()) (hipermercadoPedidosEncomendas << "true");
+		else (hipermercadoPedidosEncomendas << "false");
+		hipermercadoPedidosEncomendas << endl
 					<< hipermercado->getPedidos().at(i)->getProdutos().size() << endl;
 
 		for(unsigned int j = 0; j < hipermercado->getPedidos().at(i)->getProdutos().size(); j++) {
