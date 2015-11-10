@@ -204,6 +204,7 @@ void opcaomudarnome(Hipermercado* hipermercado);
 //MENU INICIAL
 void menuinicial(Hipermercado* hipermercado) {
 	unsigned int opcao;
+	string noveNomeHipermercado;
 
 	do {
 		//system("cls");
@@ -231,7 +232,11 @@ void menuinicial(Hipermercado* hipermercado) {
 		} else if (opcao == 3) {
 			opcaoencomendas(hipermercado);
 		} else if (opcao == 4) {
-			opcaomudarnome(hipermercado);
+			cout << "Introduza o novo nome do hipermercado: " << flush;
+			cin.clear();
+			cin.ignore(1000,'\n');
+			getline(cin,noveNomeHipermercado);
+			hipermercado->setNome(noveNomeHipermercado);
 		} else {
 			cout << "Terminou o programa, obrigados pela sua visita!";
 		}
@@ -665,7 +670,7 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 	} while(opcao != 9);
 }
 
-//OPCAO MUDAR NOME DO MENU
+/*//OPCAO MUDAR NOME DO MENU
 void opcaomudarnome(Hipermercado* hipermercado) {
 	int opcao;
 	string novonome;
@@ -691,7 +696,7 @@ void opcaomudarnome(Hipermercado* hipermercado) {
 
 		} else if (opcao == 9) { menuinicial(hipermercado); }
 	}while(opcao != 9);
-}
+}*/
 
 void escreveProdutos(Hipermercado* hipermercado);
 void escreveFornecedores(Hipermercado* hipermercado);
