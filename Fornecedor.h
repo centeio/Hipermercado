@@ -41,7 +41,7 @@ protected:
 	string tipo = "Individual";
 public:
 	FornecedorIndividual(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
-	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
+	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco);
 	string getTipo() const;
 
 };
@@ -51,7 +51,7 @@ protected:
 	string tipo = "Empresa";
 public:
 	FornecedorEmpresa(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
-	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco);
+	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco);
 	string getTipo() const;
 };
 

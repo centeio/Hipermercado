@@ -201,7 +201,7 @@ ostream& operator<< (ostream& out, Fornecedor* fornecedor) {
 
 //FornecedorIndividual
 
-void FornecedorIndividual::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco) {
+void FornecedorIndividual::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco) {
 
 	if(produtosForn.at(indiceProduto)->getPatamares().size() == 1) throw DemasiadosPatamares();
 	Fornecedor::addPatamar(indiceProduto,min,max,preco);
@@ -223,7 +223,7 @@ string FornecedorIndividual::getTipo() const {
 }
 
 //FornecedorEmpresa
-void FornecedorEmpresa::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, unsigned preco) {
+void FornecedorEmpresa::addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco) {
 	Fornecedor::addPatamar(indiceProduto,min,max,preco);
 	/**
 	 *@brief Adiciona patamar
