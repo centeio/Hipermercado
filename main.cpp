@@ -552,7 +552,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 
 			cout << "Introduza o limite minimo do patamar: " << flush;
 			cin >> patminimo;
-			cout << "Introduza o liminte maximo do patamar: " << flush;
+			cout << "Introduza o limite maximo do patamar: " << flush;
 			cin >> patmaximo;
 			cout << "Introduza o preco: " << flush;
 			cin >> preco;
