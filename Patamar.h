@@ -17,6 +17,7 @@ protected:
 	 unsigned int min, max;
 	 float preco;
 public:
+	/** Declaracao das funcoes */
 	Patamar();
 	Patamar(unsigned int min, unsigned int max, float preco) : min(min), max(max), preco(preco) {};
 	unsigned int getMinimo() const;

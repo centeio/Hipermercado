@@ -98,7 +98,7 @@ void PedidoEncomenda::acrescenta(Produto* produto, unsigned int qt) {
 	else {
 		produtos.push_back(produto);
 		quantidade.push_back(qt);
-	//	actualizaData();
+		//	actualizaData();
 	}
 	/**
 			*	@brief Acrescenta um pedido de encomenda
@@ -106,7 +106,6 @@ void PedidoEncomenda::acrescenta(Produto* produto, unsigned int qt) {
 			* @param produto Produto a acrescentar
 			* @param qt Quantidade
 			*/
-}
 }
 
 
