@@ -10,13 +10,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Fornecedor.h"
+#include "Patamar.h"
 using namespace std;
 
 
 class Produto {
 protected:
-	string nome;
-	string medida;
+	string nome, medida;
+	float stock;
 public:
 	/** Declaracao das funcoes */
 	Produto();
@@ -28,6 +30,12 @@ public:
 	bool operator==(Produto &produto);
 	friend ostream& operator<< (ostream& out, Produto* produto);
 	virtual ~Produto();
+};
+
+class ProdutoFornecedor : public Produto {
+protected:
+	Fornecedor* fornecedor;
+	vector<Patamar> patamares;
 };
 
 #endif /* PRODUTO_H_ */

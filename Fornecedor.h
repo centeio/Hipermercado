@@ -7,13 +7,12 @@
 
 #ifndef FORNECEDOR_H_
 #define FORNECEDOR_H_
-#include "ProdFornecedor.h"
-
+#include "Data.h"
 
 class Fornecedor {
 protected:
 	string nome, NIF, morada;
-	vector<ProdFornecedor*> produtosForn;
+	Data data;
 public:
 	/** Declaracao das funcoes */
 	Fornecedor();
@@ -24,15 +23,9 @@ public:
 	void setNome(string nome);
 	void setNIF(string NIF);
 	void setMorada(string morada);
-	vector<ProdFornecedor*> getProdutosForn() const;
-	virtual void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco);
 	virtual string getTipo() const = 0;
-	void addProduto(Produto* produto, unsigned int stock);
-	void remProduto(Produto* produto);
-	void decStock(Produto* produto,unsigned int quantidade);
 	friend ostream& operator<< (ostream& out, Fornecedor* fornecedor);
 	bool operator== (Fornecedor &fornecedor) const;
-	void displayProdutosForn() const;
 	virtual ~Fornecedor();
 };
 
@@ -41,7 +34,6 @@ protected:
 	string tipo = "Individual";
 public:
 	FornecedorIndividual(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
-	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco);
 	string getTipo() const;
 
 };
@@ -51,7 +43,6 @@ protected:
 	string tipo = "Empresa";
 public:
 	FornecedorEmpresa(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
-	void addPatamar(unsigned int indiceProduto, unsigned int min, unsigned int max, float preco);
 	string getTipo() const;
 };
 
