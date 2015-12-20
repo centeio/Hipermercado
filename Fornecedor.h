@@ -20,9 +20,11 @@ public:
 	string getNome() const;
 	string getNIF() const;
 	string getMorada() const;
+	Data* getData() const;
 	void setNome(string nome);
 	void setNIF(string NIF);
 	void setMorada(string morada);
+	void setData(Data data);
 	virtual string getTipo() const = 0;
 	friend ostream& operator<< (ostream& out, Fornecedor* fornecedor);
 	bool operator== (Fornecedor &fornecedor) const;
@@ -45,8 +47,6 @@ public:
 	FornecedorEmpresa(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
 	string getTipo() const;
 };
-
-class DemasiadosPatamares{};
 
 
 #endif /* FORNECEDOR_H_ */

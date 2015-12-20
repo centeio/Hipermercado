@@ -22,11 +22,13 @@ protected:
 public:
 	/** Declaracao das funcoes */
 	Produto();
-	Produto(string nome, string medida) : nome(nome), medida(medida) {};
+	Produto(string nome, string medida, float stock) : nome(nome), medida(medida), stock(stock) {};
 	string getNome() const;
 	void setNome(string nome);
 	string getMedida() const;
 	void setMedida(string medida);
+	float getStock() const;
+	void setStock();
 	bool operator==(Produto &produto);
 	friend ostream& operator<< (ostream& out, Produto* produto);
 	virtual ~Produto();
@@ -35,7 +37,14 @@ public:
 class ProdutoFornecedor : public Produto {
 protected:
 	Fornecedor* fornecedor;
-	vector<Patamar> patamares;
+	vector<Patamar*> patamares;
+public:
+	ProdutoFornecedor(string nome, string medida,float stock) : Produto(nome, medida, stock){};
+	Fornecedor* getFornecedor() const;
+	void setFornecedor(Fornecedor* fornecedor);
+	vector<Patamar*> getPatamares() const;
+	void addPatamar();
+
 };
 
 #endif /* PRODUTO_H_ */
