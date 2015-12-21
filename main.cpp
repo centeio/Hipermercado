@@ -795,9 +795,7 @@ int main() {
 	//inicializando a data
 	time_t now = time(0);
 	tm *date = localtime(&now);
-	dataactual.setDia(date->tm_mday);
-	dataactual.setMes(1 + date->tm_mon);
-	dataactual.setAno(1900 + date->tm_year);
+	hipermercado->setDataAtual(date->tm_mday, 1 + date->tm_mon, 1900 + date->tm_year);
 
 	leFicheiros(hipermercado);
 	menuinicial(hipermercado);

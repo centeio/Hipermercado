@@ -53,6 +53,14 @@ vector<Encomenda*> Hipermercado::getEncomendas() const{
 	 */
 }
 
+Data Hipermercado::getDataAtual() const { return dataatual; }
+
+void Hipermercado::setDataAtual(unsigned int dia, unsigned int mes, unsigned int ano) {
+	dataatual.setDia(dia);
+	dataatual.setMes(mes);
+	dataatual.setAno(ano);
+}
+
 void Hipermercado::alteraQuantProdPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt){
 	pedidos.at(indicepedido)->setQuantProduto(indiceproduto,novaqt);
 	/**
@@ -349,7 +357,7 @@ void Hipermercado::displayEncomendas() const{
 	 *	@brief display de todas as encomendas
 	 */
 }
-
+/*
 void Hipermercado::displayProdutosFornecedor() const {
 
 	for(unsigned int i = 0; i < fornecedores.size(); i++) {
@@ -358,7 +366,7 @@ void Hipermercado::displayProdutosFornecedor() const {
 	/**
 	 *	@brief display de todos os produtos de todos os fornecedores
 	 */
-}
+//}
 
 void Hipermercado::processaPedido() {
 
@@ -368,4 +376,28 @@ void Hipermercado::processaPedido() {
 	/**
 	 *	@brief Processa pedido
 	 */
+}
+
+void Hipermercado::atualizaTabela(){
+	for(unsigned int i=0;i<fornecedores.size();i++){
+		Data d=dataatual;
+		d.setAno(dataatual.getAno()-1);
+		if(fornecedores.at(i)->getData()<d)
+			inativos.insert(fornecedores.at(i));
+	}
+}
+
+void Hipermercado::removeDaTabela(Fornecedor* f){
+	inativos.erase(inativos.find(f));
+
+}
+
+void Hipermercado::displayTabela(){
+	unordered_set<Fornecedor*,hf,eqf>::iterator it = inativos.begin();
+	while (it!=inativos.end()) {
+		cout << *it << endl;
+		it++;
+	};
+
+
 }

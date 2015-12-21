@@ -14,7 +14,7 @@
 using namespace std;
 
 
-static Data dataactual;
+
 
 class Encomenda {
 protected:

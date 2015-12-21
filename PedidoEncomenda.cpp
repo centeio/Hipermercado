@@ -111,50 +111,6 @@ void PedidoEncomenda::acrescenta(Produto* produto, unsigned int qt) {
 
 
 void PedidoEncomenda::processamento() {
-	unsigned int i, j, k, q, qt;
-
-	for (i = 0; i < produtos.size(); i++) {
-		q=quantidade.at(i);
-		while (q > 0) {
-			int melhorp = INT_MAX, fornecedor;
-			for (j = 0; j < Hipermercado::getInstance()->getFornecedores().size(); j++) {
-
-				for (k = 0;k< Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().size();k++) {
-					if (Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().at(k)->getProduto()->getNome() == produtos.at(i)->getNome()){
-						melhorPreco melhorpreco = Hipermercado::getInstance()->getFornecedores().at(j)->getProdutosForn().at(k)->getMelhorPreco(produtos.at(i)->getNome(),q);
-					if (melhorp > melhorpreco.preco) {
-						melhorp = melhorpreco.preco;
-						fornecedor = j;
-						qt = melhorpreco.quantidade;
-					}}
-				}
-			}
-
-
-			if(j>=Hipermercado::getInstance()->getFornecedores().size()){
-				if(q==quantidade.at(i))
-					throw ProdutoNaoEstaAVenda(produtos.at(i));
-				else
-					throw ProdutoParcialmenteComprado(produtos.at(i));
-				q=0;
-
-			}
-			else{
-				bool existe=false;
-				for(unsigned int enc=0;enc<Hipermercado::getInstance()->getEncomendas().size();enc++){
-					if(Hipermercado::getInstance()->getEncomendas().at(enc)->getFornecedor()==Hipermercado::getInstance()->getFornecedores().at(fornecedor))
-						if(Hipermercado::getInstance()->getEncomendas().at(enc)->getData()==data){
-							Hipermercado::getInstance()->getEncomendas().at(enc)->addLinha(produtos.at(i),qt,melhorp);
-							existe=true;
-						}
-				}
-				if(!existe)
-					Hipermercado::getInstance()->addEncomenda(new Encomenda(Hipermercado::getInstance()->getFornecedores().at(j),produtos.at(i),qt,melhorp));
-				Hipermercado::getInstance()->getFornecedores().at(j)->decStock(produtos.at(i),quantidade.at(i));
-			}
-
-			}
-		}
 	finalizado=true;
 	/**
 				*	@brief Processa o pedido de encomenda
@@ -162,22 +118,7 @@ void PedidoEncomenda::processamento() {
 }
 
 void PedidoEncomenda::eliminaProduto(Produto* produto) {
-	unsigned int i, j;
-	for (i = 0; i < produtos.size(); i++) {
-		if (produto->getNome() == produtos.at(i)->getNome())
-			j = i;
-	}
-	if (j >= produtos.size())
-		throw ProdutoNaoExiste(produto);
-	else {
-		produtos.erase(produtos.begin() + j);
-		quantidade.erase(quantidade.begin() + j);
-	}
-	/**
-				*	@brief Elimina um produto de um pedido de encomenda
-				*
-				* @param produto Produto a eliminar
-				*/
+
 }
 
 ostream &operator<<(ostream& os,PedidoEncomenda* p){
