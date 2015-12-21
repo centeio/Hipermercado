@@ -15,6 +15,7 @@
 #include "Encomenda.h"
 #include "PedidoEncomenda.h"
 #include <tr1/unordered_set>
+#include "BST.h"
 
 using namespace std;
 using namespace tr1;
@@ -48,14 +49,13 @@ public:
 	}
 
 	vector<Fornecedor*> getFornecedores() const;
-	vector<Produto*> getProdutos() const;
+	BST<ProdutoFornecedor> getProdutos() const;
 	vector<Encomenda*> getEncomendas() const;
 	vector<PedidoEncomenda*> getPedidos() const;
 	string getNome() const;
 	Data getDataAtual() const;
 	void setDataAtual(unsigned int dia, unsigned int mes, unsigned int ano);
 	void ordenaFornecedores();
-	void ordenaProdutos();
 	void ordenaPedidos();
 	void ordenaEncomendas();
 	void displayFornecedores() const;
@@ -68,8 +68,8 @@ public:
 	void processaPedido();
 	void addFornecedor(Fornecedor* fornecedor);
 	void eliminaFornecedor(unsigned int indice);
-	void addProduto(Produto* produto);
-	void eliminaProduto(unsigned int indice);
+	void addProduto(ProdutoFornecedor produto);
+	void eliminaProduto(ProdutoFornecedor produto);
 	void alteraNomeProduto(unsigned int indice, string novonome);
 	void alteraMedidaProduto(unsigned int indice, string novamedida);
 	void addPedido(PedidoEncomenda* pedido);
@@ -85,13 +85,13 @@ public:
 private:
 	string nome;
 	vector<Fornecedor*> fornecedores;
-	vector<Produto*> produtos;
 	vector<PedidoEncomenda*> pedidos;
 	vector<Encomenda*> encomendas;
 	Hipermercado(string nome);
 	static Hipermercado* Instance;
 	unordered_set<Fornecedor*, hf, eqf> inativos;
 	Data dataatual;
+	BST<ProdutoFornecedor> produtos;
 
 };
 #endif /* HIPERMERCADO_H_ */

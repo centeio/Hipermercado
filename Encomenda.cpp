@@ -10,7 +10,7 @@
 
 Encomenda::Encomenda(Fornecedor* fornecedor,Produto* produto,int quantidade, float preco): fornecedor(fornecedor) {
 	linhas.push_back(new LinhaEncomenda (produto,quantidade,preco));
-	data=dataactual;
+	//data=dataactual;
 	/**
 	 *	@brief Adiciona encomenda com a data actual
 	 *

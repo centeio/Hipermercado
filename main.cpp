@@ -16,6 +16,7 @@
 #include "Hipermercado.h"
 using namespace std;
 
+/*
 void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoprodutos);
 void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedores);
 void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoencomendas);
@@ -788,6 +789,7 @@ void escrevePedidosEncomendas(Hipermercado* hipermercado) {
 	}
 
 }
+*/
 
 int main() {
 	Hipermercado* hipermercado = Hipermercado::getInstance();
@@ -797,8 +799,37 @@ int main() {
 	tm *date = localtime(&now);
 	hipermercado->setDataAtual(date->tm_mday, 1 + date->tm_mon, 1900 + date->tm_year);
 
-	leFicheiros(hipermercado);
-	menuinicial(hipermercado);
-	escreveFicheiros(hipermercado);
+	//leFicheiros(hipermercado);
+	//menuinicial(hipermercado);
+	//escreveFicheiros(hipermercado);
+	Fornecedor* fornecedor1 = new FornecedorIndividual("Daniel", "2454635", "Rua das Cruzes");
+	Patamar* patamar1 = new Patamar(0,100, 9);
+	ProdutoFornecedor produto1("Ananas", "kg",100,fornecedor1, patamar1);
+
+	Fornecedor* fornecedor2 = new FornecedorIndividual("Paulo", "2454635", "Rua das Cruzes");
+	Patamar* patamar2 = new Patamar(100,200, 8);
+	ProdutoFornecedor produto2("Bananas", "kg",100,fornecedor2, patamar2);
+
+	Fornecedor* fornecedor3 = new FornecedorIndividual("Joao", "2454635", "Rua das Cruzes");
+	Patamar* patamar3 = new Patamar(0,100, 10);
+	ProdutoFornecedor produto3("Maca", "kg",100,fornecedor3, patamar3);
+
+	Fornecedor* fornecedor4 = new FornecedorIndividual("Ricardo", "2454635", "Rua das Cruzes");
+	Patamar* patamar4 = new Patamar(100,200, 11);
+	ProdutoFornecedor produto4("Arroz", "kg",100,fornecedor4, patamar4);
+
+	Fornecedor* fornecedor5 = new FornecedorIndividual("Ricardo", "2454635", "Rua das Cruzes");
+	Patamar* patamar5 = new Patamar(100,200, 7);
+	ProdutoFornecedor produto5("Bananas", "kg",200,fornecedor5, patamar5);
+
+
+	hipermercado->addProduto(produto1);
+	hipermercado->addProduto(produto2);
+	hipermercado->addProduto(produto3);
+	hipermercado->addProduto(produto4);
+	hipermercado->addProduto(produto5);
+
+	hipermercado->displayProdutos();
+
 	return 0;
 }

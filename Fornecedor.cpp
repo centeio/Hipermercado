@@ -50,7 +50,7 @@ string Fornecedor::getNIF() const { return NIF; }
 string Fornecedor::getMorada() const { return morada; }
 
 
-Data* Fornecedor::getData() const { return &data; }
+Data Fornecedor::getData() const { return data; }
 
 
 /**

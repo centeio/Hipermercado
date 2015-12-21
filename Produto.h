@@ -37,14 +37,15 @@ public:
 class ProdutoFornecedor : public Produto {
 protected:
 	Fornecedor* fornecedor;
-	vector<Patamar*> patamares;
+	Patamar* patamar;
 public:
-	ProdutoFornecedor(string nome, string medida,float stock) : Produto(nome, medida, stock){};
+	ProdutoFornecedor(string nome, string medida,float stock, Fornecedor* fornecedor, Patamar* patamar) : Produto(nome, medida, stock), fornecedor(fornecedor), patamar(patamar){};
 	Fornecedor* getFornecedor() const;
 	void setFornecedor(Fornecedor* fornecedor);
-	vector<Patamar*> getPatamares() const;
+	Patamar* getPatamar() const;
 	void addPatamar();
-
+	bool operator < (ProdutoFornecedor produto) const;
+	friend ostream& operator<< (ostream& out, ProdutoFornecedor produto);
 };
 
 #endif /* PRODUTO_H_ */

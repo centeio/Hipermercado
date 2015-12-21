@@ -14,7 +14,7 @@ Hipermercado* Hipermercado::Instance = NULL;
 	 *
 	 */
 
-Hipermercado::Hipermercado(string nome): nome(nome){
+Hipermercado::Hipermercado(string nome): nome(nome), produtos(ProdutoFornecedor("","",1000, NULL, NULL)){
 	/**
 	 *	@brief Constroi o hipermercado
 	 *
@@ -30,7 +30,7 @@ vector<Fornecedor*> Hipermercado::getFornecedores() const{
 }
 
 
-vector<Produto*> Hipermercado::getProdutos() const{
+BST<ProdutoFornecedor> Hipermercado::getProdutos() const{
 	return produtos;
 	/**
 	 *	@return Retorna os produtos do hipermercado
@@ -132,14 +132,6 @@ bool op(Produto* p1,Produto* p2){
 }
 
 
-void Hipermercado::ordenaProdutos(){
-	sort(produtos.begin(),produtos.end(),op);
-	/**
-	 *	@brief Ordena Produtos
-	 */
-}
-
-
 bool opd(PedidoEncomenda* p1,PedidoEncomenda* p2){
 	if(p1->getData() < p2->getData())
 		return true;
@@ -212,8 +204,8 @@ void Hipermercado::eliminaFornecedor(unsigned int indice){
 }
 
 
-void Hipermercado::addProduto(Produto* produto){
-	produtos.push_back(produto);
+void Hipermercado::addProduto(ProdutoFornecedor produto){
+	produtos.insert(produto);
 	/**
 	 *	@brief Adiciona produto
 	 *
@@ -222,9 +214,8 @@ void Hipermercado::addProduto(Produto* produto){
 }
 
 
-void Hipermercado::eliminaProduto(unsigned int indice){
-	delete(produtos.at(indice));
-	produtos.erase(produtos.begin()+indice);
+void Hipermercado::eliminaProduto(ProdutoFornecedor produto){
+	produtos.remove(produto);
 	/**
 	 *	@brief Elimina produto
 	 *
@@ -232,7 +223,7 @@ void Hipermercado::eliminaProduto(unsigned int indice){
 	 */
 }
 
-void Hipermercado::alteraNomeProduto(unsigned int indice, string novonome){
+/*void Hipermercado::alteraNomeProduto(unsigned int indice, string novonome){
 	produtos.at(indice)->setNome(novonome);
 	/**
 	 *	@brief Altera nome do Produto
@@ -240,9 +231,9 @@ void Hipermercado::alteraNomeProduto(unsigned int indice, string novonome){
 	 *	@param indice Indice do Produto a alterar
 	 *	@param novonome Novo nome
 	 */
-}
+//}
 
-void Hipermercado::alteraMedidaProduto(unsigned int indice, string novamedida){
+/*void Hipermercado::alteraMedidaProduto(unsigned int indice, string novamedida){
 	produtos.at(indice)->setMedida(novamedida);
 	/**
 	 *	@brief Altera medida do Produto
@@ -250,7 +241,7 @@ void Hipermercado::alteraMedidaProduto(unsigned int indice, string novamedida){
 	 *	@param indice Indice do Produto a alterar
 	 *	@param novamedida Nova medida
 	 */
-}
+//}
 
 void Hipermercado::eliminaPedido(unsigned int indice){
 	delete(pedidos.at(indice));
@@ -283,6 +274,11 @@ void Hipermercado::addEncomenda(Encomenda* encomenda){
 }
 
 
+void Hipermercado::displayProdutos() const {
+	produtos.printTree();
+}
+
+
 void Hipermercado::displayFornecedores() const{
 
 	if(fornecedores.size() != 0) {
@@ -293,19 +289,6 @@ void Hipermercado::displayFornecedores() const{
 	}
 	/**
 	 *	@brief display de todos Fornecedor
-	 */
-}
-
-
-void Hipermercado::displayProdutos() const{
-	if(produtos.size() != 0) {
-		cout << "Produtos: " << endl << setw(15)<<"Nome"<<setw(15)<<"Medida"<<endl;
-		for (unsigned int i = 0; i < produtos.size(); i++) {
-			cout << i + 1 << " - " << produtos.at(i) << endl;
-		}
-	}
-	/**
-	 *	@brief display de todos os Produtos
 	 */
 }
 

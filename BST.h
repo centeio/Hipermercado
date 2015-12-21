@@ -155,9 +155,7 @@ void BST<Comparable>::printTree( ) const
 }
 
 template <class Comparable>
-const BST<Comparable> &
-BST<Comparable>::
-operator=( const BST<Comparable> & rhs )
+const BST<Comparable>& BST<Comparable>::operator=( const BST<Comparable> & rhs )
 {
   if( this != &rhs )
     {
@@ -169,8 +167,7 @@ operator=( const BST<Comparable> & rhs )
 
 
 template <class Comparable>
-const Comparable & BST<Comparable>::
-elementAt( BinaryNode<Comparable> *t ) const
+const Comparable& BST<Comparable>::elementAt( BinaryNode<Comparable> *t ) const
 {
   if( t == NULL )
     return ITEM_NOT_FOUND;
@@ -180,8 +177,7 @@ elementAt( BinaryNode<Comparable> *t ) const
 
 
 template <class Comparable>
-void BST<Comparable>::
-insert( const Comparable & x, BinaryNode<Comparable> * & t ) const
+void BST<Comparable>::insert( const Comparable & x, BinaryNode<Comparable> * & t ) const
 {
   if( t == NULL )
     t = new BinaryNode<Comparable>( x, NULL, NULL );
@@ -194,8 +190,7 @@ insert( const Comparable & x, BinaryNode<Comparable> * & t ) const
 }
 
 template <class Comparable>
-void BST<Comparable>::
-remove( const Comparable & x, BinaryNode<Comparable> * & t ) const
+void BST<Comparable>::remove( const Comparable & x, BinaryNode<Comparable> * & t ) const
 {
   if( t == NULL )
     return;   // Item not found; do nothing
@@ -217,8 +212,7 @@ remove( const Comparable & x, BinaryNode<Comparable> * & t ) const
 }
 
 template <class Comparable>
-BinaryNode<Comparable> *
-BST<Comparable>::findMin( BinaryNode<Comparable> *t ) const
+BinaryNode<Comparable>* BST<Comparable>::findMin( BinaryNode<Comparable> *t ) const
 {
   if( t == NULL )
     return NULL;
@@ -229,8 +223,7 @@ BST<Comparable>::findMin( BinaryNode<Comparable> *t ) const
 
 
 template <class Comparable>
-BinaryNode<Comparable> *
-BST<Comparable>::findMax( BinaryNode<Comparable> *t ) const
+BinaryNode<Comparable>* BST<Comparable>::findMax( BinaryNode<Comparable> *t ) const
 {
   if( t != NULL )
     while( t->right != NULL )
@@ -239,9 +232,7 @@ BST<Comparable>::findMax( BinaryNode<Comparable> *t ) const
 }
 
 template <class Comparable>
-BinaryNode<Comparable> *
-BST<Comparable>::
-find( const Comparable & x, BinaryNode<Comparable> *t ) const
+BinaryNode<Comparable>* BST<Comparable>::find( const Comparable & x, BinaryNode<Comparable> *t ) const
 {
   if( t == NULL )
     return NULL;
@@ -274,8 +265,7 @@ find( const Comparable & x, BinaryNode<Comparable> *t ) const
  * Internal method to make subtree empty.
  */
 template <class Comparable>
-void BST<Comparable>::
-makeEmpty( BinaryNode<Comparable> * & t ) const
+void BST<Comparable>::makeEmpty( BinaryNode<Comparable> * & t ) const
 {
   if( t != NULL )
     {
@@ -298,8 +288,7 @@ void BST<Comparable>::printTree( BinaryNode<Comparable> *t ) const
 }
 
 template <class Comparable>
-BinaryNode<Comparable> *
-BST<Comparable>::clone( BinaryNode<Comparable> * t ) const
+BinaryNode<Comparable>* BST<Comparable>::clone( BinaryNode<Comparable> * t ) const
 {
   if( t == NULL )
     return NULL;

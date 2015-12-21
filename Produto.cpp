@@ -95,7 +95,7 @@ ostream& operator<< (ostream& out, Produto* produto) {
 
 //ProdutoFornecedor
 
-void ProdutoFornecedor::addPatamar() {
+/*void ProdutoFornecedor::addPatamar() {
 	float preco;
 	unsigned int min, max;
 
@@ -116,10 +116,27 @@ void ProdutoFornecedor::addPatamar() {
 		Patamar* pat = new Patamar(min, max, preco);
 		patamares.push_back(pat);
 	}
-}
+}*/
 
 Fornecedor* ProdutoFornecedor::getFornecedor() const { return fornecedor; }
 
-vector<Patamar*> ProdutoFornecedor::getPatamares() const { return patamares; }
+Patamar* ProdutoFornecedor::getPatamar() const { return patamar; }
 
 void ProdutoFornecedor::setFornecedor(Fornecedor *fornecedor) { this->fornecedor = fornecedor; }
+
+bool ProdutoFornecedor::operator < (ProdutoFornecedor produto) const {
+
+	if(nome < produto.getNome()) return true;
+	else if(nome == produto.getNome()) {
+		if(patamar->getPreco() <= produto.getPatamar()->getPreco()) return true;
+	}
+
+	return false;
+}
+
+
+ostream& operator<< (ostream& out, ProdutoFornecedor produto) {
+
+	out << produto.getNome() << " " << produto.getMedida() << " " << produto.getStock() << " " << produto.getPatamar()->getPreco() << endl;
+	return out;
+}
