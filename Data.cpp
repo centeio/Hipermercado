@@ -106,3 +106,22 @@ Data::~Data() {
 			*/
 }
 
+/*bool Data::maisDeUmAno(){
+	if(ano+1<dataactual.ano)
+		return true;
+	else
+		if(ano+1==dataactual.ano)
+			if(mes==dataactual.mes)
+				if(dia<=dataactual.dia)
+					return true;
+				else
+					return false;
+			else if(mes<dataactual.mes)
+				return true;
+			else
+				return false;
+		else
+			return false;
+
+
+}*/

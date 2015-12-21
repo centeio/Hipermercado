@@ -11,6 +11,7 @@
 #include <iostream>
 
 
+
 using namespace std;
 
 class Data {
@@ -32,6 +33,7 @@ public:
 	void setAno(unsigned int novoano);
 	bool operator==(Data d2);
 	friend ostream &operator<<(ostream& os,const Data& d);
+	bool maisDeUmAno();
 };
 
 #endif /* DATA_H_ */
