@@ -32,6 +32,9 @@ Encomenda::Encomenda(Fornecedor* fornecedor,Produto* produto,int quantidade, flo
 		 */
 }
 
+Encomenda::Encomenda(Fornecedor* fornecedor, vector<LinhaEncomenda*> linhas, Data d):fornecedor(fornecedor),data(d), linhas(linhas){
+
+}
 
 Encomenda::~Encomenda() {
 	// TODO Auto-generated destructor stub

@@ -25,6 +25,7 @@ public:
 	/** Declaracao das funcoes */
 	Encomenda(Fornecedor* fornecedor,Produto* produto, int quantidade, float preco);
 	Encomenda(Fornecedor* fornecedor,Produto* produto, int quantidade, float preco, Data d);
+	Encomenda(Fornecedor* fornecedor, vector<LinhaEncomenda*> linhas, Data d);
 	Encomenda();
 	virtual ~Encomenda();
 	friend ostream &operator<<(ostream& os, Encomenda* enc);
