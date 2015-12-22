@@ -23,6 +23,12 @@ Fornecedor::Fornecedor() {
 	data.setAno(0);
 }
 
+Fornecedor::Fornecedor(string nome, string NIF, string morada) : nome(nome), NIF(NIF), morada(morada) {
+	Data data(0,0,0);
+	this->data = data;
+}
+
+
 /**
  *	@brief Destroi o produto
  *

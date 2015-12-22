@@ -17,6 +17,7 @@ public:
 	/** Declaracao das funcoes */
 	Fornecedor();
 	Fornecedor(string nome, string NIF, string morada, Data data) : nome(nome), NIF(NIF), morada(morada), data(data) {};
+	Fornecedor(string nome, string NIF, string morada);
 	string getNome() const;
 	string getNIF() const;
 	string getMorada() const;
