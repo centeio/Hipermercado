@@ -26,6 +26,8 @@ private:
 public:
 	/** Declaracao das funcoes */
 	PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quant);
+	PedidoEncomenda(vector<Produto*> produtos, vector<unsigned int> quant);
+	PedidoEncomenda(Produto* produto, unsigned int quant);
 	PedidoEncomenda();
 	virtual ~PedidoEncomenda();
 	void processamento();
