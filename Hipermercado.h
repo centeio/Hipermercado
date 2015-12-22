@@ -73,8 +73,9 @@ public:
 	void eliminaFornecedor(unsigned int indice);
 	void addProduto(ProdutoFornecedor produto);
 	void eliminaProduto(ProdutoFornecedor produto);
-	void alteraNomeProduto(unsigned int indice, string novonome);
-	void alteraMedidaProduto(unsigned int indice, string novamedida);
+	void alteraNomeProduto(string produto, string novonome);
+	void alteraMedidaProduto(string produto, string novamedida);
+	void alteraStockProduto(string produto, float stock);
 	void addPedido(PedidoEncomenda* pedido);
 	void eliminaPedido(unsigned int indice);
 	void addEncomenda(Encomenda* encomenda);
@@ -92,7 +93,7 @@ public:
 	void removeProdutoFila(Produto* p);
 	void alteraProdutoFila(Produto* p, int stock);
 	void manageFila();
-	priority_queue<Produto*, vector<Produto*>, compare> getPriorityQueue() const;
+	//priority_queue<Produto*, vector<Produto*>, compare> getPriorityQueue() const;
 
 	BinaryNode<ProdutoFornecedor> * existeProduto(string nome);
 
@@ -106,6 +107,7 @@ private:
 	unordered_set<Fornecedor*, hf, eqf> inativos;
 	Data dataatual;
 	BST<ProdutoFornecedor> produtos;
+	static ProdutoFornecedor ITEM_NOT_FOUND;
 	BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
 
 	struct compare{
