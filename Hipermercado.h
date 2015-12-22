@@ -95,7 +95,7 @@ private:
 	unordered_set<Fornecedor*, hf, eqf> inativos;
 	Data dataatual;
 	BST<ProdutoFornecedor> produtos;
-	 BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
+	BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
 
 
 };

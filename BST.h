@@ -131,8 +131,7 @@ const Comparable & BST<Comparable>::findMax( ) const
 }
 
 template <class Comparable>
-const Comparable & BST<Comparable>::
-find( const Comparable & x ) const
+const Comparable & BST<Comparable>::find( const Comparable & x ) const
 {
   return elementAt( find( x, root ) );
 }

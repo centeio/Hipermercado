@@ -28,7 +28,7 @@ public:
 	string getMedida() const;
 	void setMedida(string medida);
 	float getStock() const;
-	void setStock();
+	void setStock(float stock);
 	bool operator==(Produto &produto);
 	friend ostream& operator<< (ostream& out, Produto* produto);
 	virtual ~Produto();

@@ -65,7 +65,7 @@ void Produto::setMedida(string medida) { this->medida = medida; }
 float Produto::getStock() const { return stock; }
 
 
-void Produto::setStock() { this->stock = stock; }
+void Produto::setStock(float stock) { this->stock = stock; }
 
 
 /**

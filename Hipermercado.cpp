@@ -389,6 +389,7 @@ BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome){
 
 
 BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome,  BinaryNode<ProdutoFornecedor> *t){
+
 	if( t == NULL )
 		return NULL;
 	else if( nome < t->element.getNome() )
