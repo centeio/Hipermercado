@@ -39,6 +39,9 @@ struct hf
 	}
 };
 
+/** @brief Struct compare que organiza a fila de prioridade
+ *
+ */
 
 class Hipermercado {
 public:
@@ -83,6 +86,14 @@ public:
 	void removeDaTabela(Fornecedor* f);
 	void displayTabela();
 
+	void displayPriorityQueue();
+	//organiza na fila prioritaria
+	void addProduto(Produto* p);
+	void removeProduto(Produto* p);
+	void alteraProduto(Produto* p, int stock);
+	void manageFila();
+	priority_queue<Produto*, vector<Produto*>, compare> getPriorityQueue() const;
+
 	BinaryNode<ProdutoFornecedor> * existeProduto(string nome);
 
 private:
@@ -97,6 +108,21 @@ private:
 	BST<ProdutoFornecedor> produtos;
 	BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
 
+	struct compare{
+		bool operator() (const Produto* a, const Produto* b) {
+			//se o stock de dois produtos for igual o produto com maior alerta e o com menor preco
+			if (a->getStock() == b->getStock()) {
+				//return (melhorPreco(a)>melhorPreco(b));//preco pelo qual pode ser adquirido
+				return getInstance()->existeProduto(a->getNome())->element.getPatamar()->getPreco() > getInstance()->existeProduto(b->getNome())->element.getPatamar()->getPreco();
+			}
+			//o maior alerta e o do produto com menor stock
+			return (a->getStock() > b->getStock());
+		}
+	};
+
+	priority_queue<Produto*, vector<Produto*>, compare> alertas;
+
 
 };
 #endif /* HIPERMERCADO_H_ */
+

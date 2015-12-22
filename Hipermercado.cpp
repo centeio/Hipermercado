@@ -399,3 +399,90 @@ BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome,  BinaryNode<Pr
 	else
 		return t;    // Match
 }
+
+/** @brief Retorna a fila de prioridade
+ *
+ */
+priority_queue<Produto*, vector<Produto*>,compare> Hipermercado::getPriorityQueue() const{
+	return alertas;
+}
+
+/** @brief Adiciona um produto a fila de prioridade
+ *
+ *	@param p Produto a ser adicionado a fila
+ */
+void Hipermercado::addProduto(Produto* p){
+
+	alertas.push(p);
+}
+
+/** @brief Remove um produto da fila de prioridade
+ *
+ *	@param p Produto a ser removido
+ */
+void Hipermercado::removeProduto(Produto* p) {
+	priority_queue<Produto*, vector<Produto*>, compare> temp;
+	priority_queue<Produto*, vector<Produto*>, compare> temp2;
+	temp = alertas;
+
+	while(!temp.empty()){
+		if(temp.top() != p){
+			temp2.push(temp.top());
+			temp.pop();
+		}
+		else{
+			temp.pop();
+		}
+	}
+	alertas = temp2;
+}
+
+/** @brief Altera o stock de um produto da fila de prioridade
+ *
+ *	@param p Produto a ser alterado
+ *	@param int Stock novo stock do produto
+ */
+void Hipermercado::alteraProduto(Produto* p, int stock){
+	stack<Produto*> stack;
+
+	while (!alertas.empty()) {
+		if (alertas.top() != p) {
+			stack.push(alertas.top());
+			alertas.pop();
+		} else {
+			alertas.top()->setStock(stock);
+			break;
+		}
+	}
+	while(!stack.empty()){
+		alertas.push(stack.top());
+		stack.pop();
+	}
+}
+
+/** @brief Organiza as encomendas automaticas da fila quando o alerta � maximo, isto e quando o stock e zero
+ *
+ *
+ */
+void Hipermercado::manageFila(){
+	while(!alertas.empty()){
+		if(alertas.top()->getStock() == 0){
+			//geraEncomendaAutomaticamente do produto do topo da fila
+			alertas.pop();
+		}
+	}
+}
+
+/** @brief Imprime no ecra a constituicao da fila, com o nome do produto, as suas unidades, o stock e o melhor preco
+ *
+ */
+void Hipermercado::displayPriorityQueue(){
+	priority_queue<Produto*, vector<Produto*>, compare> temp;
+	temp = alertas;
+	cout << "alertas contains " << temp.size() << " elements.\n";
+	while (temp.size() != 0) {
+		cout << temp.top()->getNome() << " " << temp.top()->getMedida()
+		<< "  " << temp.top()->getStock() << endl;
+		temp.pop();
+	}
+}
