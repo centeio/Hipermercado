@@ -204,19 +204,23 @@ void Hipermercado::eliminaFornecedor(unsigned int indice){
 	 */
 }
 
-
+/**
+ *	@brief Adiciona produto
+ *
+ *	@param produto Produto a adicionar
+ */
 void Hipermercado::addProduto(ProdutoFornecedor produto){
 	produtos.insert(produto);
 	Produto* produtoFila = new Produto(produto.getNome(), produto.getMedida(), produto.getStock());
 	addProdutoFila(produtoFila);
-	/**
-	 *	@brief Adiciona produto
-	 *
-	 *	@param produto Produto a adicionar
-	 */
 }
 
-
+/**
+ *
+ * 	@brief Elimina produto
+ *
+ *	@param indice Indice do Produto a eliminar
+ */
 void Hipermercado::eliminaProduto(ProdutoFornecedor produto){
 	ProdutoFornecedor produtoFornecedor = produtos.find(produto);
 
@@ -224,35 +228,45 @@ void Hipermercado::eliminaProduto(ProdutoFornecedor produto){
 		produtos.remove(produto);
 		produtoFornecedor = produtos.find(produto);
 	}
-
 	Produto* produtoFila = new Produto(produto.getNome(), produto.getMedida(), produto.getStock());
 	removeProdutoFila(produtoFila);
-	/**
-	 *	@brief Elimina produto
-	 *
-	 *	@param indice Indice do Produto a eliminar
-	 */
 }
 
-/*void Hipermercado::alteraNomeProduto(unsigned int indice, string novonome){
-	produtos.at(indice)->setNome(novonome);
-	/**
- *	@brief Altera nome do Produto
- *
- *	@param indice Indice do Produto a alterar
- *	@param novonome Novo nome
- */
-//}
+/**
+*	@brief Altera nome do Produto
+*
+*	@param indice Indice do Produto a alterar
+*	@param novonome Novo nome
+*/
+void Hipermercado::alteraNomeProduto(string nome, string novonome){
+	BinaryNode<ProdutoFornecedor>* node = existeProduto(nome);
 
-/*void Hipermercado::alteraMedidaProduto(unsigned int indice, string novamedida){
-	produtos.at(indice)->setMedida(novamedida);
-	/**
- *	@brief Altera medida do Produto
- *
- *	@param indice Indice do Produto a alterar
- *	@param novamedida Nova medida
- */
-//}
+	while(node != NULL) {
+		ProdutoFornecedor produto = node->element;
+		produtos.remove(produto);
+		produto.setNome(novonome);
+		produtos.insert(produto);
+		node = existeProduto(nome);
+	}
+}
+
+/**
+*	@brief Altera medida do Produto
+*
+*	@param indice Indice do Produto a alterar
+*	@param novamedida Nova medida
+*/
+void Hipermercado::alteraMedidaProduto(string nome, string novamedida){
+	BinaryNode<ProdutoFornecedor>* node = existeProduto(nome);
+
+	while(node != NULL) {
+		ProdutoFornecedor produto = node->element;
+		produtos.remove(produto);
+		produto.setMedida(novamedida);
+		produtos.insert(produto);
+		node = existeProduto(nome);
+	}
+}
 
 void Hipermercado::eliminaPedido(unsigned int indice){
 	delete(pedidos.at(indice));
@@ -351,16 +365,6 @@ void Hipermercado::displayEncomendas() const{
 	 *	@brief display de todas as encomendas
 	 */
 }
-/*
-void Hipermercado::displayProdutosFornecedor() const {
-
-	for(unsigned int i = 0; i < fornecedores.size(); i++) {
-		fornecedores.at(i)->displayProdutosForn();
-	}
-	/**
- *	@brief display de todos os produtos de todos os fornecedores
- */
-//}
 
 void Hipermercado::processaPedido() {
 
