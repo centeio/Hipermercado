@@ -835,6 +835,18 @@ void escreveFicheiros(Hipermercado* hipermercado) {
 	escrevePedidosEncomendas(hipermercado);
 }
 
+void escreveProdutos(Hipermercado* hipermercado) {
+	ofstream hipermercadoProdutos;
+
+	hipermercadoProdutos.open("produtos.txt");
+	while(!hipermercado->getPriorityQueue()->empty()) {
+		hipermercadoProdutos << hipermercado->getPriorityQueue()->top()->getNome() << endl << hipermercado->getPriorityQueue()->top()->getMedida()
+				<< hipermercado->getPriorityQueue()->top()->getStock() << endl;
+	}
+	hipermercadoProdutos << "#";
+	hipermercadoProdutos.close();
+}
+
 void escreveProdutosFornecedor(Hipermercado* hipermercado) {
 	ofstream hipermercadoProdutosFornecedor;
 	BSTItrIn<ProdutoFornecedor> it(hipermercado->getProdutos());
@@ -866,7 +878,7 @@ void escreveFornecedores(Hipermercado* hipermercado) {
 				<< hipermercado->getFornecedores().at(i)->getData().getDia() << endl << hipermercado->getFornecedores().at(i)->getData().getMes()
 				<< endl << hipermercado->getFornecedores().at(i)->getData().getAno() << endl << hipermercado->getFornecedores().at(i)->getTipo() << endl;
 	}
-	hipermercado << "#";
+	hipermercadoFornecedores << "#";
 	hipermercadoFornecedores.close();
 }
 
@@ -879,20 +891,18 @@ void escreveEncomendas(Hipermercado* hipermercado) {
 
 	for (unsigned int i = 0; i < hipermercado->getEncomendas().size(); i++) {
 
-		hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getData().getDia() << endl
-				<< hipermercado->getEncomendas().at(i)->getData().getMes() << endl
-				<< hipermercado->getEncomendas().at(i)->getData().getAno() << endl
-				<< hipermercado->getEncomendas().at(i)->getFornecedor()->getNome() << endl
-				<< hipermercado->getEncomendas().at(i)->getLinhas().size() << endl;
-
+		hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getFornecedor()->getNome() << endl;
 		for (unsigned int j = 0; j < hipermercado->getEncomendas().at(i)->getLinhas().size(); j++) {
 
-			hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getProduto()->getNome() << endl
-					<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getProduto()->getMedida() << endl
-					<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getQuantidade() << endl
-					<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getPreco() << endl;
+			hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getProduto() << endl
+				<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getQuantidade() << endl
+				<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getPreco() << endl;
 		}
+		hipermercadoEncomendas << "#" << endl;
+		hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getData().getDia() << endl
+			<< hipermercado->getEncomendas().at(i)->getData().getMes() << endl << hipermercado->getEncomendas().at(i)->getData().getAno() << endl;
 	}
+	hipermercadoEncomendas << "#";
 	hipermercadoEncomendas.close();
 }
 
