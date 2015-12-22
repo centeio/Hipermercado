@@ -14,7 +14,7 @@
  * @param quantidade Quantidade
  * @param preco Preco
  */
-Encomenda::Encomenda(Fornecedor* fornecedor, Produto* produto, int quantidade,
+Encomenda::Encomenda(Fornecedor* fornecedor, string produto, int quantidade,
 		float preco) :
 		fornecedor(fornecedor) {
 	linhas.push_back(new LinhaEncomenda(produto, quantidade, preco));
@@ -29,7 +29,7 @@ Encomenda::Encomenda(Fornecedor* fornecedor, Produto* produto, int quantidade,
  * @param preco Preco
  * @param d Data
  */
-Encomenda::Encomenda(Fornecedor* fornecedor, Produto* produto, int quantidade,
+Encomenda::Encomenda(Fornecedor* fornecedor, string produto, int quantidade,
 		float preco, Data d) :
 		fornecedor(fornecedor), data(d) {
 	linhas.push_back(new LinhaEncomenda(produto, quantidade, preco));
@@ -81,7 +81,7 @@ Data Encomenda::getData() const {
  *	@param quantidade Quantidade
  *	@param preco Preco
  */
-void Encomenda::addLinha(Produto* produto, int quantidade, float preco) {
+void Encomenda::addLinha(string produto, int quantidade, float preco) {
 	LinhaEncomenda l(produto, quantidade, preco);
 	linhas.push_back(&l);
 }

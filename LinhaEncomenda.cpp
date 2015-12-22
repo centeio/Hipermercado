@@ -8,7 +8,7 @@
 #include "LinhaEncomenda.h"
 
 
-LinhaEncomenda::LinhaEncomenda(Produto* produto, unsigned int quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
+LinhaEncomenda::LinhaEncomenda(string produto, unsigned int quantidade,float preco):produto(produto),quantidade(quantidade),preco(preco){
     /**
 				*	@brief Constroi a linha de encomenda
 				*
@@ -25,7 +25,7 @@ LinhaEncomenda::~LinhaEncomenda() {
 				*/
 }
 
-Produto* LinhaEncomenda::getProduto() const {
+string LinhaEncomenda::getProduto() const {
     return produto;
     /**
 	*	@return Retorna o produto da linha de encomenda

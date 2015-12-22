@@ -11,15 +11,15 @@
 
 class LinhaEncomenda {
 private:
-	Produto* produto;
+	string produto;
 	unsigned int quantidade;
 	float preco;
 public:
 	/** Declaracao das funcoes */
-	LinhaEncomenda(Produto* produto, unsigned int quantidade, float preco);
+	LinhaEncomenda(string produto, unsigned int quantidade, float preco);
 	LinhaEncomenda();
 	virtual ~LinhaEncomenda();
-	Produto* getProduto() const;
+	string getProduto() const;
 	unsigned int getQuantidade() const;
 	float getPreco() const;
 };
