@@ -16,7 +16,7 @@ protected:
 public:
 	/** Declaracao das funcoes */
 	Fornecedor();
-	Fornecedor(string nome, string NIF, string morada) : nome(nome), NIF(NIF), morada(morada) {};
+	Fornecedor(string nome, string NIF, string morada, Data data) : nome(nome), NIF(NIF), morada(morada), data(data) {};
 	string getNome() const;
 	string getNIF() const;
 	string getMorada() const;
@@ -35,7 +35,7 @@ class FornecedorIndividual : public Fornecedor {
 protected:
 	string tipo = "Individual";
 public:
-	FornecedorIndividual(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
+	FornecedorIndividual(string nome, string NIF, string morada, Data data) : Fornecedor(nome,NIF,morada, data) {};
 	string getTipo() const;
 
 };
@@ -44,7 +44,7 @@ class FornecedorEmpresa : public Fornecedor {
 protected:
 	string tipo = "Empresa";
 public:
-	FornecedorEmpresa(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
+	FornecedorEmpresa(string nome, string NIF, string morada, Data data) : Fornecedor(nome,NIF,morada, data) {};
 	string getTipo() const;
 };
 
