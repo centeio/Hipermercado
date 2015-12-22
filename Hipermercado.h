@@ -83,7 +83,7 @@ public:
 	void removeDaTabela(Fornecedor* f);
 	void displayTabela();
 
-	 BinaryNode<ProdutoFornecedor> * existe(string nome);
+	BinaryNode<ProdutoFornecedor> * existeProduto(string nome);
 
 private:
 	string nome;

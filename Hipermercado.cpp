@@ -383,7 +383,7 @@ void Hipermercado::displayTabela(){
 	};
 }
 
-BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome){
+BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome){
 	existe(nome, produtos.root);
 }
 
