@@ -28,6 +28,7 @@ void leFicheiros(Hipermercado* hipermercado) {
 
 	ifstream hipermercadoProdutosFornecedor("produtosFornecedor.txt");
 	if (hipermercadoProdutosFornecedor.is_open()) {
+		cout << "HEllo" << endl;
 		leProdutosFornecedor(hipermercado, hipermercadoProdutosFornecedor);
 		hipermercadoProdutosFornecedor.close();
 		remove("produtosFornecedor.txt");
@@ -37,7 +38,7 @@ void leFicheiros(Hipermercado* hipermercado) {
 	if (hipermercadoProdutos.is_open()) {
 		leProdutos(hipermercado, hipermercadoProdutos);
 		hipermercadoProdutos.close();
-		remove("produtosFornecedor.txt");
+		remove("produtos.txt");
 	}
 
 	ifstream hipermercadoFornecedores("fornecedores.txt");
@@ -69,8 +70,6 @@ void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoProdutos) {
 	bool cicle = true;
 
 	while(cicle) {
-		hipermercadoProdutos.clear();
-		hipermercadoProdutos.ignore(1000,'\n');
 		getline(hipermercadoProdutos, nomeProduto);
 		if(nomeProduto != "#") {
 			getline(hipermercadoProdutos, medida);
@@ -78,7 +77,10 @@ void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoProdutos) {
 
 			Produto* produto = new Produto(nomeProduto, medida, stock);
 			hipermercado->addProdutoFila(produto);
+			hipermercadoProdutos.clear();
+			hipermercadoProdutos.ignore(1000,'\n');
 		}else cicle = false;
+		cout << nomeProduto << endl;
 	}
 }
 
@@ -90,8 +92,6 @@ void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProd
 	bool cicle = true;
 
 	while(cicle) {
-		hipermercadoProdutosFornecedor.clear();
-		hipermercadoProdutosFornecedor.ignore(1000,'\n');
 		getline(hipermercadoProdutosFornecedor, nomeProduto);
 		if(nomeProduto != "#") {
 			getline(hipermercadoProdutosFornecedor, medida);
@@ -119,6 +119,9 @@ void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProd
 				ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedorEmp, patamar);
 				hipermercado->addProduto(produto);
 			}
+			hipermercadoProdutosFornecedor.clear();
+			hipermercadoProdutosFornecedor.ignore(1000,'\n');
+			cout << nomeProduto << endl;
 		}else cicle = false;
 	}
 }
@@ -323,8 +326,8 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 					cout << "Por favor introduza Y para sim e N para nao. " << flush;
 					cin >> answer;
 				}
-				if (answer == 'n') {
-					cout << "Nao e possivel adicionar um produto sem um fornecedor." << endl;
+				if (tolower(answer) == 'n') {
+					cout << endl << "Nao e possivel adicionar um produto sem um fornecedor." << endl << endl;
 					return;
 				} else {
 					cout << "Introduza o tipo de fornecedor: " << endl << "1. Individual;" << endl << "2. Empresa: " <<
