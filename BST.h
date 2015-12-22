@@ -41,7 +41,12 @@ protected:
   friend class BSTItrLevel<Comparable>;
   friend class Hipermercado;
   friend class PedidoEncomenda;
+public:
+    Comparable getElement() const;
 };
+
+template <class Comparable>
+Comparable BinaryNode::getElement() const { return element; }
 
 template <class Comparable>
 class BST

@@ -134,6 +134,8 @@ bool ProdutoFornecedor::operator < (ProdutoFornecedor produto) const {
 	return false;
 }
 
+bool ProdutoFornecedor::operator==(ProdutoFornecedor& produto) { return nome == produto.getNome(); }
+
 
 ostream& operator<< (ostream& out, ProdutoFornecedor produto) {
 

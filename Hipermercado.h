@@ -75,6 +75,7 @@ public:
 	void eliminaProduto(ProdutoFornecedor produto);
 	void alteraNomeProduto(string produto, string novonome);
 	void alteraMedidaProduto(string produto, string novamedida);
+	void alteraStockProduto(string produto, float stock);
 	void addPedido(PedidoEncomenda* pedido);
 	void eliminaPedido(unsigned int indice);
 	void addEncomenda(Encomenda* encomenda);
@@ -106,6 +107,7 @@ private:
 	unordered_set<Fornecedor*, hf, eqf> inativos;
 	Data dataatual;
 	BST<ProdutoFornecedor> produtos;
+	static ProdutoFornecedor ITEM_NOT_FOUND;
 	BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
 
 	struct compare{

@@ -7,14 +7,15 @@
 #include "Hipermercado.h"
 #include <algorithm>
 
-
-Hipermercado* Hipermercado::Instance = NULL;
 /**
  *	@brief Inicializacao da variavel estatica instance
  *
  */
+Hipermercado* Hipermercado::Instance = NULL;
 
-Hipermercado::Hipermercado(string nome): nome(nome), produtos(ProdutoFornecedor("","",1000, NULL, NULL)){
+ProdutoFornecedor Hipermercado::ITEM_NOT_FOUND = ProdutoFornecedor("","",1000, NULL, NULL);
+
+Hipermercado::Hipermercado(string nome): nome(nome), produtos(ITEM_NOT_FOUND){
 	/**
 	 *	@brief Constroi o hipermercado
 	 *
@@ -206,6 +207,8 @@ void Hipermercado::eliminaFornecedor(unsigned int indice){
 
 void Hipermercado::addProduto(ProdutoFornecedor produto){
 	produtos.insert(produto);
+	Produto* produtoFila = new Produto(produto.getNome(), produto.getMedida(), produto.getStock());
+	addProdutoFila(produtoFila);
 	/**
 	 *	@brief Adiciona produto
 	 *
@@ -215,7 +218,15 @@ void Hipermercado::addProduto(ProdutoFornecedor produto){
 
 
 void Hipermercado::eliminaProduto(ProdutoFornecedor produto){
-	produtos.remove(produto);
+	ProdutoFornecedor produtoFornecedor = produtos.find(produto);
+
+	while(produtoFornecedor != ITEM_NOT_FOUND) {
+		produtos.remove(produto);
+		produtoFornecedor = produtos.find(produto);
+	}
+
+	Produto* produtoFila = new Produto(produto.getNome(), produto.getMedida(), produto.getStock());
+	removeProdutoFila(produtoFila);
 	/**
 	 *	@brief Elimina produto
 	 *
@@ -403,9 +414,9 @@ BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome,  BinaryNode<Pr
 /** @brief Retorna a fila de prioridade
  *
  */
-priority_queue<Produto*, vector<Produto*>,compare> Hipermercado::getPriorityQueue() const{
+/*priority_queue<Produto*, vector<Produto*>,compare> Hipermercado::getPriorityQueue() const{
 	return alertas;
-}
+}*/
 
 /** @brief Adiciona um produto a fila de prioridade
  *
@@ -426,7 +437,7 @@ void Hipermercado::removeProdutoFila(Produto* p) {
 	temp = alertas;
 
 	while(!temp.empty()){
-		if(temp.top() != p){
+		if((*temp.top()) != *p){
 			temp2.push(temp.top());
 			temp.pop();
 		}

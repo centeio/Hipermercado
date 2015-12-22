@@ -46,6 +46,8 @@ public:
 	void addPatamar();
 	bool operator < (ProdutoFornecedor produto) const;
 	friend ostream& operator<< (ostream& out, ProdutoFornecedor produto);
+	bool operator==(ProdutoFornecedor &produto);
+
 };
 
 #endif /* PRODUTO_H_ */
