@@ -28,7 +28,7 @@ PedidoEncomenda::PedidoEncomenda(Produto* produto, unsigned int quant): data(Hip
 }
 
 PedidoEncomenda::PedidoEncomenda(vector<Produto*> produtos, vector<unsigned int> quantidade) :
-data(Hipermercado::getInstance()->getDataAtual()), produtos(produtos), quantidade(quantidade) {
+						data(Hipermercado::getInstance()->getDataAtual()), produtos(produtos), quantidade(quantidade) {
 	finalizado = false;
 	/**
 	 *	@brief Construtor do Pedido de Encomenda
@@ -130,6 +130,7 @@ void PedidoEncomenda::acrescenta(Produto* produto, unsigned int qt) {
 void PedidoEncomenda::processamento() {
 	Hipermercado* hipermercado = Hipermercado::getInstance();
 	vector<Encomenda*> encomendas;
+	stack<ProdutoFornecedor> prods;
 
 	for(unsigned int i=0;i<produtos.size();i++)
 	{
@@ -139,34 +140,46 @@ void PedidoEncomenda::processamento() {
 		{
 			if(hipermercado->existeProduto(produtos.at(i)->getNome()) != NULL)
 			{
+
 				ProdutoFornecedor p = hipermercado->existeProduto(produtos.at(i)->getNome())->element;
-				Fornecedor* f = p.getFornecedor();
-				if(q<p.getStock())
+
+				if(q>=p.getPatamar()->getMinimo()&&q<=p.getPatamar()->getMaximo())
 				{
-					hipermercado->existeProduto(produtos.at(i)->getNome())->element.setStock(p.getStock()-q);
-					q=0;
+
+					Fornecedor* f = p.getFornecedor();
+					if(q<p.getStock())
+					{
+						hipermercado->existeProduto(produtos.at(i)->getNome())->element.setStock(p.getStock()-q);
+						q=0;
+					}
+					else
+					{
+						if(q==p.getStock())
+							q=0;
+						else
+							q-=p.getStock();
+						hipermercado->eliminaProduto(p);
+					}
+					bool existe=false;
+					for(unsigned int j=0;j<encomendas.size();j++)
+					{
+						if(encomendas.at(j)->getFornecedor()==f)
+						{
+							encomendas.at(j)->addLinha(p.getNome(),quantidade.at(i)-q,p.getPatamar()->getPreco());
+							existe=true;
+						}
+					}
+					if(!existe)
+					{
+						Encomenda* enc= new Encomenda(f,p.getNome(),quantidade.at(i)-q,p.getPatamar()->getPreco());
+						encomendas.push_back(enc);
+					}
+
 				}
 				else
 				{
-					if(q==p.getStock())
-						q=0;
-					else
-						q-=p.getStock();
+					prods.push(p);
 					hipermercado->eliminaProduto(p);
-				}
-				bool existe=false;
-				for(unsigned int j=0;j<encomendas.size();j++)
-				{
-					if(encomendas.at(j)->getFornecedor()==f)
-					{
-						encomendas.at(j)->addLinha(p.getNome(),q,p.getPatamar()->getPreco());
-						existe=true;
-					}
-				}
-				if(!existe)
-				{
-					Encomenda* enc= new Encomenda(f,p.getNome(),q,p.getPatamar()->getPreco());
-					encomendas.push_back(enc);
 				}
 			}
 			else
@@ -178,9 +191,22 @@ void PedidoEncomenda::processamento() {
 
 				PedidoEncomenda* pedido = new PedidoEncomenda(produtos.at(i),q);
 				hipermercado->addPedido(pedido);
-				q=0;}
+				q=0;
+			}
 
 		}
+
+		hipermercado->alteraProdutoFila(produtos.at(i),produtos.at(i)->getStock()+quantidade.at(i)-q);
+	}
+
+	for(unsigned int k=0;k<encomendas.size();k++)
+	{
+		hipermercado->addEncomenda(encomendas.at(k));
+	}
+	while(!prods.empty())
+	{
+		hipermercado->addProduto(prods.top());
+		prods.pop();
 	}
 
 	finalizado=true;
