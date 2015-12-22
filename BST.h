@@ -26,6 +26,7 @@ class BST;
 template <class Comparable>
 class BinaryNode
 {
+protected:
   Comparable element;
   BinaryNode *left;
   BinaryNode *right;
@@ -38,6 +39,8 @@ class BinaryNode
   friend class BSTItrPre<Comparable>;
   friend class BSTItrPost<Comparable>;
   friend class BSTItrLevel<Comparable>;
+  friend class Hipermercado;
+  friend class PedidoEncomenda;
 };
 
 template <class Comparable>
@@ -60,7 +63,7 @@ class BST
   
   const BST & operator=( const BST & rhs );
   
- private:
+ protected:
   BinaryNode<Comparable> *root;
   const Comparable ITEM_NOT_FOUND;
   
@@ -79,6 +82,8 @@ class BST
   friend class BSTItrPre<Comparable>;
   friend class BSTItrPost<Comparable>;
   friend class BSTItrLevel<Comparable>;
+  friend class Hipermercado;
+  friend class PedidoEncomenda;
 };
 
 // Note that all "matching" is based on the < method.

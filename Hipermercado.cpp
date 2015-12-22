@@ -10,9 +10,9 @@
 
 Hipermercado* Hipermercado::Instance = NULL;
 /**
-	 *	@brief Inicializacao da variavel estatica instance
-	 *
-	 */
+ *	@brief Inicializacao da variavel estatica instance
+ *
+ */
 
 Hipermercado::Hipermercado(string nome): nome(nome), produtos(ProdutoFornecedor("","",1000, NULL, NULL)){
 	/**
@@ -124,11 +124,11 @@ bool op(Produto* p1,Produto* p2){
 	else
 		return false;
 	/**
-		 *	@return Retorna verdadeiro se o nome do produto 1 for alfabeticamente anterior ao nome do produto 2
-		 *
-		 *	@param p1 Produto1
-		 *	@param p2 Produto2
-		 */
+	 *	@return Retorna verdadeiro se o nome do produto 1 for alfabeticamente anterior ao nome do produto 2
+	 *
+	 *	@param p1 Produto1
+	 *	@param p2 Produto2
+	 */
 }
 
 
@@ -138,11 +138,11 @@ bool opd(PedidoEncomenda* p1,PedidoEncomenda* p2){
 	else
 		return false;
 	/**
-		 *	@return Retorna verdadeiro se a data do Pedido de Encomenda 1 for mais recente que a data do Pedido de Encomenda 2
-		 *
-		 *	@param p1 Pedido de Encomenda 1
-		 *	@param p2 Pedido de Encomenda 2
-		 */
+	 *	@return Retorna verdadeiro se a data do Pedido de Encomenda 1 for mais recente que a data do Pedido de Encomenda 2
+	 *
+	 *	@param p1 Pedido de Encomenda 1
+	 *	@param p2 Pedido de Encomenda 2
+	 */
 }
 
 void Hipermercado::ordenaPedidos(){
@@ -158,11 +158,11 @@ bool oe(Encomenda* e1, Encomenda* e2){
 	else
 		return false;
 	/**
-			 *	@return Retorna verdadeiro se a data da Encomenda 1 for mais recente que a  data da Encomenda 2
-			 *
-			 *	@param p1 Pedido de Encomenda 1
-			 *	@param p2 Pedido de Encomenda 2
-			 */
+	 *	@return Retorna verdadeiro se a data da Encomenda 1 for mais recente que a  data da Encomenda 2
+	 *
+	 *	@param p1 Pedido de Encomenda 1
+	 *	@param p2 Pedido de Encomenda 2
+	 */
 }
 
 void Hipermercado::ordenaEncomendas(){
@@ -226,21 +226,21 @@ void Hipermercado::eliminaProduto(ProdutoFornecedor produto){
 /*void Hipermercado::alteraNomeProduto(unsigned int indice, string novonome){
 	produtos.at(indice)->setNome(novonome);
 	/**
-	 *	@brief Altera nome do Produto
-	 *
-	 *	@param indice Indice do Produto a alterar
-	 *	@param novonome Novo nome
-	 */
+ *	@brief Altera nome do Produto
+ *
+ *	@param indice Indice do Produto a alterar
+ *	@param novonome Novo nome
+ */
 //}
 
 /*void Hipermercado::alteraMedidaProduto(unsigned int indice, string novamedida){
 	produtos.at(indice)->setMedida(novamedida);
 	/**
-	 *	@brief Altera medida do Produto
-	 *
-	 *	@param indice Indice do Produto a alterar
-	 *	@param novamedida Nova medida
-	 */
+ *	@brief Altera medida do Produto
+ *
+ *	@param indice Indice do Produto a alterar
+ *	@param novamedida Nova medida
+ */
 //}
 
 void Hipermercado::eliminaPedido(unsigned int indice){
@@ -347,8 +347,8 @@ void Hipermercado::displayProdutosFornecedor() const {
 		fornecedores.at(i)->displayProdutosForn();
 	}
 	/**
-	 *	@brief display de todos os produtos de todos os fornecedores
-	 */
+ *	@brief display de todos os produtos de todos os fornecedores
+ */
 //}
 
 void Hipermercado::processaPedido() {
@@ -381,6 +381,20 @@ void Hipermercado::displayTabela(){
 		cout << *it << endl;
 		it++;
 	};
+}
+
+BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome){
+	existe(nome, produtos.root);
+}
 
 
+BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome,  BinaryNode<ProdutoFornecedor> *t){
+	if( t == NULL )
+		return NULL;
+	else if( nome < t->element.getNome() )
+		return existe( nome, t->left );
+	else if( t->element.getNome() < nome )
+		return existe( nome, t->right );
+	else
+		return t;    // Match
 }

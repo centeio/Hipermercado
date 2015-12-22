@@ -78,9 +78,12 @@ public:
 	void setNome(string novonome);
 	void alteraQuantProdPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt);
 	void alteraNomeProdPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome);
+
 	void atualizaTabela();
 	void removeDaTabela(Fornecedor* f);
 	void displayTabela();
+
+	 BinaryNode<ProdutoFornecedor> * existe(string nome);
 
 private:
 	string nome;
@@ -92,6 +95,8 @@ private:
 	unordered_set<Fornecedor*, hf, eqf> inativos;
 	Data dataatual;
 	BST<ProdutoFornecedor> produtos;
+	 BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
+
 
 };
 #endif /* HIPERMERCADO_H_ */
