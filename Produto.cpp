@@ -78,6 +78,9 @@ void Produto::setStock(float stock) { this->stock = stock; }
 bool Produto::operator== (Produto &produto) { return (nome == produto.getNome()); }
 
 
+bool Produto::operator!=(Produto &produto) { return nome != produto.getNome(); }
+
+
 /** @brief Imprime no ecra os atributos da classe por overload do operator<<
  *
  *	@param out Objeto da iostream

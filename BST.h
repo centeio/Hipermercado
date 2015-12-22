@@ -46,7 +46,7 @@ public:
 };
 
 template <class Comparable>
-Comparable BinaryNode::getElement() const { return element; }
+Comparable BinaryNode<Comparable>::getElement() const { return element; }
 
 template <class Comparable>
 class BST

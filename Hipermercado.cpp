@@ -399,27 +399,20 @@ void Hipermercado::displayTabela(){
 }
 
 BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome){
-	existe(nome, produtos.root);
+	existeProduto(nome, produtos.root);
 }
 
 
-BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome,  BinaryNode<ProdutoFornecedor> *t){
+BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome,  BinaryNode<ProdutoFornecedor> *t){
 
 	if( t == NULL )
 		return NULL;
 	else if( nome < t->element.getNome() )
-		return existe( nome, t->left );
+		return existeProduto( nome, t->left );
 	else if( t->element.getNome() < nome )
-		return existe( nome, t->right );
+		return existeProduto( nome, t->right );
 	else
 		return t;    // Match
-}
-
-/** @brief Retorna a fila de prioridade
- *
- */
-priority_queue<Produto*, vector<Produto*>,compare>* Hipermercado::getPriorityQueue() const{
-	return &alertas;
 }
 
 /** @brief Adiciona um produto a fila de prioridade
@@ -441,7 +434,7 @@ void Hipermercado::removeProdutoFila(Produto* p) {
 	temp = alertas;
 
 	while(!temp.empty()){
-		if((*temp.top()) != *p){
+		if(*(temp.top()) != *p){
 			temp2.push(temp.top());
 			temp.pop();
 		}
@@ -461,7 +454,7 @@ void Hipermercado::alteraProdutoFila(Produto* p, int stock){
 	stack<Produto*> stack;
 
 	while (!alertas.empty()) {
-		if (alertas.top() != p) {
+		if (*(alertas.top()) != *p) {
 			stack.push(alertas.top());
 			alertas.pop();
 		} else {

@@ -30,6 +30,7 @@ public:
 	float getStock() const;
 	void setStock(float stock);
 	bool operator==(Produto &produto);
+	bool operator!=(Produto &produto);
 	friend ostream& operator<< (ostream& out, Produto* produto);
 	virtual ~Produto();
 };

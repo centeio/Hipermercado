@@ -192,7 +192,7 @@ void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoEncomendas) 
 }
 
 void lePedidosEncomendas(Hipermercado* hipermercado, ifstream& hipermercadopedidosencomendas) {
-	unsigned int numPedidos, dia, mes, ano, numProdutos, quantidade, indiceProduto;
+	/*unsigned int numPedidos, dia, mes, ano, numProdutos, quantidade, indiceProduto;
 	string finalizado, nomeProduto;
 	vector<Produto*> produtos;
 	vector<unsigned int> quantidades;
@@ -219,7 +219,7 @@ void lePedidosEncomendas(Hipermercado* hipermercado, ifstream& hipermercadopedid
 
 		if(finalizado == "true") hipermercado->getPedidos().at(hipermercado->getPedidos().size() - 1)->setFinalizado(true);
 		else hipermercado->getPedidos().at(hipermercado->getPedidos().size() - 1)->setFinalizado(false);
-	}
+	}*/
 }
 
 
@@ -416,25 +416,53 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			hipermercado->alteraNomeProduto(nomeProduto, novoNome);
 		} else if (opcao == 4) {
 			string novaMedida;
-			cin.clear();
-			cin.ignore(1000,'\n');
 
-			cout << "Introduza o nome do produto que pretende alterar: " << flush;
-			getline(cin,nomeProduto);
+			do {
+				cin.clear();
+				cin.ignore(1000, '\n');
+				cout << "Introduza o nome do produto que pretende alterar: " << flush;
+				getline(cin, nomeProduto);
+				if (hipermercado->existeProduto(nomeProduto) == NULL) {
+					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
+					cin >> answer;
+					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+						cout << "Por favor introduza Y para sim e N para nao. " << flush;
+						cin >> answer;
+					}
+					if (answer == 'n') {
+						return;
+					}
+				}
+			}while(tolower(answer) == 'y');
+
 			cout << "Introduza a nova medida: " << flush;
 			getline(cin, novaMedida);
 			hipermercado->alteraMedidaProduto(nomeProduto, novaMedida);
 
 		} else if (opcao == 5) {
 			float novoStock;
-			cin.clear();
-			cin.ignore(1000,'\n');
 
-			cout << "Introduza o nome do produto que pretende alterar: " << flush;
-			getline(cin,nomeProduto);
+			do {
+				cin.clear();
+				cin.ignore(1000, '\n');
+				cout << "Introduza o nome do produto que pretende alterar: " << flush;
+				getline(cin, nomeProduto);
+				if (hipermercado->existeProduto(nomeProduto) == NULL) {
+					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
+					cin >> answer;
+					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+						cout << "Por favor introduza Y para sim e N para nao. " << flush;
+						cin >> answer;
+					}
+					if (answer == 'n') {
+						return;
+					}
+				}
+			}while(tolower(answer) == 'y');
 			cout << "Introduza o novo stock: " << flush;
 			cin >> stock;
-			hipermercado->alteraStockProduto(nomeProduto, stock);
+			Produto* produto = new Produto(nomeProduto,"",0);
+			hipermercado->alteraProdutoFila(produto, stock);
 
 		} else if (opcao == 6) {
 			/*cin.clear();
@@ -839,9 +867,9 @@ void escreveProdutos(Hipermercado* hipermercado) {
 	ofstream hipermercadoProdutos;
 
 	hipermercadoProdutos.open("produtos.txt");
-	while(!hipermercado->getPriorityQueue()->empty()) {
-		hipermercadoProdutos << hipermercado->getPriorityQueue()->top()->getNome() << endl << hipermercado->getPriorityQueue()->top()->getMedida()
-				<< hipermercado->getPriorityQueue()->top()->getStock() << endl;
+	while(!hipermercado->getPriorityQueue().empty()) {
+		hipermercadoProdutos << hipermercado->getPriorityQueue().top()->getNome() << endl << hipermercado->getPriorityQueue().top()->getMedida()
+				<< hipermercado->getPriorityQueue().top()->getStock() << endl;
 	}
 	hipermercadoProdutos << "#";
 	hipermercadoProdutos.close();

@@ -55,7 +55,7 @@ private:
 	Data dataatual;
 	BST<ProdutoFornecedor> produtos;
 	static ProdutoFornecedor ITEM_NOT_FOUND;
-	BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
+	BinaryNode<ProdutoFornecedor> * existeProduto(string nome, BinaryNode<ProdutoFornecedor> *t);
 
 	struct compare{
 		bool operator() (const Produto* produto1, const Produto* produto2) {
@@ -100,7 +100,6 @@ public:
 	void eliminaProduto(ProdutoFornecedor produto);
 	void alteraNomeProduto(string produto, string novonome);
 	void alteraMedidaProduto(string produto, string novamedida);
-	void alteraStockProduto(string produto, float stock);
 	void addPedido(PedidoEncomenda* pedido);
 	void eliminaPedido(unsigned int indice);
 	void addEncomenda(Encomenda* encomenda);
@@ -118,9 +117,9 @@ public:
 	void removeProdutoFila(Produto* p);
 	void alteraProdutoFila(Produto* p, int stock);
 	void manageFila();
-	priority_queue<Produto*, vector<Produto*>, compare>* getPriorityQueue() const;
+	priority_queue<Produto*, vector<Produto*>, compare>& getPriorityQueue() {return alertas;};
 
-	BinaryNode<ProdutoFornecedor> * existeProduto(string nome);
+	BinaryNode<ProdutoFornecedor>* existeProduto(string nome);
 };
 #endif /* HIPERMERCADO_H_ */
 
