@@ -44,6 +44,31 @@ struct hf
  */
 
 class Hipermercado {
+private:
+	string nome;
+	vector<Fornecedor*> fornecedores;
+	vector<PedidoEncomenda*> pedidos;
+	vector<Encomenda*> encomendas;
+	Hipermercado(string nome);
+	static Hipermercado* Instance;
+	unordered_set<Fornecedor*, hf, eqf> inativos;
+	Data dataatual;
+	BST<ProdutoFornecedor> produtos;
+	static ProdutoFornecedor ITEM_NOT_FOUND;
+	BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
+
+	struct compare{
+		bool operator() (const Produto* produto1, const Produto* produto2) {
+			if (produto1->getStock() == produto2->getStock()) {
+				return (getInstance()->existeProduto(produto1->getNome())->element.getPatamar()->getPreco() >
+						getInstance()->existeProduto(produto2->getNome())->element.getPatamar()->getPreco());
+			}
+			return (produto1->getStock() > produto2->getStock());
+		}
+	};
+
+	priority_queue<Produto*, vector<Produto*>, compare> alertas;
+
 public:
 	/** Declaracao das funcoes */
 	static Hipermercado* getInstance() {
@@ -93,38 +118,9 @@ public:
 	void removeProdutoFila(Produto* p);
 	void alteraProdutoFila(Produto* p, int stock);
 	void manageFila();
-	//priority_queue<Produto*, vector<Produto*>, compare> getPriorityQueue() const;
+	priority_queue<Produto*, vector<Produto*>, compare> getPriorityQueue() const;
 
 	BinaryNode<ProdutoFornecedor> * existeProduto(string nome);
-
-private:
-	string nome;
-	vector<Fornecedor*> fornecedores;
-	vector<PedidoEncomenda*> pedidos;
-	vector<Encomenda*> encomendas;
-	Hipermercado(string nome);
-	static Hipermercado* Instance;
-	unordered_set<Fornecedor*, hf, eqf> inativos;
-	Data dataatual;
-	BST<ProdutoFornecedor> produtos;
-	static ProdutoFornecedor ITEM_NOT_FOUND;
-	BinaryNode<ProdutoFornecedor> * existe(string nome, BinaryNode<ProdutoFornecedor> *t);
-
-	struct compare{
-		bool operator() (const Produto* a, const Produto* b) {
-			//se o stock de dois produtos for igual o produto com maior alerta e o com menor preco
-			if (a->getStock() == b->getStock()) {
-				//return (melhorPreco(a)>melhorPreco(b));//preco pelo qual pode ser adquirido
-				return getInstance()->existeProduto(a->getNome())->element.getPatamar()->getPreco() > getInstance()->existeProduto(b->getNome())->element.getPatamar()->getPreco();
-			}
-			//o maior alerta e o do produto com menor stock
-			return (a->getStock() > b->getStock());
-		}
-	};
-
-	priority_queue<Produto*, vector<Produto*>, compare> alertas;
-
-
 };
 #endif /* HIPERMERCADO_H_ */
 

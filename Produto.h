@@ -47,6 +47,8 @@ public:
 	bool operator < (ProdutoFornecedor produto) const;
 	friend ostream& operator<< (ostream& out, ProdutoFornecedor produto);
 	bool operator==(ProdutoFornecedor &produto);
+	bool operator!=(ProdutoFornecedor &produto);
+
 
 };
 

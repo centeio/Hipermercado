@@ -418,9 +418,9 @@ BinaryNode<ProdutoFornecedor> * Hipermercado::existe(string nome,  BinaryNode<Pr
 /** @brief Retorna a fila de prioridade
  *
  */
-/*priority_queue<Produto*, vector<Produto*>,compare> Hipermercado::getPriorityQueue() const{
+priority_queue<Produto*, vector<Produto*>,compare> Hipermercado::getPriorityQueue() const{
 	return alertas;
-}*/
+}
 
 /** @brief Adiciona um produto a fila de prioridade
  *
