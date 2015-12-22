@@ -88,9 +88,9 @@ public:
 
 	void displayPriorityQueue();
 	//organiza na fila prioritaria
-	void addProduto(Produto* p);
-	void removeProduto(Produto* p);
-	void alteraProduto(Produto* p, int stock);
+	void addProdutoFila(Produto* p);
+	void removeProdutoFila(Produto* p);
+	void alteraProdutoFila(Produto* p, int stock);
 	void manageFila();
 	priority_queue<Produto*, vector<Produto*>, compare> getPriorityQueue() const;
 

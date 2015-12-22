@@ -411,7 +411,7 @@ priority_queue<Produto*, vector<Produto*>,compare> Hipermercado::getPriorityQueu
  *
  *	@param p Produto a ser adicionado a fila
  */
-void Hipermercado::addProduto(Produto* p){
+void Hipermercado::addProdutoFila(Produto* p){
 
 	alertas.push(p);
 }
@@ -420,7 +420,7 @@ void Hipermercado::addProduto(Produto* p){
  *
  *	@param p Produto a ser removido
  */
-void Hipermercado::removeProduto(Produto* p) {
+void Hipermercado::removeProdutoFila(Produto* p) {
 	priority_queue<Produto*, vector<Produto*>, compare> temp;
 	priority_queue<Produto*, vector<Produto*>, compare> temp2;
 	temp = alertas;
@@ -442,7 +442,7 @@ void Hipermercado::removeProduto(Produto* p) {
  *	@param p Produto a ser alterado
  *	@param int Stock novo stock do produto
  */
-void Hipermercado::alteraProduto(Produto* p, int stock){
+void Hipermercado::alteraProdutoFila(Produto* p, int stock){
 	stack<Produto*> stack;
 
 	while (!alertas.empty()) {
