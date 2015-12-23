@@ -193,7 +193,6 @@ void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProd
 	}
 }
 
-
 //LER ENCOMENDAS.TXT
 void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoEncomendas) {
 	string nomeFornecedor, nomeProduto;
@@ -203,8 +202,6 @@ void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoEncomendas) 
 	vector<LinhaEncomenda*> linhas;
 
 	while(firstCicle) {
-		hipermercadoEncomendas.clear();
-		hipermercadoEncomendas.ignore(1000,'\n');
 		getline(hipermercadoEncomendas, nomeFornecedor);
 		if(nomeFornecedor != "#") {
 			while (secondCicle) {
@@ -221,6 +218,8 @@ void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoEncomendas) 
 			Data data(dia, mes, ano);
 			Encomenda* encomenda = new Encomenda(procuraFornecedor(hipermercado, nomeFornecedor), linhas, data);
 			hipermercado->addEncomenda(encomenda);
+			hipermercadoEncomendas.clear();
+			hipermercadoEncomendas.ignore(1000,'\n');
 		} else firstCicle = false;
 	}
 }
@@ -258,7 +257,6 @@ void lePedidosEncomendas(Hipermercado* hipermercado, ifstream& hipermercadoPedid
 void opcaoprodutos(Hipermercado* hipermercado);
 void opcaofornecedores(Hipermercado* hipermercado);
 void opcaoencomendas(Hipermercado* hipermercado);
-void opcaomudarnome(Hipermercado* hipermercado);
 
 //MENU INICIAL
 void menuinicial(Hipermercado* hipermercado) {
