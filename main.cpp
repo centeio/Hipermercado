@@ -317,8 +317,6 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 		cout << setw(10) << "6 - Alterar fornecedor do produto." << endl;
 		cout << setw(10) << "7 - Eliminar produto." << endl;
 		cout << setw(10) << "9 - Voltar ao menu inicial." << endl;
-		cin >> opcao;
-
 
 		do {
 			cout << "Introduza a opcao pretendida: " << flush;
@@ -334,8 +332,8 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 
 
 		if (opcao == 1) {
-			//hipermercado->displayProdutos();
 			hipermercado->displayPriorityQueue();
+			cout << endl;
 			//system("pause");
 		}
 		else if (opcao == 2) {
@@ -896,7 +894,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
  */
 void opcaoencomendas(Hipermercado* hipermercado) {
 	int opcao;
-	string nomeProduto, unidades, opcaoString;
+	string nomeProduto, unidades, opcaoString, answer;
 	unsigned int quantidade, numProdutos, numPedido;
 	float preco;
 	bool b;
@@ -934,41 +932,44 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			//system("pause");
 			}
 		else if (opcao == 3) {
-
-
-			//	string nomeProduto;
 			vector<string> produtosencomendas;
 			vector<unsigned int> quantidades;
 
-			do
-			{
-				//ADICIONAR PEDIDO DE ENCOMENDA
-				cout << "Insira o nome do produto que quer encomendar: " << flush;
+			do {
+				answer = "n";
+				cout << "Introduza o nome do produto que pretende eliminar: " << flush;
 				getline(cin, nomeProduto);
 
 				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
 				BST<ProdutoFornecedor> temporary = hipermercado->getProdutos();
 
-				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND)
-					cout << "O produto que pretende alterar nao existe." << flush;
-				else {
-					cout << "Introduza a quantidade que quer encomendar deste produto: " << flush;
-					do {
-						cout << "Introduza o stock inicial do produto: " << flush;
-						getline(cin, opcaoString);
-						stringstream ss(opcaoString);
-						ss >> quantidade;
-						if (quantidade == 0)	cout << "Tem de introduzir um valor valido." << flush;
-
-					} while (quantidade == 0);
-					produtosencomendas.push_back(nomeProduto);
-					quantidades.push_back(quantidade);
+				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND) {
+					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
+						cout << "Por favor introduza Y para sim e N para nao. " << flush;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					}
+					if (answer == "n")	return;
 				}
+			}while(answer == "y");
 
-			}while(nomeProduto!="0");
+			do {
+				cout << "Introduza a quantidade que quer encomendar deste produto: " << flush;
+				getline(cin, opcaoString);
+				stringstream ss(opcaoString);
+				ss >> quantidade;
+				if (quantidade == 0) cout << "Tem de introduzir um valor valido." << flush;
+
+			} while (quantidade == 0);
+
+			produtosencomendas.push_back(nomeProduto);
+			quantidades.push_back(quantidade);
+
 			if(produtosencomendas.size()!=0)
 					hipermercado->addPedido(new PedidoEncomenda(hipermercado->getDataAtual(), produtosencomendas, quantidades));
-			opcaoencomendas(hipermercado);
 
 		} else if (opcao == 4) {
 			//mostrar lista de pedidos por realizar

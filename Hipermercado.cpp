@@ -461,7 +461,7 @@ bool Hipermercado::existeFila(Produto* produto) {
 	priority_queue<Produto*, vector<Produto*>, compare> temp = alertas;
 
 	while(!temp.empty()) {
-		if(*(temp.top()) == *produto) return true;
+		if(temp.top()->getNome() == produto->getNome()) return true;
 		temp.pop();
 	}
 	return false;
@@ -472,9 +472,11 @@ bool Hipermercado::existeFila(Produto* produto) {
  *
  *	@param p Produto a ser adicionado a fila
  */
-void Hipermercado::addProdutoFila(Produto* p){
+void Hipermercado::addProdutoFila(Produto* produto){
 
-	alertas.push(p);
+	if (!existeFila(produto)) {
+		alertas.push(produto);
+	}
 }
 
 /** @brief Remove um produto da fila de prioridade
