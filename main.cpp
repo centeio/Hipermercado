@@ -177,7 +177,6 @@ void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProd
 			hipermercadoProdutosFornecedor >> min >> max >> preco;
 
 			Patamar* patamar = new Patamar(min, max, preco);
-			Data data(dia, mes, ano);
 			if(tipo == "Individual") {
 				Fornecedor *fornecedorInd = procuraFornecedor(hipermercado,nomeFornecedor);
 				ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedorInd, patamar);
