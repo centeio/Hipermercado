@@ -157,7 +157,7 @@ Fornecedor* procuraFornecedor(Hipermercado* hipermercado, string nome){
 //LER PRODUTOSFORNECEDOR.TXT
 void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProdutosFornecedor) {
 	string nomeProduto, medida, nomeFornecedor, NIF, morada, tipo;
-	unsigned int dia, mes, ano, min, max;
+	unsigned int min, max;
 	float preco, stock;
 	bool cicle = true;
 
