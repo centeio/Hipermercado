@@ -117,6 +117,7 @@ public:
 	void removeProdutoFila(Produto* p);
 	void alteraProdutoFila(Produto* p, int stock);
 	void manageFila();
+	bool existeFila(Produto* produto);
 	priority_queue<Produto*, vector<Produto*>, compare>& getPriorityQueue() {return alertas;};
 
 	BinaryNode<ProdutoFornecedor>* existeProduto(string nome);

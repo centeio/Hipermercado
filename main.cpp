@@ -56,7 +56,6 @@ void leFicheiros(Hipermercado* hipermercado) {
 
 	ifstream hipermercadoPedidosEncomendas("pedidosencomendas.txt");
 	if (hipermercadoPedidosEncomendas.is_open()) {
-		cout << "5" << endl;
 		lePedidosEncomendas(hipermercado, hipermercadoPedidosEncomendas);
 		hipermercadoPedidosEncomendas.close();
 		remove("pedidosencomendas.txt");
@@ -80,7 +79,6 @@ void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoProdutos) {
 			hipermercadoProdutos.clear();
 			hipermercadoProdutos.ignore(1000,'\n');
 		}else cicle = false;
-		cout << nomeProduto << endl;
 	}
 }
 
@@ -123,7 +121,6 @@ void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProd
 			}
 			hipermercadoProdutosFornecedor.clear();
 			hipermercadoProdutosFornecedor.ignore(1000,'\n');
-			cout << nomeProduto << endl;
 		}else cicle = false;
 	}
 }
@@ -176,6 +173,8 @@ void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoEncomendas) 
 	vector<LinhaEncomenda*> linhas;
 
 	while(firstCicle) {
+		hipermercadoEncomendas.clear();
+		hipermercadoEncomendas.ignore(1000,'\n');
 		getline(hipermercadoEncomendas, nomeFornecedor);
 		if(nomeFornecedor != "#") {
 			while (secondCicle) {
@@ -205,25 +204,23 @@ void lePedidosEncomendas(Hipermercado* hipermercado, ifstream& hipermercadoPedid
 
 	while(outerCicle) {
 		hipermercadoPedidosEncomendas >> dia;
-		cout << dia << endl;
-		if(dia != '#') {
+		if(dia != 0) {
 			hipermercadoPedidosEncomendas >> mes >> ano >> finalizado;
-			cout << mes << ano << finalizado << endl;
 			while(innerCicle) {
-				hipermercadoPedidosEncomendas >> nomeProduto;
-				cout << nomeProduto << endl;
+				hipermercadoPedidosEncomendas.clear();
+				hipermercadoPedidosEncomendas.ignore(1000,'\n');
+				getline(hipermercadoPedidosEncomendas, nomeProduto);
 				if(nomeProduto != "#") {
 					hipermercadoPedidosEncomendas >> quantidade;
-					cout << quantidade << endl;
 					produtos.push_back(nomeProduto);
 					quantidades.push_back(quantidade);
 				}else innerCicle = false;
 			}
+			PedidoEncomenda* pedido = new PedidoEncomenda(Data(dia,mes,ano), produtos, quantidades);
+			if(finalizado == "true") pedido->setFinalizado(true);
+			else pedido->setFinalizado(false);
+			hipermercado->addPedido(pedido);
 		}else outerCicle = false;
-		PedidoEncomenda* pedido = new PedidoEncomenda(Data(dia,mes,ano), produtos, quantidades);
-		if(finalizado == "true") pedido->setFinalizado(true);
-		else pedido->setFinalizado(false);
-		hipermercado->addPedido(pedido);
 	}
 }
 
@@ -558,7 +555,7 @@ void alteraFornecedor(Hipermercado* hipermercado);
 //OPCAO FORNECEDORES DO MENU
 void opcaofornecedores(Hipermercado* hipermercado) {
 	string nomeFornecedor, morada, tipo, NIF;
-	unsigned int opcao, indiceFornecedor;
+	unsigned int opcao;
 	char answer = 'n';
 
 	do {
@@ -956,7 +953,7 @@ void escrevePedidosEncomendas(Hipermercado* hipermercado) {
 		}
 		hipermercadoPedidosEncomendas << "#" << endl;
 	}
-	hipermercadoPedidosEncomendas << "#" << endl;
+	hipermercadoPedidosEncomendas << "0" << endl;
 }
 
 

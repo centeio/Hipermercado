@@ -212,7 +212,7 @@ void Hipermercado::eliminaFornecedor(unsigned int indice){
 void Hipermercado::addProduto(ProdutoFornecedor produto){
 	produtos.insert(produto);
 	Produto* produtoFila = new Produto(produto.getNome(), produto.getMedida(), produto.getStock());
-	addProdutoFila(produtoFila);
+	if(!existeFila(produtoFila)) addProdutoFila(produtoFila);
 }
 
 /**
@@ -414,6 +414,17 @@ BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome,  Binary
 	else
 		return t;    // Match
 }
+
+bool Hipermercado::existeFila(Produto* produto) {
+	priority_queue<Produto*, vector<Produto*>, compare> temp = alertas;
+
+	while(!temp.empty()) {
+		if(*(temp.top()) == *produto) return true;
+		temp.pop();
+	}
+	return false;
+}
+
 
 /** @brief Adiciona um produto a fila de prioridade
  *
