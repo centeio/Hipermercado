@@ -163,11 +163,9 @@ void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProd
 
 	while(cicle) {
 		getline(hipermercadoProdutosFornecedor, nomeProduto);
-		cout << nomeProduto << endl;
 		if(nomeProduto != "#") {
 			getline(hipermercadoProdutosFornecedor, medida);
 			hipermercadoProdutosFornecedor >> stock;
-			cout << medida << " " << stock << endl;
 
 			hipermercadoProdutosFornecedor.clear();
 			hipermercadoProdutosFornecedor.ignore(1000,'\n');
