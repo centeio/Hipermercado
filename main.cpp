@@ -28,7 +28,6 @@ void leFicheiros(Hipermercado* hipermercado) {
 
 	ifstream hipermercadoProdutosFornecedor("produtosFornecedor.txt");
 	if (hipermercadoProdutosFornecedor.is_open()) {
-		cout << "HEllo" << endl;
 		leProdutosFornecedor(hipermercado, hipermercadoProdutosFornecedor);
 		hipermercadoProdutosFornecedor.close();
 		remove("produtosFornecedor.txt");
@@ -57,6 +56,7 @@ void leFicheiros(Hipermercado* hipermercado) {
 
 	ifstream hipermercadoPedidosEncomendas("pedidosencomendas.txt");
 	if (hipermercadoPedidosEncomendas.is_open()) {
+		cout << "5" << endl;
 		lePedidosEncomendas(hipermercado, hipermercadoPedidosEncomendas);
 		hipermercadoPedidosEncomendas.close();
 		remove("pedidosencomendas.txt");
@@ -73,7 +73,7 @@ void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoProdutos) {
 		getline(hipermercadoProdutos, nomeProduto);
 		if(nomeProduto != "#") {
 			getline(hipermercadoProdutos, medida);
-			cin >> stock;
+			hipermercadoProdutos >> stock;
 
 			Produto* produto = new Produto(nomeProduto, medida, stock);
 			hipermercado->addProdutoFila(produto);
@@ -95,17 +95,19 @@ void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProd
 		getline(hipermercadoProdutosFornecedor, nomeProduto);
 		if(nomeProduto != "#") {
 			getline(hipermercadoProdutosFornecedor, medida);
-			cin >> stock;
+			hipermercadoProdutosFornecedor >> stock;
+
 			hipermercadoProdutosFornecedor.clear();
 			hipermercadoProdutosFornecedor.ignore(1000,'\n');
 			getline(hipermercadoProdutosFornecedor, nomeFornecedor);
 			getline(hipermercadoProdutosFornecedor, NIF);
 			getline(hipermercadoProdutosFornecedor, morada);
-			cin >> dia >> mes >> ano;
+			hipermercadoProdutosFornecedor >> dia >> mes >> ano;
+
 			hipermercadoProdutosFornecedor.clear();
 			hipermercadoProdutosFornecedor.ignore(1000,'\n');
 			getline(hipermercadoProdutosFornecedor, tipo);
-			cin >> min >> max >> preco;
+			hipermercadoProdutosFornecedor >> min >> max >> preco;
 
 			Patamar* patamar = new Patamar(min, max, preco);
 			Data data(dia, mes, ano);
@@ -138,7 +140,7 @@ void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedor
 		if(nome != "#") {
 			getline(hipermercadoFornecedores, NIF);
 			getline(hipermercadoFornecedores, morada);
-			cin >> dia >> mes >> ano;
+			hipermercadoFornecedores >> dia >> mes >> ano;
 			hipermercadoFornecedores.clear();
 			hipermercadoFornecedores.ignore(1000,'\n');
 			getline(hipermercadoFornecedores, tipo);
@@ -179,14 +181,14 @@ void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoEncomendas) 
 			while (secondCicle) {
 				getline(hipermercadoEncomendas, nomeProduto);
 				if (nomeProduto != "#") {
-					cin >> quantidade >> preco;
+					hipermercadoEncomendas >> quantidade >> preco;
 					LinhaEncomenda* linha = new LinhaEncomenda(nomeProduto, quantidade, preco);
 					linhas.push_back(linha);
 					hipermercadoEncomendas.clear();
 					hipermercadoEncomendas.ignore(1000, '\n');
 				} else secondCicle = false;
 			}
-			cin >> dia >> mes >> ano;
+			hipermercadoEncomendas >> dia >> mes >> ano;
 			Data data(dia, mes, ano);
 			Encomenda* encomenda = new Encomenda(procuraFornecedor(hipermercado, nomeFornecedor), linhas, data);
 			hipermercado->addEncomenda(encomenda);
@@ -203,12 +205,16 @@ void lePedidosEncomendas(Hipermercado* hipermercado, ifstream& hipermercadoPedid
 
 	while(outerCicle) {
 		hipermercadoPedidosEncomendas >> dia;
+		cout << dia << endl;
 		if(dia != '#') {
 			hipermercadoPedidosEncomendas >> mes >> ano >> finalizado;
+			cout << mes << ano << finalizado << endl;
 			while(innerCicle) {
 				hipermercadoPedidosEncomendas >> nomeProduto;
+				cout << nomeProduto << endl;
 				if(nomeProduto != "#") {
 					hipermercadoPedidosEncomendas >> quantidade;
+					cout << quantidade << endl;
 					produtos.push_back(nomeProduto);
 					quantidades.push_back(quantidade);
 				}else innerCicle = false;
@@ -746,7 +752,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 
 //OPCAO FORNECEDORES DO MENU
 void opcaoencomendas(Hipermercado* hipermercado) {
-	/*int opcao;
+	int opcao;
 	string nomeProduto, unidades;
 	unsigned int quantidade, numProdutos, numPedido, numProduto;
 	float preco;
@@ -843,7 +849,7 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			catch(PedidoEncomenda::ProdutoParcialmenteComprado& p2){
 				opcaoencomendas(hipermercado);
 			}		} else { return; }
-	} while(opcao != 9);*/
+	} while(opcao != 9);
 }
 
 void escreveProdutosFornecedor(Hipermercado* hipermercado);
@@ -856,6 +862,7 @@ void escreveFicheiros(Hipermercado* hipermercado) {
 
 
 	escreveProdutosFornecedor(hipermercado);
+	escreveProdutos(hipermercado);
 	escreveFornecedores(hipermercado);
 	escreveEncomendas(hipermercado);
 	escrevePedidosEncomendas(hipermercado);
@@ -867,7 +874,8 @@ void escreveProdutos(Hipermercado* hipermercado) {
 	hipermercadoProdutos.open("produtos.txt");
 	while(!hipermercado->getPriorityQueue().empty()) {
 		hipermercadoProdutos << hipermercado->getPriorityQueue().top()->getNome() << endl << hipermercado->getPriorityQueue().top()->getMedida()
-						<< hipermercado->getPriorityQueue().top()->getStock() << endl;
+						<< endl << hipermercado->getPriorityQueue().top()->getStock() << endl;
+		hipermercado->getPriorityQueue().pop();
 	}
 	hipermercadoProdutos << "#";
 	hipermercadoProdutos.close();
@@ -902,7 +910,7 @@ void escreveFornecedores(Hipermercado* hipermercado) {
 	for (unsigned int i = 0; i < hipermercado->getFornecedores().size(); i++) {
 		hipermercadoFornecedores << hipermercado->getFornecedores().at(i)->getNome() << endl
 				<< hipermercado->getFornecedores().at(i)->getNIF() << endl << hipermercado->getFornecedores().at(i)->getMorada()
-				<< hipermercado->getFornecedores().at(i)->getData().getDia() << endl << hipermercado->getFornecedores().at(i)->getData().getMes()
+				<< endl << hipermercado->getFornecedores().at(i)->getData().getDia() << endl << hipermercado->getFornecedores().at(i)->getData().getMes()
 				<< endl << hipermercado->getFornecedores().at(i)->getData().getAno() << endl << hipermercado->getFornecedores().at(i)->getTipo() << endl;
 	}
 	hipermercadoFornecedores << "#";
@@ -914,13 +922,10 @@ void escreveEncomendas(Hipermercado* hipermercado) {
 
 	hipermercadoEncomendas.open("encomendas.txt");
 
-	hipermercadoEncomendas << hipermercado->getEncomendas().size() << endl;
-
 	for (unsigned int i = 0; i < hipermercado->getEncomendas().size(); i++) {
-
 		hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getFornecedor()->getNome() << endl;
-		for (unsigned int j = 0; j < hipermercado->getEncomendas().at(i)->getLinhas().size(); j++) {
 
+		for (unsigned int j = 0; j < hipermercado->getEncomendas().at(i)->getLinhas().size(); j++) {
 			hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getProduto() << endl
 					<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getQuantidade() << endl
 					<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getPreco() << endl;
