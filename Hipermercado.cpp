@@ -13,73 +13,96 @@
  */
 Hipermercado* Hipermercado::Instance = NULL;
 
+/**
+ *	@brief variável que define qual é o produto que representa produto not found
+ *
+ */
 ProdutoFornecedor Hipermercado::ITEM_NOT_FOUND = ProdutoFornecedor("","",1000, NULL, NULL);
 
-Hipermercado::Hipermercado(string nome): nome(nome), produtos(ITEM_NOT_FOUND){
-	/**
+/**
 	 *	@brief Constroi o hipermercado
 	 *
 	 *	@param nome
 	 */
+Hipermercado::Hipermercado(string nome): nome(nome), produtos(ITEM_NOT_FOUND){
+
 }
 
-vector<Fornecedor*> Hipermercado::getFornecedores() const{
-	return fornecedores;
-	/**
+/**
 	 *	@return Retorna os fornecedores do hipermercado
 	 */
+vector<Fornecedor*> Hipermercado::getFornecedores() const{
+	return fornecedores;
+
 }
 
-
-BST<ProdutoFornecedor> Hipermercado::getProdutos() {
-	return produtos;
-	/**
+/**
 	 *	@return Retorna os produtos do hipermercado
 	 */
+BST<ProdutoFornecedor> Hipermercado::getProdutos() {
+	return produtos;
+
 }
 
-
-vector<PedidoEncomenda*> Hipermercado::getPedidos() const{
-	return pedidos;
-	/**
+/**
 	 *	@return Retorna os pedidos do hipermercado
 	 */
+vector<PedidoEncomenda*> Hipermercado::getPedidos() const{
+	return pedidos;
+
 }
 
-
-vector<Encomenda*> Hipermercado::getEncomendas() const{
-	return encomendas;
-	/**
+/**
 	 *	@return Retorna as encomendas do hipermercado
 	 */
+vector<Encomenda*> Hipermercado::getEncomendas() const{
+	return encomendas;
 }
 
+/**
+	 *	@return Retorna a data atual
+	 */
 Data Hipermercado::getDataAtual() const { return dataatual; }
 
+
+/**
+ *	@brief Define a data atual
+ *
+ *   @param dia Dia
+ *   @param mes Mes
+ *   @param ano Ano
+ */
 void Hipermercado::setDataAtual(unsigned int dia, unsigned int mes, unsigned int ano) {
 	dataatual.setDia(dia);
 	dataatual.setMes(mes);
 	dataatual.setAno(ano);
 }
 
+/**
+ *	@brief Altera a quantidade de um produto pedido
+ *
+ *   @param indicepedido Indice do pedido
+ *   @param indiceproduto Indice do produto
+ *   @param novaqt Nova quantidade do produto
+ */
 void Hipermercado::alteraQuantProdPedido(unsigned int indicepedido, unsigned int indiceproduto, unsigned int novaqt){
 	pedidos.at(indicepedido)->setQuantProduto(indiceproduto,novaqt);
-	/**
-	 *	@return Retorna os produtos do hipermercado
-	 *
-	 *	@param IndicePedido Indice do pedido
-	 *	@param IndiceProduto Indice do produto
-	 *	@param Novaqt Nova quantidade
-	 */
 }
 
-string Hipermercado::getNome() const{
-	return nome;
-	/**
+/**
 	 *	@return Retorna o nome do hipermercado
 	 */
+string Hipermercado::getNome() const{
+	return nome;
 }
 
+/**
+	 *	@brief Altera o nome do produto de indice "indiceproduto" no pedido de indice "indicepedido"
+	 *
+	 *	@param indicepedido Indice do pedido
+	 *	@param indiceproduto Indice do produto
+	 *	@param novonome Novo Nome
+	 */
 void Hipermercado::alteraNomeProdPedido(unsigned int indicepedido, unsigned int indiceproduto, string novonome){
 	if(indicepedido+1>=pedidos.size())
 		cout<<"Nao existe esse pedido."<<endl;
@@ -88,120 +111,107 @@ void Hipermercado::alteraNomeProdPedido(unsigned int indicepedido, unsigned int 
 			cout<<"Nao existe esse produto nesse pedido."<<endl;
 		else
 			pedidos.at(indicepedido)->setProduto(indiceproduto,novonome);
-	/**
-	 *	@brief Altera o nome do produto de indice "indiceproduto" no pedido de indice "indicepedido"
-	 *
-	 *	@param indicepedido Indice do pedido
-	 *	@param indiceproduto Indice do produto
-	 *	@param novonome Novo Nome
-	 */
 }
 
-bool of(Fornecedor* f1,Fornecedor* f2){
-	if(f1->getNome() < f2->getNome())
-		return true;
-	else
-		return false;
-	/**
+/**
 	 *	@return Retorna verdadeiro se o nome do fornecedor 1 for alfabeticamente anterior ao nome do fornecedor 2
 	 *
 	 *	@param f1 Fornecedor1
 	 *	@param f2 Fornecedor2
 	 */
-}
-
-
-void Hipermercado::ordenaFornecedores(){
-	sort(fornecedores.begin(),fornecedores.end(),of);
-	/**
-	 *	@brief Ordena Fornecedores
-	 */
-}
-
-
-bool op(Produto* p1,Produto* p2){
-	if(p1->getNome() < p2->getNome())
+bool of(Fornecedor* f1,Fornecedor* f2){
+	if(f1->getNome() < f2->getNome())
 		return true;
 	else
 		return false;
-	/**
+}
+
+/**
+	 *	@brief Ordena Fornecedores
+	 */
+void Hipermercado::ordenaFornecedores(){
+	sort(fornecedores.begin(),fornecedores.end(),of);
+}
+
+/**
 	 *	@return Retorna verdadeiro se o nome do produto 1 for alfabeticamente anterior ao nome do produto 2
 	 *
 	 *	@param p1 Produto1
 	 *	@param p2 Produto2
 	 */
-}
-
-
-bool opd(PedidoEncomenda* p1,PedidoEncomenda* p2){
-	if(p1->getData() < p2->getData())
+bool op(Produto* p1,Produto* p2){
+	if(p1->getNome() < p2->getNome())
 		return true;
 	else
 		return false;
-	/**
+}
+
+/**
 	 *	@return Retorna verdadeiro se a data do Pedido de Encomenda 1 for mais recente que a data do Pedido de Encomenda 2
 	 *
 	 *	@param p1 Pedido de Encomenda 1
 	 *	@param p2 Pedido de Encomenda 2
 	 */
-}
-
-void Hipermercado::ordenaPedidos(){
-	sort(pedidos.begin(),pedidos.end(),opd);
-	/**
-	 *	@brief Ordena Pedidos
-	 */
-}
-
-bool oe(Encomenda* e1, Encomenda* e2){
-	if(e1->getData() < e2->getData())
+bool opd(PedidoEncomenda* p1,PedidoEncomenda* p2){
+	if(p1->getData() < p2->getData())
 		return true;
 	else
 		return false;
-	/**
+}
+
+/**
+ *	@brief Ordena Pedidos
+ */
+void Hipermercado::ordenaPedidos(){
+	sort(pedidos.begin(),pedidos.end(),opd);
+}
+
+/**
 	 *	@return Retorna verdadeiro se a data da Encomenda 1 for mais recente que a  data da Encomenda 2
 	 *
 	 *	@param p1 Pedido de Encomenda 1
 	 *	@param p2 Pedido de Encomenda 2
 	 */
+bool oe(Encomenda* e1, Encomenda* e2){
+	if(e1->getData() < e2->getData())
+		return true;
+	else
+		return false;
 }
 
-void Hipermercado::ordenaEncomendas(){
-	sort(encomendas.begin(),encomendas.end(),oe);
-	/**
+/**
 	 *	@brief Ordena Encomendas
 	 */
+void Hipermercado::ordenaEncomendas(){
+	sort(encomendas.begin(),encomendas.end(),oe);
 }
 
-
-void Hipermercado::addFornecedor(Fornecedor* fornecedor){
-	fornecedores.push_back(fornecedor);
-	/**
+/**
 	 *	@brief  Adiciona fornecedor
 	 *
 	 *	@param fornecedor Fornecedor
 	 */
-}
+void Hipermercado::addFornecedor(Fornecedor* fornecedor){
+	fornecedores.push_back(fornecedor);
+	}
 
-
-void Hipermercado::setNome(string novonome){
-	nome=novonome;
-	/**
+/**
 	 *	@brief Define o novo nome do hipermercado
 	 *
 	 *	@param novonome Novo nome
 	 */
+void Hipermercado::setNome(string novonome){
+	nome=novonome;
 }
 
-
-void Hipermercado::eliminaFornecedor(unsigned int indice){
-	delete(fornecedores.at(indice));
-	fornecedores.erase(fornecedores.begin()+indice);
-	/**
+/**
 	 *	@brief Elimina fornecedor
 	 *
 	 *	@param indice Indice do fornecedor a eliminar
 	 */
+void Hipermercado::eliminaFornecedor(unsigned int indice){
+	delete(fornecedores.at(indice));
+	fornecedores.erase(fornecedores.begin()+indice);
 }
 
 /**
@@ -270,42 +280,46 @@ void Hipermercado::alteraMedidaProduto(string nome, string novamedida){
 	}*/
 }
 
-void Hipermercado::eliminaPedido(unsigned int indice){
-	delete(pedidos.at(indice));
-	pedidos.erase(pedidos.begin()+indice);
-	/**
+/**
 	 *	@brief Elimina Pedido
 	 *
 	 *	@param indice Indice do pedido a eliminar
 	 */
+void Hipermercado::eliminaPedido(unsigned int indice){
+	delete(pedidos.at(indice));
+	pedidos.erase(pedidos.begin()+indice);
+
 }
 
-
-void Hipermercado::addPedido(PedidoEncomenda* pedido){
-	pedidos.push_back(pedido);
-	/**
+/**
 	 *	@brief Adiciona pedido de encomenda
 	 *
 	 *	@param pedido Pedido de encomenda
 	 */
+void Hipermercado::addPedido(PedidoEncomenda* pedido){
+	pedidos.push_back(pedido);
+
 }
 
-
-void Hipermercado::addEncomenda(Encomenda* encomenda){
-	encomendas.push_back(encomenda);
-	/**
+/**
 	 *	@brief Adiciona Encomenda
 	 *
 	 *	@param encomenda Encomenda
 	 */
+void Hipermercado::addEncomenda(Encomenda* encomenda){
+	encomendas.push_back(encomenda);
 }
 
-
+/**
+ *	@brief Display dos produtos do Hipermercado
+ */
 void Hipermercado::displayProdutos() const {
 	produtos.printTree();
 }
 
-
+/**
+ *	@brief Display dos fornecedores do Hipermercado
+ */
 void Hipermercado::displayFornecedores() const{
 
 	if(fornecedores.size() != 0) {
@@ -314,23 +328,22 @@ void Hipermercado::displayFornecedores() const{
 		for (unsigned int i = 0; i < fornecedores.size(); i++)
 			cout << i + 1 << " - " << fornecedores.at(i) << endl;
 	}
-	/**
-	 *	@brief display de todos Fornecedor
-	 */
 }
 
-
+/**
+ *	@brief display de todos os Pedidos
+ */
 void Hipermercado::displayPedidos() const{
 	if(pedidos.size() != 0) {
 		cout << "Pedidos: " << endl;
 		for (unsigned int i = 0; i < pedidos.size(); i++)
 			cout << i + 1 << " - " << pedidos.at(i) << endl;
 	}
-	/**
-	 *	@brief display de todos os Pedidos
-	 */
 }
 
+/**
+	 *	@brief display de todos pedidos por processar
+	 */
 void Hipermercado::displayPedidosPorProcessar() const{
 	cout << "Pedidos: "<< endl;
 
@@ -338,24 +351,22 @@ void Hipermercado::displayPedidosPorProcessar() const{
 		if(!pedidos.at(i)->getFinalizado())
 			cout<< i+1 << " - " << pedidos.at(i) << endl;
 	}
-	/**
-	 *	@brief display de todos pedidos por processar
-	 */
 }
 
-
+/**
+	 *	@brief display de todos os pedidos processados
+	 */
 void Hipermercado::displayPedidosProcessados() const{
 	cout << "Pedidos: "<<endl;
 	for(unsigned int i=0;i<pedidos.size();i++){
 		if(pedidos.at(i)->getFinalizado())
 			cout<< endl << i+1 << " - " << pedidos.at(i) << endl;
 	}
-	/**
-	 *	@brief display de todos os pedidos processados
-	 */
 }
 
-
+/**
+	 *	@brief display de todas as encomendas
+	 */
 void Hipermercado::displayEncomendas() const{
 	if(encomendas.size() != 0) {
 		cout << "Encomendas: " << endl;
@@ -363,21 +374,21 @@ void Hipermercado::displayEncomendas() const{
 			cout << i + 1 << " - " << encomendas.at(i) << endl;
 		}
 	}
-	/**
-	 *	@brief display de todas as encomendas
-	 */
 }
 
+/**
+	 *	@brief Processa pedido
+	 */
 void Hipermercado::processaPedido() {
 
 	for(unsigned int i = 0; i < pedidos.size(); i++) {
 		if(!pedidos.at(i)->getFinalizado()) pedidos.at(i)->processamento();
 	}
-	/**
-	 *	@brief Processa pedido
-	 */
 }
 
+/**
+	 *	@brief Atualiza a tabela de fornecedores
+	 */
 void Hipermercado::atualizaTabela(){
 	for(unsigned int i=0;i<fornecedores.size();i++){
 		Data d=dataatual;
@@ -387,11 +398,18 @@ void Hipermercado::atualizaTabela(){
 	}
 }
 
+/**
+ *	@brief Remove da tabala o fornecedor f
+ *
+ *	@param f Fornecedor a remover
+ */
 void Hipermercado::removeDaTabela(Fornecedor* f){
 	inativos.erase(inativos.find(f));
-
 }
 
+/**
+ *	@brief Display da tabela de fornecedores
+ */
 void Hipermercado::displayTabela(){
 	unordered_set<Fornecedor*,hf,eqf>::iterator it = inativos.begin();
 	while (it!=inativos.end()) {
@@ -417,6 +435,12 @@ BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome,  Binary
 		return t;    // Match
 }*/
 
+
+/**
+	 *	@return Retorna verdadeiro se o produto existir na fila de prioridades
+	 *
+	 *	@param produto Produto
+	 */
 bool Hipermercado::existeFila(Produto* produto) {
 	priority_queue<Produto*, vector<Produto*>, compare> temp = alertas;
 

@@ -9,17 +9,23 @@
 #include "Hipermercado.h"
 
 
-PedidoEncomenda::PedidoEncomenda(Data data, vector<string> produtos, vector<unsigned int> quantidade) :
-data(data), produtos(produtos), quantidade(quantidade) {
-	finalizado = false;
-	/**
+/**
 	 *	@brief Construtor do Pedido de Encomenda
 	 *
 	 *	@param produtos Produtos do pedido de encomenda
 	 *	@param quantidade Quantidade da encomenda
 	 */
+PedidoEncomenda::PedidoEncomenda(Data data, vector<string> produtos, vector<unsigned int> quantidade) :
+data(data), produtos(produtos), quantidade(quantidade) {
+	finalizado = false;
 }
 
+/**
+	 *	@brief Construtor do Pedido de Encomenda
+	 *
+	 *	@param produtos Produtos do pedido de encomenda
+	 *	@param quantidade Quantidade da encomenda
+	 */
 PedidoEncomenda::PedidoEncomenda(string produto, unsigned int quant): data(Hipermercado::getInstance()->getDataAtual()){
 	finalizado=false;
 	produtos.push_back(produto);
@@ -27,82 +33,84 @@ PedidoEncomenda::PedidoEncomenda(string produto, unsigned int quant): data(Hiper
 
 }
 
-PedidoEncomenda::PedidoEncomenda(vector<string> produtos, vector<unsigned int> quantidade) :
-						data(Hipermercado::getInstance()->getDataAtual()), produtos(produtos), quantidade(quantidade) {
-	finalizado = false;
-	/**
+/**
 	 *	@brief Construtor do Pedido de Encomenda
 	 *
 	 *	@param produtos Produtos do pedido de encomenda
 	 *	@param quantidade Quantidade da encomenda
 	 */
+PedidoEncomenda::PedidoEncomenda(vector<string> produtos, vector<unsigned int> quantidade) :
+						data(Hipermercado::getInstance()->getDataAtual()), produtos(produtos), quantidade(quantidade) {
+	finalizado = false;
 }
 
-Data PedidoEncomenda::getData() const{
-	return data;
-	/**
+/**
 	 *	@return Retorna a data
 	 */
+Data PedidoEncomenda::getData() const{
+	return data;
 }
 
 
-bool PedidoEncomenda::getFinalizado() const{
-	return finalizado;
-	/**
+/**
 	 *	@return Retorna Verdadeiro se o pedido de encomenda estiver finalizado, caso contrario retorna falso
 	 */
+bool PedidoEncomenda::getFinalizado() const{
+	return finalizado;
 }
 
-
-vector<string> PedidoEncomenda::getProdutos() const{
-	return produtos;
-	/**
+/**
 	 *	@return Retorna os produtos do pedido de encomenda
 	 */
+vector<string> PedidoEncomenda::getProdutos() const{
+	return produtos;
+
 }
 
-
-vector<unsigned int> PedidoEncomenda::getQuantidade() const{
-	return quantidade;
-	/**
+/**
 	 *	@return Retorna as quantidades do produtos do pedido de encomenda
 	 */
+vector<unsigned int> PedidoEncomenda::getQuantidade() const{
+	return quantidade;
 }
 
-void PedidoEncomenda::setFinalizado(bool finalizado) {
-	this->finalizado = finalizado;
-	/**
+/**
 	 *	@brief Define o se o pedido de encomenda esta finalizado ou nao
 	 *
 	 * @param finalizado Finalizado
 	 */
+void PedidoEncomenda::setFinalizado(bool finalizado) {
+	this->finalizado = finalizado;
 }
 
-
-void PedidoEncomenda::setQuantProduto(unsigned int indiceProduto, unsigned int novaqt){
-	if(indiceProduto<produtos.size())
-		quantidade.at(indiceProduto)=novaqt;
-	/**
+/**
 	 *	@brief Define a quantidade do produto do pedido de encomenda
 	 *
 	 * @param indiceProduto Indice do Produto
 	 * @param novaqt Nova quantidade
 	 */
+void PedidoEncomenda::setQuantProduto(unsigned int indiceProduto, unsigned int novaqt){
+	if(indiceProduto<produtos.size())
+		quantidade.at(indiceProduto)=novaqt;
 }
 
-
-void PedidoEncomenda::setProduto(unsigned int indice, string novonome){
-	if(indice<produtos.size())
-		produtos.at(indice)=novonome;
-	/**
+/**
 	 *	@brief Define o novo nome do produto do pedido de encomenda
 	 *
 	 * @param indice Indice do Produto
 	 * @param novonome Novo nome
 	 */
+void PedidoEncomenda::setProduto(unsigned int indice, string novonome){
+	if(indice<produtos.size())
+		produtos.at(indice)=novonome;
 }
 
-
+/**
+	 *	@brief Acrescenta um pedido de encomenda
+	 *
+	 * @param produto Produto a acrescentar
+	 * @param qt Quantidade
+	 */
 void PedidoEncomenda::acrescenta(string produto, unsigned int qt) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {
@@ -117,18 +125,23 @@ void PedidoEncomenda::acrescenta(string produto, unsigned int qt) {
 		quantidade.push_back(qt);
 		//	actualizaData();
 	}
-	/**
-	 *	@brief Acrescenta um pedido de encomenda
-	 *
-	 * @param produto Produto a acrescentar
-	 * @param qt Quantidade
-	 */
 }
 
+
+
+/**
+	 *	@return Retorna Verdadeiro se nome do produto 1 for diferente do nome do produto 2
+	 *
+	 *	@param produto1 Produto1
+	 *	@param produto2 Produto2
+	 */
 bool operator!=(const ProdutoFornecedor produto1, const ProdutoFornecedor produto2) {
 	return produto1.getNome() != produto2.getNome();
 }
 
+/**
+	 *	@brief Processa o pedido de encomenda
+	 */
 void PedidoEncomenda::processamento() {
 	Hipermercado* hipermercado = Hipermercado::getInstance();
 	vector<Encomenda*> encomendas;
@@ -214,14 +227,13 @@ void PedidoEncomenda::processamento() {
 	}
 
 	finalizado=true;
-
-
-	/**
-	 *	@brief Processa o pedido de encomenda
-	 */
 }
 
-
+/**
+	 *	@brief Elimina um produto de um pedido de encomenda
+	 *
+	 * @param produto Produto a eliminar
+	 */
 void PedidoEncomenda::eliminaProduto(string produto) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {
@@ -234,13 +246,15 @@ void PedidoEncomenda::eliminaProduto(string produto) {
 		produtos.erase(produtos.begin() + j);
 		quantidade.erase(quantidade.begin() + j);
 	}
-	/**
-	 *	@brief Elimina um produto de um pedido de encomenda
-	 *
-	 * @param produto Produto a eliminar
-	 */
 }
 
+/** @brief Imprime no ecra os atributos da classe por overload do operator<<
+	 *
+	 *	@param os Objeto da iostream
+	 *	@param p Pedido de Encomenda
+	 *
+	 *	@return Retorna ostream
+	 */
 ostream &operator<<(ostream& os,PedidoEncomenda* p){
 
 	os << "Data " << p->getData() << "\n \n";
@@ -250,17 +264,10 @@ ostream &operator<<(ostream& os,PedidoEncomenda* p){
 		os << p->getProdutos().at(i) << setw(15) << p->getQuantidade().at(i) << endl;
 	}
 	return os;
-	/** @brief Imprime no ecra os atributos da classe por overload do operator<<
-	 *
-	 *	@param os Objeto da iostream
-	 *	@param p Pedido de Encomenda
-	 *
-	 *	@return Retorna ostream
-	 */
 }
 
-
-PedidoEncomenda::~PedidoEncomenda() {
-	/** @brief Destrutor do Pedido de Encomenda
+/** @brief Destrutor do Pedido de Encomenda
 	 */
+PedidoEncomenda::~PedidoEncomenda() {
+
 }

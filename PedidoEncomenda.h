@@ -46,6 +46,7 @@ public:
 	private:
 		string produto;
 	public:
+		/** Declaracao das funcoes */
 		ProdutoNaoExiste(string produto): produto(produto){
 			cout<<"O produto "<<produto<<" nao existe na lista de pedidos.\n";
 		};
@@ -56,6 +57,7 @@ public:
 	private:
 		string produto;
 	public:
+		/** Declaracao das funcoes */
 		ProdutoNaoEstaAVenda(string produto): produto(produto){
 			cout<<"O produto "<<produto<<" nao se encontra a venda em nenhum fornecedor.\n";
 		};
@@ -65,6 +67,7 @@ public:
 	private:
 		string produto;
 	public:
+		/** Declaracao das funcoes */
 		ProdutoParcialmenteComprado(string produto): produto(produto){
 					cout<<"O produto "<<produto
 							<<" nao foi comprado na quantidade pretendida, devido a insuficiencia de stock nos fornecedores.\n";

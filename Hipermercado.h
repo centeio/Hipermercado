@@ -39,9 +39,6 @@ struct hf
 	}
 };
 
-/** @brief Struct compare que organiza a fila de prioridade
- *
- */
 
 class Hipermercado {
 protected:

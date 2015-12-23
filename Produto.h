@@ -40,6 +40,7 @@ protected:
 	Fornecedor* fornecedor;
 	Patamar* patamar;
 public:
+	/** Declaracao das funcoes */
 	ProdutoFornecedor(string nome, string medida,float stock, Fornecedor* fornecedor, Patamar* patamar) : Produto(nome, medida, stock), fornecedor(fornecedor), patamar(patamar){};
 	Fornecedor* getFornecedor() const;
 	void setFornecedor(Fornecedor* fornecedor);

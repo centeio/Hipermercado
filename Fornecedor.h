@@ -36,6 +36,7 @@ class FornecedorIndividual : public Fornecedor {
 protected:
 	string tipo = "Individual";
 public:
+	/** Declaracao das funcoes */
 	FornecedorIndividual(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
 	FornecedorIndividual(string nome, string NIF, string morada, Data data) : Fornecedor(nome,NIF,morada, data) {};
 	string getTipo() const;
@@ -46,6 +47,7 @@ class FornecedorEmpresa : public Fornecedor {
 protected:
 	string tipo = "Empresa";
 public:
+	/** Declaracao das funcoes */
 	FornecedorEmpresa(string nome, string NIF, string morada) : Fornecedor(nome,NIF,morada) {};
 	FornecedorEmpresa(string nome, string NIF, string morada, Data data) : Fornecedor(nome,NIF,morada, data) {};
 	string getTipo() const;

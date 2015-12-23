@@ -7,6 +7,9 @@
 
 #include "Data.h"
 
+/**
+ *	@brief Cria a data
+ */
 Data::Data() {
 }
 ;

@@ -23,6 +23,10 @@ Fornecedor::Fornecedor() {
 	data.setAno(0);
 }
 
+/**
+ *	@brief Constroi o fornecedor
+ *
+ */
 Fornecedor::Fornecedor(string nome, string NIF, string morada) : nome(nome), NIF(NIF), morada(morada) {
 	Data data(0,0,0);
 	this->data = data;
@@ -58,6 +62,9 @@ string Fornecedor::getMorada() const {
 	return morada;
 }
 
+/**
+ *	@return Retorna a Data do fornecedor
+ */
 Data Fornecedor::getData() const {
 	return data;
 }
@@ -89,6 +96,11 @@ void Fornecedor::setMorada(string morada) {
 	this->morada = morada;
 }
 
+/**
+ *	@brief Define a data do fornecedor
+ *
+ * @param data Data do fornecedor
+ */
 void Fornecedor::setData(Data data) {
 	this->data = data;
 }

@@ -16,14 +16,47 @@
 #include "Hipermercado.h"
 using namespace std;
 
-
+/**
+ *	@brief Le os produtos do fornecedor
+ *
+ *	@param hipermercado Hipermercado
+ *	@param &hipermercadoProdutosFornecedor Ficheiro a ler
+ */
 void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProdutosFornecedor);
+
+/**
+ *	@brief Le os produtos do hipermercado
+ *	@param hipermercado Hipermercado
+ *	@param &hipermercadoProdutos Ficheiro a ler
+ */
 void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoProdutos);
+
+/**
+ *	@brief Le os fornecedores
+ *	@param hipermercado Hipermercado
+ *	@param &hipermercadoFornecedores Ficheiro a ler
+ */
 void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedores);
+
+/**
+ *	@brief Le as encomendas
+ *	@param hipermercado Hipermercado
+ *	@param &hipermercadoencomendas Ficheiro a ler
+ */
 void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoencomendas);
+
+/**
+ *	@brief Le os pedidos de encomendas
+ *	@param hipermercado Hipermercado
+ *	@param &hipermercadopedidosencomendas Ficheiro a ler
+ */
 void lePedidosEncomendas(Hipermercado* hipermercado, ifstream& hipermercadopedidosencomendas);
 
-//LER FICHEIROS DE TEXTO
+/**
+ *	@brief Le os ficheiros de texto
+ *
+ *	@param hipermercado Hipermercado
+ */
 void leFicheiros(Hipermercado* hipermercado) {
 
 	ifstream hipermercadoProdutosFornecedor("produtosFornecedor.txt");
@@ -563,6 +596,10 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 void alteraFornecedor(Hipermercado* hipermercado);
 
 //OPCAO FORNECEDORES DO MENU
+
+/**
+ *	@brief Opcao do menu relativamente aos fornecedores
+ */
 void opcaofornecedores(Hipermercado* hipermercado) {
 	string nomeFornecedor, morada, tipo, NIF;
 	unsigned int opcao;
@@ -662,6 +699,11 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 	}while(opcao != 9);
 }
 
+/**
+ *	@brief Altera um fornecedor
+ *
+ *	@param hipermercado Hipermercado
+ */
 void alteraFornecedor(Hipermercado* hipermercado) {
 	unsigned int opcao2 = 0;
 	string nomeFornecedor, NIF, morada, produtoAdicionar;
@@ -757,6 +799,11 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 }
 
 //OPCAO FORNECEDORES DO MENU
+/**
+ *	@brief Opcao do menu do hipermercado relativa as encomendas
+ *
+ *	@param hipermercado Hipermercado
+ */
 void opcaoencomendas(Hipermercado* hipermercado) {
 	int opcao;
 	string nomeProduto, unidades;
@@ -859,12 +906,46 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 	} while(opcao != 9);
 }
 
+/**
+ *	@brief Escreve os produtos do fornecedor no ficheiro de texto, isto é atualiza a informacao antes de fechar o programa
+ *
+ *	@param hipermercado Hipermercado
+ */
 void escreveProdutosFornecedor(Hipermercado* hipermercado);
+
+/**
+ *	@brief Escreve os produtos no ficheiro de texto, isto é atualiza a informacao antes de fechar o programa
+ *
+ *	@param hipermercado Hipermercado
+ */
 void escreveProdutos(Hipermercado* hipermercado);
+
+/**
+ *	@brief Escreve os fornecedores no ficheiro de texto, isto é atualiza a informacao antes de fechar o programa
+ *
+ *	@param hipermercado Hipermercado
+ */
 void escreveFornecedores(Hipermercado* hipermercado);
+
+/**
+ *	@brief Escreve as encomendas no ficheiro de texto, isto é atualiza a informacao antes de fechar o programa
+ *
+ *	@param hipermercado Hipermercado
+ */
 void escreveEncomendas(Hipermercado* hipermercado);
+
+/**
+ *	@brief Escreve os pedidos de encomendas no ficheiro de texto, isto é atualiza a informacao antes de fechar o programa
+ *
+ *	@param hipermercado Hipermercado
+ */
 void escrevePedidosEncomendas(Hipermercado* hipermercado);
 
+/**
+ *	@brief Escreve em todos os ficheiros de texto , atualizando a informacao antes de fechar o programa
+ *
+ *	@param hipermercado Hipermercado
+ */
 void escreveFicheiros(Hipermercado* hipermercado) {
 
 
@@ -967,6 +1048,10 @@ void escrevePedidosEncomendas(Hipermercado* hipermercado) {
 }
 
 
+/**
+ *	@brief Main do programa
+ *
+ **/
 int main() {
 	Hipermercado* hipermercado = Hipermercado::getInstance();
 
