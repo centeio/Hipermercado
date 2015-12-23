@@ -273,13 +273,15 @@ void menuinicial(Hipermercado* hipermercado) {
 		cout << setw(10) << "4 - Mudar nome do Hipermercado." << endl;
 		cout << setw(10) << "9 - Terminar o programa." << endl;
 
-		cout << "Introduza a opcao pretendida: " << endl;
-		cin >> opcao;
+		do {
+			cout << "Introduza a opcao pretendida: " << flush;
+			getline(cin, opcaoString);
+			stringstream ss(opcaoString);
+			ss >> opcao;
 
-		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5) && (opcao != 9)) {
-			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: " << flush;
-			cin >> opcao;
-		}
+			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 9))
+				cout << "Opcao invalida." << flush;
+		}while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 9));
 
 		if (opcao == 1) {
 			opcaoprodutos(hipermercado);
@@ -303,10 +305,9 @@ bool operator==(const ProdutoFornecedor produto1, const ProdutoFornecedor produt
 
 //OPCAO PRODUTOS DO MENU
 void opcaoprodutos(Hipermercado* hipermercado) {
-	string medida, nomeProduto, nomeFornecedor, NIF, morada,opcaoString;
+	string medida, nomeProduto, nomeFornecedor, NIF, morada,opcaoString, answer;
 	float stock, preco;
 	unsigned int opcao, min, max;
-	char answer;
 
 	do {
 		//system("cls");
@@ -321,69 +322,98 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 		cout << setw(10) << "9 - Voltar ao menu inicial." << endl;
 		cin >> opcao;
 
-		while ((opcao < 1) || (opcao > 9)) {
-			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: "
-					<< flush;
-			cin >> opcao;
-		}
+
+		do {
+			cout << "Introduza a opcao pretendida: " << flush;
+			getline(cin, opcaoString);
+			stringstream ss(opcaoString);
+			ss >> opcao;
+
+			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
+					(opcao != 5) && (opcao != 6) && (opcao != 7) && (opcao != 9))
+				cout << "Opcao invalida." << flush;
+		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
+				(opcao != 5) && (opcao != 6) && (opcao != 7) && (opcao != 9));
+
 
 		if (opcao == 1) {
-			hipermercado->displayProdutos();
+			//hipermercado->displayProdutos();
 			hipermercado->displayPriorityQueue();
 			//system("pause");
 		}
 		else if (opcao == 2) {
-			answer = 'n';
 			cout << "Introduza o nome do produto: " << flush;
-			cin.clear();
-			cin.ignore(1000,'\n');
 			getline(cin,nomeProduto);
 			cout << "Introduza a medida usada para o produto: " << flush;
 			getline(cin,medida);
-			cout << "Introduza o stock inicial do produto: " << flush;
-			cin >> stock;
+			do {
+				cout << "Introduza o stock inicial do produto: " << flush;
+				getline(cin, opcaoString);
+				stringstream ss(opcaoString);
+				ss >> stock;
+				if (stock == 0)	cout << "Tem de introduzir um valor valido." << flush;
+
+			} while (stock == 0);
 			cout << "Introduza o nome do Fornecedor desse produto: " << flush;
-			cin.clear();
-			cin.ignore(1000,'\n');
 			getline(cin, nomeFornecedor);
 			Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
 			if(fornecedor == NULL) {
 				cout << "Esse fornecedor nao faz parte dos fornecedores do " << hipermercado->getNome() << "."
 						<< endl << "Pretende adiciona-lo como novo fornecedor(Y/N): " << flush;
-				cin >> answer;
-				while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+				getline(cin, answer);
+				transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+				while (answer != "n" && answer != "y") {
 					cout << "Por favor introduza Y para sim e N para nao. " << flush;
-					cin >> answer;
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 				}
-				if (tolower(answer) == 'n') {
+				if (answer == "n") {
 					cout << endl << "Nao e possivel adicionar um produto sem um fornecedor." << endl << endl;
 					return;
 				} else {
-					cout << "Introduza o tipo de fornecedor: " << endl << "1. Individual;" << endl << "2. Empresa: " <<
-							flush;
-					cin >> opcao;
-					while (opcao != 1 && opcao != 2) {
-						cout << "Opcao invalida. Por favor reintroduza o opcao valido ou 0 para sair: " << flush;
-						cin >> opcao;
-					}
-					if (opcao == 0) return;
-					else if (opcao == 1) {
+					do {
+						cout << "Introduza o tipo de fornecedor: " << endl << "1. Individual;" << endl << "2. Empresa: " << flush;
+						getline(cin, opcaoString);
+						stringstream ss(opcaoString);
+						ss >> opcao;
+						if (opcao == 0 && (opcao != 1) && (opcao != 2))	cout << "Opcao invalida." << flush;
+
+					} while (opcao == 0 && (opcao != 1) && (opcao != 2));
+					if (opcao == 1) {
 						cout << "Introduza o NIF do fornecedor: " << flush;
-						cin.clear();
-						cin.ignore(1000, '\n');
 						getline(cin, NIF);
 						cout << "Introduza a morada do fornecedor: " << flush;
 						getline(cin, morada);
 
 						FornecedorIndividual *fornecedorInd = new FornecedorIndividual(nomeFornecedor, NIF, morada);
 						hipermercado->addFornecedor(fornecedorInd);
-						cout << "E necessario introduzir o patamar para este produto." << endl <<
-								"Introduza o limite inferior: " << flush;
-						cin >> min;
-						cout << "Introduza o limite superior: " << flush;
-						cin >> max;
-						cout << "Introduza o preco: " << flush;
-						cin >> preco;
+						do {
+							cout << "E necessario introduzir o patamar para este produto." << endl <<
+										"Introduza o limite inferior: " << flush;
+							getline(cin, opcaoString);
+							stringstream ss(opcaoString);
+							ss >> min;
+							if (min == 0)
+								cout << "Tem de introduzir um valor valido." << flush;
+						} while (min == 0);
+						do {
+							cout <<"Introduza o limite superior: " << flush;
+							getline(cin, opcaoString);
+							stringstream ss(opcaoString);
+							ss >> max;
+							if (max == 0)
+								cout << "Tem de introduzir um valor valido."
+										<< flush;
+						} while (max == 0);
+						do {
+							cout << "Introduza o limite inferior: " << flush;
+							getline(cin, opcaoString);
+							stringstream ss(opcaoString);
+							ss >> preco;
+							if (preco == 0)
+								cout << "Tem de introduzir um valor valido." << flush;
+
+						} while (preco == 0);
 
 						Patamar *patamarInd = new Patamar(min, max, preco);
 						ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedorInd, patamarInd);
@@ -391,21 +421,44 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 					}
 					else {
 						cout << "Introduza o NIF do fornecedor: " << flush;
-						cin.clear();
-						cin.ignore(1000, '\n');
 						getline(cin, NIF);
 						cout << "Introduza a morada do fornecedor: " << flush;
 						getline(cin, morada);
 
-						FornecedorEmpresa *fornecedorEmp = new FornecedorEmpresa(nomeFornecedor, NIF, morada);
+						FornecedorEmpresa* fornecedorEmp = new FornecedorEmpresa(nomeFornecedor, NIF, morada);
 						hipermercado->addFornecedor(fornecedorEmp);
-						cout << "E necessario introduzir o patamar para este produto." << endl <<
-								"Introduza o limite inferior: " << flush;
-						cin >> min;
-						cout << "Introduza o limite superior: " << flush;
-						cin >> max;
-						cout << "Introduza o preco: " << flush;
-						cin >> preco;
+
+						do {
+							cout << "E necessario introduzir o patamar para este produto."
+									<< endl << "Introduza o limite inferior: "
+									<< flush;
+							getline(cin, opcaoString);
+							stringstream ss(opcaoString);
+							ss >> min;
+							if (min == 0)
+								cout << "Tem de introduzir um valor valido." << flush;
+						} while (min == 0);
+
+						do {
+							cout << "Introduza o limite superior: " << flush;
+							getline(cin, opcaoString);
+							stringstream ss(opcaoString);
+							ss >> max;
+							if (max == 0)
+								cout << "Tem de introduzir um valor valido."
+										<< flush;
+						} while (max == 0);
+
+						do {
+							cout << "Introduza o preco: " << flush;
+							getline(cin, opcaoString);
+							stringstream ss(opcaoString);
+							ss >> preco;
+							if (preco == 0)
+								cout << "Tem de introduzir um valor valido."
+										<< flush;
+
+						} while (preco == 0);
 
 						Patamar* patamarEmp = new Patamar(min, max, preco);
 						ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedorEmp, patamarEmp);
@@ -413,62 +466,87 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 					}
 				}
 			} else {
-				cout << "Introduza o limite inferior: " << flush;
-				cin >> min;
-				cout << "Introduza o limite superior: " << flush;
-				cin >> max;
-				cout << "Introduza o preco: " << flush;
-				cin >> preco;
+				do {
+					cout << "Introduza o limite inferior: " << flush;
+					getline(cin, opcaoString);
+					stringstream ss(opcaoString);
+					ss >> min;
+					if (min == 0)
+						cout << "Tem de introduzir um valor valido." << flush;
+				} while (min == 0);
+
+				do {
+					cout << "Introduza o limite superior: " << flush;
+					getline(cin, opcaoString);
+					stringstream ss(opcaoString);
+					ss >> max;
+					if (max == 0)
+						cout << "Tem de introduzir um valor valido." << flush;
+				} while (max == 0);
+
+				do {
+					cout << "Introduza o preco: " << flush;
+					getline(cin, opcaoString);
+					stringstream ss(opcaoString);
+					ss >> preco;
+					if (preco == 0)
+						cout << "Tem de introduzir um valor valido." << flush;
+
+				} while (preco == 0);
 
 				Patamar* patamar = new Patamar(min,max,preco);
-				ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedor,patamar);
+				ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedor, patamar);
 				hipermercado->addProduto(produto);
 			}
 		} else if (opcao == 3) {
 			string novoNome;
-			answer = 'n';
+
 			do {
-				cout << "Introduza o nome do produto que pretende alterar: "
-						<< flush;
+				answer = "n";
+				cout << "Introduza o nome do produto que pretende alterar: " << flush;
 				getline(cin, nomeProduto);
+
 				ProdutoFornecedor temp(nomeProduto, "", 0, NULL, NULL);
 				BST<ProdutoFornecedor> temporary = hipermercado->getProdutos();
+
 				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND) {
 					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
-					cin >> answer;
-					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
 						cout << "Por favor introduza Y para sim e N para nao. " << flush;
-						cin >> answer;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 					}
-					if (tolower(answer) == 'n')	return;
+					if (answer == "n")	return;
 				}
-				cin.clear();
-				cin.ignore(1000, '\n');
-			} while (tolower(answer) == 'y');
+			} while (answer == "y");
 			cout << "Introduza o novo nome do produto: " << flush;
 			getline(cin, novoNome);
 			hipermercado->alteraNomeProduto(nomeProduto, novoNome);
 		} else if (opcao == 4) {
 			string novaMedida;
-			answer = 'n';
+
 			do {
-				cin.clear();
-				cin.ignore(1000, '\n');
+				answer = "n";
 				cout << "Introduza o nome do produto que pretende alterar: " << flush;
 				getline(cin, nomeProduto);
+
 				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
-				if (hipermercado->getProdutos().find(temp) == Hipermercado::ITEM_NOT_FOUND) {
+				BST<ProdutoFornecedor> temporary = hipermercado->getProdutos();
+
+				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND) {
 					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
-					cin >> answer;
-					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
 						cout << "Por favor introduza Y para sim e N para nao. " << flush;
-						cin >> answer;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 					}
-					if (answer == 'n') {
-						return;
-					}
+					if (answer == "n")	return;
 				}
-			}while(tolower(answer) == 'y');
+			}while(answer == "y");
 
 			cout << "Introduza a nova medida: " << flush;
 			getline(cin, novaMedida);
@@ -476,24 +554,27 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 
 		} else if (opcao == 5) {
 			float novoStock;
-			answer = 'n';
+
 			do {
-				cin.clear();
-				cin.ignore(1000, '\n');
+				answer = "n";
 				cout << "Introduza o nome do produto que pretende alterar: " << flush;
+				getline(cin, nomeProduto);
+
 				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
-				if (hipermercado->getProdutos().find(temp) == Hipermercado::ITEM_NOT_FOUND) {
+				BST<ProdutoFornecedor> temporary = hipermercado->getProdutos();
+
+				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND) {
 					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
-					cin >> answer;
-					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
 						cout << "Por favor introduza Y para sim e N para nao. " << flush;
-						cin >> answer;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 					}
-					if (answer == 'n') {
-						return;
-					}
+					if (answer == "n")	return;
 				}
-			}while(tolower(answer) == 'y');
+			}while(answer == "y");
 			cout << "Introduza o novo stock: " << flush;
 			cin >> novoStock;
 			Produto* produto = new Produto(nomeProduto,"",0);
@@ -559,26 +640,28 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				hipermercado->alteraFornecedorProduto(nomeProduto, fornecedor);
 			}*/
 		} else if(opcao == 7) {
-			answer = 'n';
-			cin.clear();
-			cin.ignore(1000, '\n');
 			do {
+				answer = "n";
 				cout << "Introduza o nome do produto que pretende eliminar: " << flush;
 				getline(cin, nomeProduto);
 
 				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
-				if (hipermercado->getProdutos().find(temp) == Hipermercado::ITEM_NOT_FOUND) {
-					cout << "O produto que introduziu não existe. Pretende introduzir outro nome (Y/N): " << flush;
-					cin >> answer;
-					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+				BST<ProdutoFornecedor> temporary = hipermercado->getProdutos();
+
+				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND) {
+					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
 						cout << "Por favor introduza Y para sim e N para nao. " << flush;
-						cin >> answer;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 					}
-					if (answer == 'n') return;
-				} else {
-					hipermercado->eliminaProduto(hipermercado->getProdutos().find(temp));
+					if (answer == "n")	return;
 				}
-			}while(tolower(answer) == 'y');
+			}while(answer == "y");
+			ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
+			hipermercado->eliminaProduto(hipermercado->getProdutos().find(temp));
 		}
 		else { return; }
 	}while(opcao != 9);
@@ -592,7 +675,7 @@ void alteraFornecedor(Hipermercado* hipermercado);
  *	@brief Opcao do menu relativamente aos fornecedores
  */
 void opcaofornecedores(Hipermercado* hipermercado) {
-	string nomeFornecedor, morada, tipo, NIF;
+	string nomeFornecedor, morada, tipo, NIF, opcaoString;
 	unsigned int opcao;
 
 	do {
@@ -606,10 +689,17 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 		cout << setw(10) << "9 - Voltar ao menu inicial." << endl;
 		cin >> opcao;
 
-		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5) && (opcao != 9)) {
-			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: " << flush;
-			cin >> opcao;
-		}
+		do {
+			cout << "Introduza a opcao pretendida: " << flush;
+			getline(cin, opcaoString);
+			stringstream ss(opcaoString);
+			ss >> opcao;
+
+			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
+				(opcao != 5) && (opcao != 9))
+				cout << "Opcao invalida." << flush;
+		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
+				(opcao != 5) && (opcao != 9));
 
 		if (opcao == 1) {
 			hipermercado->displayFornecedores();
@@ -619,22 +709,22 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 			hipermercado->displayTabela();
 			//system("pause");
 		} else if (opcao == 3) {
-			cin.clear();
-			cin.ignore(1000, '\n');
 			cout << "Introduza o nome do novo fornecedor: " << flush;
 			getline(cin, nomeFornecedor);
 			cout << "Introduza o NIF do novo fornecedor: " << flush;
 			getline(cin, NIF);
 			cout << "Introduza a morada do novo fornecedor: " << flush;
 			getline(cin, morada);
-			cout << "Introduza o tipo de fornecedor: " << endl << "1. Individual;" << endl << "2. Empresa: " << flush;
-			cin >> opcao;
-			while (opcao != 1 && opcao != 2 && opcao != 0) {
-				cout << "Opcao invalida. Por favor reintroduza o opcao valido ou 0 para sair: " << flush;
-				cin >> opcao;
-			}
-			if (opcao == 0) return;
-			else if (opcao == 1) {
+
+			do {
+				cout << "Introduza o tipo de fornecedor: " << endl << "1. Individual;" << endl << "2. Empresa: " << flush;
+				getline(cin, opcaoString);
+				stringstream ss(opcaoString);
+				ss >> opcao;
+				if (opcao == 0 && (opcao != 1) && (opcao != 2))	cout << "Opcao invalida." << flush;
+
+			} while (opcao == 0 && (opcao != 1) && (opcao != 2));
+			if (opcao == 1) {
 				FornecedorIndividual *fornecedorInd = new FornecedorIndividual(nomeFornecedor, NIF, morada);
 				hipermercado->addFornecedor(fornecedorInd);
 			}
@@ -696,9 +786,8 @@ void opcaofornecedores(Hipermercado* hipermercado) {
  *	@param hipermercado Hipermercado
  */
 void alteraFornecedor(Hipermercado* hipermercado) {
-	unsigned int opcao2 = 0;
-	string nomeFornecedor, NIF, morada, produtoAdicionar;
-	char answer;
+	unsigned int opcao;
+	string nomeFornecedor, NIF, morada, produtoAdicionar, opcaoString, answer;
 
 	do {
 		cout << setw(10) << "Menu Alterar Fornecedor:" << endl;
@@ -708,13 +797,19 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 		cout << setw(10) << "9 - Voltar ao menu fornecedores" << endl;
 		cin >> opcao2;
 
-		while ((opcao2 != 1) && (opcao2 != 2) && (opcao2 != 3) && (opcao2 != 9)) {
-			cout << setw(10) << "Opcao invalida. Volte a introduzir a opcao pretendida: " << flush;
-			cin >> opcao2;
-		}
+		do {
+			cout << "Introduza a opcao pretendida: " << flush;
+			getline(cin, opcaoString);
+			stringstream ss(opcaoString);
+			ss >> opcao;
 
-		if (opcao2 == 1) {
-			answer = 'n';
+			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 9))
+				cout << "Opcao invalida." << flush;
+
+		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 9));
+
+		if (opcao == 1) {
+			answer = "n";
 			do {
 				cin.clear();
 				cin.ignore(1000, '\n');
