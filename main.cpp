@@ -251,7 +251,7 @@ void menuinicial(Hipermercado* hipermercado) {
 
 		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5) && (opcao != 9)) {
 			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: "
-			<< flush;
+					<< flush;
 			cin >> opcao;
 		}
 
@@ -295,7 +295,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 
 		while ((opcao < 1) || (opcao > 9)) {
 			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: "
-			<< flush;
+					<< flush;
 			cin >> opcao;
 		}
 
@@ -320,7 +320,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
 			if(fornecedor == NULL) {
 				cout << "Esse fornecedor não faz parte dos fornecedores do " << hipermercado->getNome() << "."
-				<< endl << "Pretende adiciona-lo como novo fornecedor(Y/N): " << flush;
+						<< endl << "Pretende adiciona-lo como novo fornecedor(Y/N): " << flush;
 				cin >> answer;
 				while (tolower(answer) != 'n' && tolower(answer) != 'y') {
 					cout << "Por favor introduza Y para sim e N para nao. " << flush;
@@ -331,7 +331,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 					return;
 				} else {
 					cout << "Introduza o tipo de fornecedor: " << endl << "1. Individual;" << endl << "2. Empresa: " <<
-					flush;
+							flush;
 					cin >> opcao;
 					while (opcao != 1 && opcao != 2) {
 						cout << "Opcao invalida. Por favor reintroduza o opcao valido ou 0 para sair: " << flush;
@@ -349,7 +349,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 						FornecedorIndividual *fornecedorInd = new FornecedorIndividual(nomeFornecedor, NIF, morada);
 						hipermercado->addFornecedor(fornecedorInd);
 						cout << "E necessario introduzir o patamar para este produto." << endl <<
-						"Introduza o limite inferior: " << flush;
+								"Introduza o limite inferior: " << flush;
 						cin >> min;
 						cout << "Introduza o limite superior: " << flush;
 						cin >> max;
@@ -371,7 +371,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 						FornecedorEmpresa *fornecedorEmp = new FornecedorEmpresa(nomeFornecedor, NIF, morada);
 						hipermercado->addFornecedor(fornecedorEmp);
 						cout << "E necessario introduzir o patamar para este produto." << endl <<
-						"Introduza o limite inferior: " << flush;
+								"Introduza o limite inferior: " << flush;
 						cin >> min;
 						cout << "Introduza o limite superior: " << flush;
 						cin >> max;
@@ -578,7 +578,7 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 		if (opcao == 1) {
 			hipermercado->displayFornecedores();
 			//system("pause");
-			}
+		}
 		else if(opcao == 2) {
 			hipermercado->displayTabela();
 			//system("pause");
@@ -649,7 +649,7 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 			}
 
 			hipermercado->eliminaFornecedor(indiceFornecedor - 1);
-		*/
+			 */
 		} else { return; }
 	}while(opcao != 9);
 }
@@ -784,39 +784,38 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			}
 		else if (opcao == 3) {
 
-			unsigned int indiceProduto;
-			vector<Produto *> produtosencomendas;
+
+			//	string nomeProduto;
+			vector<string> produtosencomendas;
 			vector<unsigned int> quantidades;
 
 			do
 			{
 				//ADICIONAR PEDIDO DE ENCOMENDA
-				b=true;
-				hipermercado->displayProdutos();
-				cout << "Para terminar carregue 0. Insira o indice do produto que quer encomendar: " << flush;
-				cin >> indiceProduto;
 
-				if(indiceProduto>0 && indiceProduto<=hipermercado->getProdutos().size()){
-					cout << "Introduza a quantidade que quer encomendar deste produto: " << flush;
-					cin >> quantidade;
-					produtosencomendas.push_back(hipermercado->getProdutos().at(indiceProduto-1));
-					quantidades.push_back(quantidade);
-				}
-				else
-				if(indiceProduto==0){
-					if(produtosencomendas.size()!=0)
-						hipermercado->addPedido(new PedidoEncomenda(hipermercado->getDataAtual(), produtosencomendas, quantidades));
-					opcaoencomendas(hipermercado);
-					b=false;}
-				else{
-					//system("cls");
-					cout<<"O produto que introduziu não existe." << endl;
-				}
+				cout << "Para terminar carregue 0. Insira o nome do produto que quer encomendar: " << flush;
+				getline(cin, nomeProduto);
 				cin.clear();
-				cin.ignore(1000,'\n');
-			}while(b==true);
+				cin.ignore(1000, '\n');
+				cout << "Para terminar carregue 0. Insira o nome do produto que quer encomendar: " << flush;
+				getline(cin, nomeProduto);
+				if (hipermercado->existeProduto(nomeProduto) == NULL)
+					cout << "O produto que pretende alterar nao existe." << flush;
+				else{
+					cout << "Introduza a quantidade que quer encomendar deste produto: " << flush;
+				//	getline(cin,quantidade);
+					cin>>quantidade;
+					produtosencomendas.push_back(nomeProduto);
+					quantidades.push_back(quantidade); //TODO convert to int
+					}
 
-		} else if (opcao == 4) {
+			}while(nomeProduto!="0");
+				if(produtosencomendas.size()!=0)
+					hipermercado->addPedido(new PedidoEncomenda(hipermercado->getDataAtual(), produtosencomendas, quantidades));
+				opcaoencomendas(hipermercado);
+
+			cin.clear();
+			cin.ignore(1000,'\n');		} else if (opcao == 4) {
 			//mostrar lista de pedidos por realizar
 			//funcao que altera pedido encomenda;
 			hipermercado->displayPedidosPorProcessar();
@@ -872,7 +871,7 @@ void escreveProdutos(Hipermercado* hipermercado) {
 	hipermercadoProdutos.open("produtos.txt");
 	while(!hipermercado->getPriorityQueue().empty()) {
 		hipermercadoProdutos << hipermercado->getPriorityQueue().top()->getNome() << endl << hipermercado->getPriorityQueue().top()->getMedida()
-				<< hipermercado->getPriorityQueue().top()->getStock() << endl;
+						<< hipermercado->getPriorityQueue().top()->getStock() << endl;
 	}
 	hipermercadoProdutos << "#";
 	hipermercadoProdutos.close();
@@ -886,11 +885,11 @@ void escreveProdutosFornecedor(Hipermercado* hipermercado) {
 
 	while(!it.isAtEnd()) {
 		hipermercadoProdutosFornecedor << it.retrieve().getNome() << endl << it.retrieve().getMedida()
-				<< endl << it.retrieve().getStock() << endl << it.retrieve().getFornecedor()->getNome() << endl << it.retrieve().getFornecedor()->getNIF()
-				<< endl << it.retrieve().getFornecedor()->getMorada() << endl << it.retrieve().getFornecedor()->getData().getDia() <<  endl
-				<< it.retrieve().getFornecedor()->getData().getMes() << endl << it.retrieve().getFornecedor()->getData().getAno() << endl
-				<< it.retrieve().getFornecedor()->getTipo() << endl << it.retrieve().getPatamar()->getMinimo() << endl << it.retrieve().getPatamar()->getMaximo()
-				<< endl << it.retrieve().getPatamar()->getPreco() << endl;
+						<< endl << it.retrieve().getStock() << endl << it.retrieve().getFornecedor()->getNome() << endl << it.retrieve().getFornecedor()->getNIF()
+						<< endl << it.retrieve().getFornecedor()->getMorada() << endl << it.retrieve().getFornecedor()->getData().getDia() <<  endl
+						<< it.retrieve().getFornecedor()->getData().getMes() << endl << it.retrieve().getFornecedor()->getData().getAno() << endl
+						<< it.retrieve().getFornecedor()->getTipo() << endl << it.retrieve().getPatamar()->getMinimo() << endl << it.retrieve().getPatamar()->getMaximo()
+						<< endl << it.retrieve().getPatamar()->getPreco() << endl;
 		it.advance();
 	}
 	hipermercadoProdutosFornecedor << "#";
@@ -926,12 +925,12 @@ void escreveEncomendas(Hipermercado* hipermercado) {
 		for (unsigned int j = 0; j < hipermercado->getEncomendas().at(i)->getLinhas().size(); j++) {
 
 			hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getProduto() << endl
-				<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getQuantidade() << endl
-				<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getPreco() << endl;
+					<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getQuantidade() << endl
+					<< hipermercado->getEncomendas().at(i)->getLinhas().at(j)->getPreco() << endl;
 		}
 		hipermercadoEncomendas << "#" << endl;
 		hipermercadoEncomendas << hipermercado->getEncomendas().at(i)->getData().getDia() << endl
-			<< hipermercado->getEncomendas().at(i)->getData().getMes() << endl << hipermercado->getEncomendas().at(i)->getData().getAno() << endl;
+				<< hipermercado->getEncomendas().at(i)->getData().getMes() << endl << hipermercado->getEncomendas().at(i)->getData().getAno() << endl;
 	}
 	hipermercadoEncomendas << "#";
 	hipermercadoEncomendas.close();
@@ -947,12 +946,12 @@ void escrevePedidosEncomendas(Hipermercado* hipermercado) {
 	for(unsigned int i = 0; i < hipermercado->getPedidos().size(); i++) {
 
 		hipermercadoPedidosEncomendas << hipermercado->getPedidos().at(i)->getData().getDia() << endl
-					<< hipermercado->getPedidos().at(i)->getData().getMes() << endl
-					<< hipermercado->getPedidos().at(i)->getData().getAno() << endl;
+				<< hipermercado->getPedidos().at(i)->getData().getMes() << endl
+				<< hipermercado->getPedidos().at(i)->getData().getAno() << endl;
 		if(hipermercado->getPedidos().at(i)->getFinalizado()) (hipermercadoPedidosEncomendas << "true");
 		else (hipermercadoPedidosEncomendas << "false");
 		hipermercadoPedidosEncomendas << endl
-					<< hipermercado->getPedidos().at(i)->getProdutos().size() << endl;
+				<< hipermercado->getPedidos().at(i)->getProdutos().size() << endl;
 
 		for(unsigned int j = 0; j < hipermercado->getPedidos().at(i)->getProdutos().size(); j++) {
 
