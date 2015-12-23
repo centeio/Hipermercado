@@ -209,9 +209,19 @@ void Hipermercado::setNome(string novonome){
 	 *
 	 *	@param indice Indice do fornecedor a eliminar
 	 */
-void Hipermercado::eliminaFornecedor(unsigned int indice){
-	delete(fornecedores.at(indice));
-	fornecedores.erase(fornecedores.begin()+indice);
+void Hipermercado::eliminaFornecedor(Fornecedor* fornecedor){
+	BSTItrIn<ProdutoFornecedor> it(produtos);
+
+	while(!it.isAtEnd()) {
+		if(it.retrieve().getFornecedor() == fornecedor) produtos.remove(it.retrieve());
+	}
+
+	for(unsigned int i = 0; i < fornecedores.size(); i++) {
+		if(fornecedores.at(i) == fornecedor) {
+			fornecedores.erase(fornecedores.begin()+i);
+		}
+	}
+	delete(fornecedor);
 }
 
 /**

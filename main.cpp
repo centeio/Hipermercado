@@ -401,7 +401,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 										<< flush;
 						} while (max == 0);
 						do {
-							cout << "Introduza o limite inferior: " << flush;
+							cout << "Introduza o preco: " << flush;
 							getline(cin, opcaoString);
 							stringstream ss(opcaoString);
 							ss >> preco;
@@ -756,7 +756,6 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 					if (answer == "n")	return;
 				}
 			}while(answer == "y");
-
 			Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
 			hipermercado->eliminaFornecedor(fornecedor);
 		} else if (opcao == 6) {
