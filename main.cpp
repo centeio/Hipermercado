@@ -13,6 +13,7 @@
 #include <cctype>
 #include <algorithm>
 #include <ctime>
+#include <sstream>
 #include "Hipermercado.h"
 using namespace std;
 
@@ -115,49 +116,6 @@ void leProdutos(Hipermercado* hipermercado, ifstream &hipermercadoProdutos) {
 	}
 }
 
-//LER PRODUTOSFORNECEDOR.TXT
-void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProdutosFornecedor) {
-	string nomeProduto, medida, nomeFornecedor, NIF, morada, tipo;
-	unsigned int dia, mes, ano, min, max;
-	float preco, stock;
-	bool cicle = true;
-
-	while(cicle) {
-		getline(hipermercadoProdutosFornecedor, nomeProduto);
-		if(nomeProduto != "#") {
-			getline(hipermercadoProdutosFornecedor, medida);
-			hipermercadoProdutosFornecedor >> stock;
-
-			hipermercadoProdutosFornecedor.clear();
-			hipermercadoProdutosFornecedor.ignore(1000,'\n');
-			getline(hipermercadoProdutosFornecedor, nomeFornecedor);
-			getline(hipermercadoProdutosFornecedor, NIF);
-			getline(hipermercadoProdutosFornecedor, morada);
-			hipermercadoProdutosFornecedor >> dia >> mes >> ano;
-
-			hipermercadoProdutosFornecedor.clear();
-			hipermercadoProdutosFornecedor.ignore(1000,'\n');
-			getline(hipermercadoProdutosFornecedor, tipo);
-			hipermercadoProdutosFornecedor >> min >> max >> preco;
-
-			Patamar* patamar = new Patamar(min, max, preco);
-			Data data(dia, mes, ano);
-			if(tipo == "Individual") {
-				Fornecedor *fornecedorInd = new FornecedorIndividual(nomeFornecedor, NIF, morada, data);
-				ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedorInd, patamar);
-				hipermercado->addProduto(produto);
-			}
-			else {
-				Fornecedor *fornecedorEmp = new FornecedorEmpresa(nomeFornecedor, NIF, morada, data);
-				ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedorEmp, patamar);
-				hipermercado->addProduto(produto);
-			}
-			hipermercadoProdutosFornecedor.clear();
-			hipermercadoProdutosFornecedor.ignore(1000,'\n');
-		}else cicle = false;
-	}
-}
-
 //LER FORNECEDORES.TXT
 void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedores) {
 	string nome, NIF, morada, tipo;
@@ -187,7 +145,6 @@ void leFornecedores(Hipermercado* hipermercado, ifstream &hipermercadoFornecedor
 	}
 }
 
-
 Fornecedor* procuraFornecedor(Hipermercado* hipermercado, string nome){
 
 	for(unsigned int i = 0; i < hipermercado->getFornecedores().size(); i++ ){
@@ -196,6 +153,47 @@ Fornecedor* procuraFornecedor(Hipermercado* hipermercado, string nome){
 	}
 	return NULL;
 }
+
+//LER PRODUTOSFORNECEDOR.TXT
+void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProdutosFornecedor) {
+	string nomeProduto, medida, nomeFornecedor, NIF, morada, tipo;
+	unsigned int dia, mes, ano, min, max;
+	float preco, stock;
+	bool cicle = true;
+
+	while(cicle) {
+		getline(hipermercadoProdutosFornecedor, nomeProduto);
+		if(nomeProduto != "#") {
+			getline(hipermercadoProdutosFornecedor, medida);
+			hipermercadoProdutosFornecedor >> stock;
+
+			hipermercadoProdutosFornecedor.clear();
+			hipermercadoProdutosFornecedor.ignore(1000,'\n');
+			getline(hipermercadoProdutosFornecedor, nomeFornecedor);
+
+			hipermercadoProdutosFornecedor.clear();
+			hipermercadoProdutosFornecedor.ignore(1000,'\n');
+			getline(hipermercadoProdutosFornecedor, tipo);
+			hipermercadoProdutosFornecedor >> min >> max >> preco;
+
+			Patamar* patamar = new Patamar(min, max, preco);
+			Data data(dia, mes, ano);
+			if(tipo == "Individual") {
+				Fornecedor *fornecedorInd = procuraFornecedor(hipermercado,nomeFornecedor);
+				ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedorInd, patamar);
+				hipermercado->addProduto(produto);
+			}
+			else {
+				Fornecedor *fornecedorEmp = procuraFornecedor(hipermercado,nomeFornecedor);
+				ProdutoFornecedor produto(nomeProduto, medida, stock, fornecedorEmp, patamar);
+				hipermercado->addProduto(produto);
+			}
+			hipermercadoProdutosFornecedor.clear();
+			hipermercadoProdutosFornecedor.ignore(1000,'\n');
+		}else cicle = false;
+	}
+}
+
 
 //LER ENCOMENDAS.TXT
 void leEncomendas(Hipermercado* hipermercado, ifstream &hipermercadoEncomendas) {
@@ -265,8 +263,8 @@ void opcaomudarnome(Hipermercado* hipermercado);
 
 //MENU INICIAL
 void menuinicial(Hipermercado* hipermercado) {
-	unsigned int opcao;
-	string noveNomeHipermercado;
+	string noveNomeHipermercado,opcaoString;
+	int opcao;
 
 	do {
 		//system("cls");
@@ -282,8 +280,7 @@ void menuinicial(Hipermercado* hipermercado) {
 		cin >> opcao;
 
 		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5) && (opcao != 9)) {
-			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: "
-					<< flush;
+			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: " << flush;
 			cin >> opcao;
 		}
 
@@ -295,8 +292,6 @@ void menuinicial(Hipermercado* hipermercado) {
 			opcaoencomendas(hipermercado);
 		} else if (opcao == 4) {
 			cout << "Introduza o novo nome do hipermercado: " << flush;
-			cin.clear();
-			cin.ignore(1000,'\n');
 			getline(cin,noveNomeHipermercado);
 			hipermercado->setNome(noveNomeHipermercado);
 		} else {
@@ -311,7 +306,7 @@ bool operator==(const ProdutoFornecedor produto1, const ProdutoFornecedor produt
 
 //OPCAO PRODUTOS DO MENU
 void opcaoprodutos(Hipermercado* hipermercado) {
-	string medida, nomeProduto, nomeFornecedor, NIF, morada;
+	string medida, nomeProduto, nomeFornecedor, NIF, morada,opcaoString;
 	float stock, preco;
 	unsigned int opcao, min, max;
 	char answer;
@@ -337,6 +332,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 
 		if (opcao == 1) {
 			hipermercado->displayProdutos();
+			hipermercado->displayPriorityQueue();
 			//system("pause");
 		}
 		else if (opcao == 2) {
@@ -435,11 +431,10 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			string novoNome;
 			answer = 'n';
 			do {
-				cin.clear();
-				cin.ignore(1000, '\n');
-				cout << "Introduza o nome do produto que pretende alterar: " << flush;
+				cout << "Introduza o nome do produto que pretende alterar: "
+						<< flush;
 				getline(cin, nomeProduto);
-				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
+				ProdutoFornecedor temp(nomeProduto, "", 0, NULL, NULL);
 				BST<ProdutoFornecedor> temporary = hipermercado->getProdutos();
 				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND) {
 					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
@@ -448,12 +443,11 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 						cout << "Por favor introduza Y para sim e N para nao. " << flush;
 						cin >> answer;
 					}
-					if (answer == 'n') {
-						return;
-					}
+					if (tolower(answer) == 'n')	return;
 				}
-				cout << temporary.find(temp).getFornecedor()->getNome() << endl;
-			}while(tolower(answer) == 'y');
+				cin.clear();
+				cin.ignore(1000, '\n');
+			} while (tolower(answer) == 'y');
 			cout << "Introduza o novo nome do produto: " << flush;
 			getline(cin, novoNome);
 			hipermercado->alteraNomeProduto(nomeProduto, novoNome);
@@ -978,10 +972,8 @@ void escreveProdutosFornecedor(Hipermercado* hipermercado) {
 
 	while(!it.isAtEnd()) {
 		hipermercadoProdutosFornecedor << it.retrieve().getNome() << endl << it.retrieve().getMedida()
-						<< endl << it.retrieve().getStock() << endl << it.retrieve().getFornecedor()->getNome() << endl << it.retrieve().getFornecedor()->getNIF()
-						<< endl << it.retrieve().getFornecedor()->getMorada() << endl << it.retrieve().getFornecedor()->getData().getDia() <<  endl
-						<< it.retrieve().getFornecedor()->getData().getMes() << endl << it.retrieve().getFornecedor()->getData().getAno() << endl
-						<< it.retrieve().getFornecedor()->getTipo() << endl << it.retrieve().getPatamar()->getMinimo() << endl << it.retrieve().getPatamar()->getMaximo()
+						<< endl << it.retrieve().getStock() << endl << it.retrieve().getFornecedor()->getNome()
+						<< endl << it.retrieve().getPatamar()->getMinimo() << endl << it.retrieve().getPatamar()->getMaximo()
 						<< endl << it.retrieve().getPatamar()->getPreco() << endl;
 		it.advance();
 	}

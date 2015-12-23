@@ -221,8 +221,8 @@ void Hipermercado::eliminaFornecedor(unsigned int indice){
  */
 void Hipermercado::addProduto(ProdutoFornecedor produto){
 	produtos.insert(produto);
-	Produto* produtoFila = new Produto(produto.getNome(), produto.getMedida(), produto.getStock());
-	if(!existeFila(produtoFila)) addProdutoFila(produtoFila);
+	Produto* produtoFila = new Produto(produto.getNome(), produto.getMedida(),0);
+	if (!existeFila(produtoFila)) addProdutoFila(produtoFila);
 }
 
 /**
@@ -250,15 +250,31 @@ void Hipermercado::eliminaProduto(ProdutoFornecedor produto){
 *	@param novonome Novo nome
 */
 void Hipermercado::alteraNomeProduto(string nome, string novonome){
-	ProdutoFornecedor temp(nome,"",0,NULL,NULL);
+	stack<Produto*> stack;
+	ProdutoFornecedor temp(nome, "", 0, NULL, NULL);
 	ProdutoFornecedor produto = produtos.find(temp);
+	temp.setPatamar(produto.getPatamar());
 
-	while(produto != ITEM_NOT_FOUND) {
-		cout << "1" << endl;
+	while (produto != ITEM_NOT_FOUND) {
 		produtos.remove(produto);
 		produto.setNome(novonome);
 		produtos.insert(produto);
 		produto = produtos.find(temp);
+	}
+
+	Produto* produtoFila = new Produto(nome, "", 1000);
+	while (!alertas.empty()) {
+		if (*(alertas.top()) != *produtoFila) {
+			stack.push(alertas.top());
+			alertas.pop();
+		} else {
+			alertas.top()->setNome(novonome);
+			break;
+		}
+	}
+	while (!stack.empty()) {
+		alertas.push(stack.top());
+		stack.pop();
 	}
 }
 
@@ -495,11 +511,11 @@ void Hipermercado::alteraProdutoFila(Produto* p, int stock){
 			stack.push(alertas.top());
 			alertas.pop();
 		} else {
-			alertas.top()->setStock(stock);
+			alertas.top()->setStock(alertas.top()->getStock() + stock);
 			break;
 		}
 	}
-	while(!stack.empty()){
+	while (!stack.empty()) {
 		alertas.push(stack.top());
 		stack.pop();
 	}
@@ -510,9 +526,9 @@ void Hipermercado::alteraProdutoFila(Produto* p, int stock){
  *
  */
 void Hipermercado::manageFila(){
-	while(!alertas.empty()){
-		if(alertas.top()->getStock() == 0){
-			//geraEncomendaAutomaticamente do produto do topo da fila
+	while (!alertas.empty()) {
+		if (alertas.top()->getStock() == 0) {
+			pedidos.push_back(new PedidoEncomenda(alertas.top()->getNome(), 100));
 			alertas.pop();
 		}
 	}
@@ -524,7 +540,6 @@ void Hipermercado::manageFila(){
 void Hipermercado::displayPriorityQueue(){
 	priority_queue<Produto*, vector<Produto*>, compare> temp;
 	temp = alertas;
-	cout << "alertas contains " << temp.size() << " elements.\n";
 	while (temp.size() != 0) {
 		cout << temp.top()->getNome() << " " << temp.top()->getMedida()
 		<< "  " << temp.top()->getStock() << endl;

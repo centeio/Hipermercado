@@ -44,6 +44,7 @@ public:
 	ProdutoFornecedor(string nome, string medida,float stock, Fornecedor* fornecedor, Patamar* patamar) : Produto(nome, medida, stock), fornecedor(fornecedor), patamar(patamar){};
 	Fornecedor* getFornecedor() const;
 	void setFornecedor(Fornecedor* fornecedor);
+	void setPatamar(Patamar* patamar);
 	Patamar* getPatamar() const;
 	void addPatamar();
 	bool operator < (ProdutoFornecedor produto) const;

@@ -152,7 +152,14 @@ Patamar* ProdutoFornecedor::getPatamar() const { return patamar; }
  */
 void ProdutoFornecedor::setFornecedor(Fornecedor *fornecedor) { this->fornecedor = fornecedor; }
 
-//TODO
+/**
+ *	@brief Define a o patamar do produto
+ *
+ * @param patamar Patamar do produto
+ */
+void ProdutoFornecedor::setPatamar(Patamar* patamar) { this->patamar = patamar; }
+
+
 /** @return Retorna verdadeiro se o nome for menor e caso o nome seja o mesmo, retorna verdadeiro se o preço for menor
  *
  *	@param produto Produto a ser comparado
