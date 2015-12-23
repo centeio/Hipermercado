@@ -272,6 +272,10 @@ void menuinicial(Hipermercado* hipermercado) {
 	}while(opcao != 9);
 }
 
+bool operator==(const ProdutoFornecedor produto1, const ProdutoFornecedor produto2) {
+	return produto1.getNome() == produto2.getNome();
+}
+
 //OPCAO PRODUTOS DO MENU
 void opcaoprodutos(Hipermercado* hipermercado) {
 	string medida, nomeProduto, nomeFornecedor, NIF, morada;
@@ -402,7 +406,9 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				cin.ignore(1000, '\n');
 				cout << "Introduza o nome do produto que pretende alterar: " << flush;
 				getline(cin, nomeProduto);
-				if (hipermercado->existeProduto(nomeProduto) == NULL) {
+				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
+				BST<ProdutoFornecedor> temporary = hipermercado->getProdutos();
+				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND) {
 					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
 					cin >> answer;
 					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
@@ -413,6 +419,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 						return;
 					}
 				}
+				cout << temporary.find(temp).getFornecedor()->getNome() << endl;
 			}while(tolower(answer) == 'y');
 			cout << "Introduza o novo nome do produto: " << flush;
 			getline(cin, novoNome);
@@ -425,7 +432,8 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				cin.ignore(1000, '\n');
 				cout << "Introduza o nome do produto que pretende alterar: " << flush;
 				getline(cin, nomeProduto);
-				if (hipermercado->existeProduto(nomeProduto) == NULL) {
+				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
+				if (hipermercado->getProdutos().find(temp) == Hipermercado::ITEM_NOT_FOUND) {
 					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
 					cin >> answer;
 					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
@@ -449,8 +457,8 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				cin.clear();
 				cin.ignore(1000, '\n');
 				cout << "Introduza o nome do produto que pretende alterar: " << flush;
-				getline(cin, nomeProduto);
-				if (hipermercado->existeProduto(nomeProduto) == NULL) {
+				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
+				if (hipermercado->getProdutos().find(temp) == Hipermercado::ITEM_NOT_FOUND) {
 					cout << "O produto que pretende alterar nao existe. Prentende introduziu outro nome(Y/N): " << flush;
 					cin >> answer;
 					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
@@ -463,7 +471,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				}
 			}while(tolower(answer) == 'y');
 			cout << "Introduza o novo stock: " << flush;
-			cin >> stock;
+			cin >> novoStock;
 			Produto* produto = new Produto(nomeProduto,"",0);
 			hipermercado->alteraProdutoFila(produto, stock);
 
@@ -534,8 +542,8 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				cout << "Introduza o nome do produto que pretende eliminar: " << flush;
 				getline(cin, nomeProduto);
 
-				BinaryNode<ProdutoFornecedor>* node = hipermercado->existeProduto(nomeProduto);
-				if (node == NULL) {
+				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
+				if (hipermercado->getProdutos().find(temp) == Hipermercado::ITEM_NOT_FOUND) {
 					cout << "O produto que introduziu não existe. Pretende introduzir outro nome (Y/N): " << flush;
 					cin >> answer;
 					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
@@ -544,7 +552,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 					}
 					if (answer == 'n') return;
 				} else {
-					hipermercado->eliminaProduto(node->getElement());
+					hipermercado->eliminaProduto(hipermercado->getProdutos().find(temp));
 				}
 			}while(tolower(answer) == 'y');
 		}
@@ -558,7 +566,6 @@ void alteraFornecedor(Hipermercado* hipermercado);
 void opcaofornecedores(Hipermercado* hipermercado) {
 	string nomeFornecedor, morada, tipo, NIF;
 	unsigned int opcao;
-	char answer = 'n';
 
 	do {
 		//system("cls");
@@ -658,7 +665,7 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 void alteraFornecedor(Hipermercado* hipermercado) {
 	unsigned int opcao2 = 0;
 	string nomeFornecedor, NIF, morada, produtoAdicionar;
-	char answer = 'n';
+	char answer;
 
 	do {
 		cout << setw(10) << "Menu Alterar Fornecedor:" << endl;
@@ -674,7 +681,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 		}
 
 		if (opcao2 == 1) {
-
+			answer = 'n';
 			do {
 				cin.clear();
 				cin.ignore(1000, '\n');
@@ -698,7 +705,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 			}while(tolower(answer) == 'y');
 
 		} else if (opcao2 == 2) {
-
+			answer = 'n';
 			do {
 				cin.clear();
 				cin.ignore(1000, '\n');
@@ -722,7 +729,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 			}while(tolower(answer) == 'y');
 
 		} else if (opcao2 == 3) {
-
+			answer = 'n';
 			do {
 				cin.clear();
 				cin.ignore(1000, '\n');
@@ -753,7 +760,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 void opcaoencomendas(Hipermercado* hipermercado) {
 	int opcao;
 	string nomeProduto, unidades;
-	unsigned int quantidade, numProdutos, numPedido, numProduto;
+	unsigned int quantidade, numProdutos, numPedido;
 	float preco;
 	bool b;
 
@@ -800,7 +807,8 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 				cin.ignore(1000, '\n');
 				cout << "Para terminar carregue 0. Insira o nome do produto que quer encomendar: " << flush;
 				getline(cin, nomeProduto);
-				if (hipermercado->existeProduto(nomeProduto) == NULL)
+				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
+				if (hipermercado->getProdutos().find(temp) == Hipermercado::ITEM_NOT_FOUND)
 					cout << "O produto que pretende alterar nao existe." << flush;
 				else{
 					cout << "Introduza a quantidade que quer encomendar deste produto: " << flush;

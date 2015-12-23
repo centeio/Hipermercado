@@ -125,7 +125,9 @@ void PedidoEncomenda::acrescenta(string produto, unsigned int qt) {
 	 */
 }
 
-
+bool operator!=(const ProdutoFornecedor produto1, const ProdutoFornecedor produto2) {
+	return produto1.getNome() != produto2.getNome();
+}
 
 void PedidoEncomenda::processamento() {
 	Hipermercado* hipermercado = Hipermercado::getInstance();
@@ -138,10 +140,10 @@ void PedidoEncomenda::processamento() {
 
 		while(q>0)
 		{
-			if(hipermercado->existeProduto(produtos.at(i)) != NULL)
+			ProdutoFornecedor temp(produtos.at(i),"",0,NULL,NULL);
+			if(hipermercado->getProdutos().find(temp) != Hipermercado::ITEM_NOT_FOUND)
 			{
-
-				ProdutoFornecedor p = hipermercado->existeProduto(produtos.at(i))->element;
+				ProdutoFornecedor p = hipermercado->getProdutos().find(temp);
 
 				if(q>=p.getPatamar()->getMinimo()&&q<=p.getPatamar()->getMaximo())
 				{
@@ -149,7 +151,9 @@ void PedidoEncomenda::processamento() {
 					Fornecedor* f = p.getFornecedor();
 					if(q<p.getStock())
 					{
-						hipermercado->existeProduto(produtos.at(i))->element.setStock(p.getStock()-q);
+						hipermercado->produtos.remove(p);
+						p.setStock(p.getStock()-q);
+						hipermercado->produtos.insert(p);
 						q=0;
 					}
 					else

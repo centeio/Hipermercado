@@ -128,12 +128,14 @@ Patamar* ProdutoFornecedor::getPatamar() const { return patamar; }
 void ProdutoFornecedor::setFornecedor(Fornecedor *fornecedor) { this->fornecedor = fornecedor; }
 
 bool ProdutoFornecedor::operator < (ProdutoFornecedor produto) const {
-
 	if(nome < produto.getNome()) return true;
 	else if(nome == produto.getNome()) {
-		if(patamar->getPreco() <= produto.getPatamar()->getPreco()) return true;
+		if(patamar == NULL)	cout << 0 << endl;
+		if(patamar == NULL  || produto.getPatamar() == NULL) return false;
+		else {
+			if(patamar->getPreco() <= produto.getPatamar()->getPreco()) return true;
+		}
 	}
-
 	return false;
 }
 

@@ -44,7 +44,7 @@ struct hf
  */
 
 class Hipermercado {
-private:
+protected:
 	string nome;
 	vector<Fornecedor*> fornecedores;
 	vector<PedidoEncomenda*> pedidos;
@@ -54,14 +54,12 @@ private:
 	unordered_set<Fornecedor*, hf, eqf> inativos;
 	Data dataatual;
 	BST<ProdutoFornecedor> produtos;
-	static ProdutoFornecedor ITEM_NOT_FOUND;
-	BinaryNode<ProdutoFornecedor> * existeProduto(string nome, BinaryNode<ProdutoFornecedor> *t);
-
 	struct compare{
 		bool operator() (const Produto* produto1, const Produto* produto2) {
 			if (produto1->getStock() == produto2->getStock()) {
-				return (getInstance()->existeProduto(produto1->getNome())->element.getPatamar()->getPreco() >
-						getInstance()->existeProduto(produto2->getNome())->element.getPatamar()->getPreco());
+				ProdutoFornecedor temp1(produto1->getNome(),"",0, NULL, NULL), temp2(produto2->getNome(),"",0, NULL, NULL);
+				return (getInstance()->produtos.find(temp1).getPatamar()->getPreco() >
+					getInstance()->produtos.find(temp2).getPatamar()->getPreco());
 			}
 			return (produto1->getStock() > produto2->getStock());
 		}
@@ -75,9 +73,9 @@ public:
 		if(Instance == NULL) Instance = new Hipermercado("Super");
 		return Instance;
 	}
-
+	static ProdutoFornecedor ITEM_NOT_FOUND;
 	vector<Fornecedor*> getFornecedores() const;
-	BST<ProdutoFornecedor> getProdutos() const;
+	BST<ProdutoFornecedor> getProdutos();
 	vector<Encomenda*> getEncomendas() const;
 	vector<PedidoEncomenda*> getPedidos() const;
 	string getNome() const;
@@ -120,7 +118,8 @@ public:
 	bool existeFila(Produto* produto);
 	priority_queue<Produto*, vector<Produto*>, compare>& getPriorityQueue() {return alertas;};
 
-	BinaryNode<ProdutoFornecedor>* existeProduto(string nome);
+	friend class PedidoEncomenda;
+
 };
 #endif /* HIPERMERCADO_H_ */
 

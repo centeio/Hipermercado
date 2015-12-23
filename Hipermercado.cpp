@@ -31,7 +31,7 @@ vector<Fornecedor*> Hipermercado::getFornecedores() const{
 }
 
 
-BST<ProdutoFornecedor> Hipermercado::getProdutos() const{
+BST<ProdutoFornecedor> Hipermercado::getProdutos() {
 	return produtos;
 	/**
 	 *	@return Retorna os produtos do hipermercado
@@ -228,6 +228,7 @@ void Hipermercado::eliminaProduto(ProdutoFornecedor produto){
 		produtos.remove(produto);
 		produtoFornecedor = produtos.find(produto);
 	}
+
 	Produto* produtoFila = new Produto(produto.getNome(), produto.getMedida(), produto.getStock());
 	removeProdutoFila(produtoFila);
 }
@@ -239,14 +240,15 @@ void Hipermercado::eliminaProduto(ProdutoFornecedor produto){
 *	@param novonome Novo nome
 */
 void Hipermercado::alteraNomeProduto(string nome, string novonome){
-	BinaryNode<ProdutoFornecedor>* node = existeProduto(nome);
+	ProdutoFornecedor temp(nome,"",0,NULL,NULL);
+	ProdutoFornecedor produto = produtos.find(temp);
 
-	while(node != NULL) {
-		ProdutoFornecedor produto = node->element;
+	while(produto != ITEM_NOT_FOUND) {
+		cout << "1" << endl;
 		produtos.remove(produto);
 		produto.setNome(novonome);
 		produtos.insert(produto);
-		node = existeProduto(nome);
+		produto = produtos.find(temp);
 	}
 }
 
@@ -257,7 +259,7 @@ void Hipermercado::alteraNomeProduto(string nome, string novonome){
 *	@param novamedida Nova medida
 */
 void Hipermercado::alteraMedidaProduto(string nome, string novamedida){
-	BinaryNode<ProdutoFornecedor>* node = existeProduto(nome);
+/*	BinaryNode<ProdutoFornecedor>* node = existeProduto(nome);
 
 	while(node != NULL) {
 		ProdutoFornecedor produto = node->element;
@@ -265,7 +267,7 @@ void Hipermercado::alteraMedidaProduto(string nome, string novamedida){
 		produto.setMedida(novamedida);
 		produtos.insert(produto);
 		node = existeProduto(nome);
-	}
+	}*/
 }
 
 void Hipermercado::eliminaPedido(unsigned int indice){
@@ -398,7 +400,7 @@ void Hipermercado::displayTabela(){
 	};
 }
 
-BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome){
+/*BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome){
 	existeProduto(nome, produtos.root);
 }
 
@@ -413,7 +415,7 @@ BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome,  Binary
 		return existeProduto( nome, t->right );
 	else
 		return t;    // Match
-}
+}*/
 
 bool Hipermercado::existeFila(Produto* produto) {
 	priority_queue<Produto*, vector<Produto*>, compare> temp = alertas;
