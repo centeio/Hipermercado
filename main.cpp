@@ -163,17 +163,16 @@ void leProdutosFornecedor(Hipermercado* hipermercado, ifstream &hipermercadoProd
 
 	while(cicle) {
 		getline(hipermercadoProdutosFornecedor, nomeProduto);
+		cout << nomeProduto << endl;
 		if(nomeProduto != "#") {
 			getline(hipermercadoProdutosFornecedor, medida);
 			hipermercadoProdutosFornecedor >> stock;
+			cout << medida << " " << stock << endl;
 
 			hipermercadoProdutosFornecedor.clear();
 			hipermercadoProdutosFornecedor.ignore(1000,'\n');
 			getline(hipermercadoProdutosFornecedor, nomeFornecedor);
 
-			hipermercadoProdutosFornecedor.clear();
-			hipermercadoProdutosFornecedor.ignore(1000,'\n');
-			getline(hipermercadoProdutosFornecedor, tipo);
 			hipermercadoProdutosFornecedor >> min >> max >> preco;
 
 			Patamar* patamar = new Patamar(min, max, preco);
@@ -576,7 +575,14 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				}
 			}while(answer == "y");
 			cout << "Introduza o novo stock: " << flush;
-			cin >> novoStock;
+			do {
+				cout << "Introduza o stock inicial do produto: " << flush;
+				getline(cin, opcaoString);
+				stringstream ss(opcaoString);
+				ss >> stock;
+				if (stock == 0)	cout << "Tem de introduzir um valor valido." << flush;
+
+			} while (stock == 0);
 			Produto* produto = new Produto(nomeProduto,"",0);
 			hipermercado->alteraProdutoFila(produto, stock);
 
@@ -892,7 +898,7 @@ void alteraFornecedor(Hipermercado* hipermercado) {
  */
 void opcaoencomendas(Hipermercado* hipermercado) {
 	int opcao;
-	string nomeProduto, unidades;
+	string nomeProduto, unidades, opcaoString;
 	unsigned int quantidade, numProdutos, numPedido;
 	float preco;
 	bool b;
@@ -907,13 +913,19 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 		cout << setw(10) << "5 - Cancelar encomenda." << endl;
 		cout << setw(10) << "6 - Processar pedidos." << endl;
 		cout << setw(10) << "9 - Voltar ao menu inicial." << endl;
-		cin >> opcao;
 
-		while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
-			   && (opcao != 5) && (opcao != 6) && (opcao != 9)) {
-			cout << "Opcao invalida. Volte a introduzir a opcao pretendida: " << flush;
-			cin >> opcao;
-		}
+		do {
+			cout << "Introduza a opcao pretendida: " << flush;
+			getline(cin, opcaoString);
+			stringstream ss(opcaoString);
+			ss >> opcao;
+
+			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
+					&& (opcao != 5) && (opcao != 6) && (opcao != 9))
+				cout << "Opcao invalida." << flush;
+
+		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
+				&& (opcao != 5) && (opcao != 6) && (opcao != 9));
 
 		if (opcao == 1) {
 			hipermercado->displayEncomendas();
@@ -933,31 +945,34 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			do
 			{
 				//ADICIONAR PEDIDO DE ENCOMENDA
+				cout << "Insira o nome do produto que quer encomendar: " << flush;
+				getline(cin, nomeProduto);
 
-				cout << "Para terminar carregue 0. Insira o nome do produto que quer encomendar: " << flush;
-				getline(cin, nomeProduto);
-				cin.clear();
-				cin.ignore(1000, '\n');
-				cout << "Para terminar carregue 0. Insira o nome do produto que quer encomendar: " << flush;
-				getline(cin, nomeProduto);
 				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
-				if (hipermercado->getProdutos().find(temp) == Hipermercado::ITEM_NOT_FOUND)
+				BST<ProdutoFornecedor> temporary = hipermercado->getProdutos();
+
+				if (temporary.find(temp) == Hipermercado::ITEM_NOT_FOUND)
 					cout << "O produto que pretende alterar nao existe." << flush;
-				else{
+				else {
 					cout << "Introduza a quantidade que quer encomendar deste produto: " << flush;
-				//	getline(cin,quantidade);
-					cin>>quantidade;
+					do {
+						cout << "Introduza o stock inicial do produto: " << flush;
+						getline(cin, opcaoString);
+						stringstream ss(opcaoString);
+						ss >> quantidade;
+						if (quantidade == 0)	cout << "Tem de introduzir um valor valido." << flush;
+
+					} while (quantidade == 0);
 					produtosencomendas.push_back(nomeProduto);
-					quantidades.push_back(quantidade); //TODO convert to int
-					}
+					quantidades.push_back(quantidade);
+				}
 
 			}while(nomeProduto!="0");
-				if(produtosencomendas.size()!=0)
+			if(produtosencomendas.size()!=0)
 					hipermercado->addPedido(new PedidoEncomenda(hipermercado->getDataAtual(), produtosencomendas, quantidades));
-				opcaoencomendas(hipermercado);
+			opcaoencomendas(hipermercado);
 
-			cin.clear();
-			cin.ignore(1000,'\n');		} else if (opcao == 4) {
+		} else if (opcao == 4) {
 			//mostrar lista de pedidos por realizar
 			//funcao que altera pedido encomenda;
 			hipermercado->displayPedidosPorProcessar();
