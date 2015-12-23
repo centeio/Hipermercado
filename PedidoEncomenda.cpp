@@ -9,7 +9,7 @@
 #include "Hipermercado.h"
 
 
-PedidoEncomenda::PedidoEncomenda(Data data, vector<Produto*> produtos, vector<unsigned int> quantidade) :
+PedidoEncomenda::PedidoEncomenda(Data data, vector<string> produtos, vector<unsigned int> quantidade) :
 data(data), produtos(produtos), quantidade(quantidade) {
 	finalizado = false;
 	/**
@@ -20,14 +20,14 @@ data(data), produtos(produtos), quantidade(quantidade) {
 	 */
 }
 
-PedidoEncomenda::PedidoEncomenda(Produto* produto, unsigned int quant): data(Hipermercado::getInstance()->getDataAtual()){
+PedidoEncomenda::PedidoEncomenda(string produto, unsigned int quant): data(Hipermercado::getInstance()->getDataAtual()){
 	finalizado=false;
 	produtos.push_back(produto);
 	quantidade.push_back(quant);
 
 }
 
-PedidoEncomenda::PedidoEncomenda(vector<Produto*> produtos, vector<unsigned int> quantidade) :
+PedidoEncomenda::PedidoEncomenda(vector<string> produtos, vector<unsigned int> quantidade) :
 						data(Hipermercado::getInstance()->getDataAtual()), produtos(produtos), quantidade(quantidade) {
 	finalizado = false;
 	/**
@@ -54,7 +54,7 @@ bool PedidoEncomenda::getFinalizado() const{
 }
 
 
-vector<Produto*> PedidoEncomenda::getProdutos() const{
+vector<string> PedidoEncomenda::getProdutos() const{
 	return produtos;
 	/**
 	 *	@return Retorna os produtos do pedido de encomenda
@@ -93,7 +93,7 @@ void PedidoEncomenda::setQuantProduto(unsigned int indiceProduto, unsigned int n
 
 void PedidoEncomenda::setProduto(unsigned int indice, string novonome){
 	if(indice<produtos.size())
-		produtos.at(indice)->setNome(novonome);
+		produtos.at(indice)=novonome;
 	/**
 	 *	@brief Define o novo nome do produto do pedido de encomenda
 	 *
@@ -103,10 +103,10 @@ void PedidoEncomenda::setProduto(unsigned int indice, string novonome){
 }
 
 
-void PedidoEncomenda::acrescenta(Produto* produto, unsigned int qt) {
+void PedidoEncomenda::acrescenta(string produto, unsigned int qt) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {
-		if (produto->getNome() == produtos.at(i)->getNome())
+		if (produto == produtos.at(i))
 			j = i;
 	}
 
@@ -138,10 +138,10 @@ void PedidoEncomenda::processamento() {
 
 		while(q>0)
 		{
-			if(hipermercado->existeProduto(produtos.at(i)->getNome()) != NULL)
+			if(hipermercado->existeProduto(produtos.at(i)) != NULL)
 			{
 
-				ProdutoFornecedor p = hipermercado->existeProduto(produtos.at(i)->getNome())->element;
+				ProdutoFornecedor p = hipermercado->existeProduto(produtos.at(i))->element;
 
 				if(q>=p.getPatamar()->getMinimo()&&q<=p.getPatamar()->getMaximo())
 				{
@@ -149,7 +149,7 @@ void PedidoEncomenda::processamento() {
 					Fornecedor* f = p.getFornecedor();
 					if(q<p.getStock())
 					{
-						hipermercado->existeProduto(produtos.at(i)->getNome())->element.setStock(p.getStock()-q);
+						hipermercado->existeProduto(produtos.at(i))->element.setStock(p.getStock()-q);
 						q=0;
 					}
 					else
@@ -196,7 +196,7 @@ void PedidoEncomenda::processamento() {
 
 		}
 
-		hipermercado->alteraProdutoFila(produtos.at(i),produtos.at(i)->getStock()+quantidade.at(i)-q);
+//TODO		hipermercado->alteraProdutoFila(produtos.at(i),produtos.at(i)->getStock()+quantidade.at(i)-q);
 	}
 
 	for(unsigned int k=0;k<encomendas.size();k++)
@@ -218,10 +218,10 @@ void PedidoEncomenda::processamento() {
 }
 
 
-void PedidoEncomenda::eliminaProduto(Produto* produto) {
+void PedidoEncomenda::eliminaProduto(string produto) {
 	unsigned int i, j;
 	for (i = 0; i < produtos.size(); i++) {
-		if (produto->getNome() == produtos.at(i)->getNome())
+		if (produto == produtos.at(i))
 			j = i;
 	}
 	if (j >= produtos.size())
@@ -243,7 +243,7 @@ ostream &operator<<(ostream& os,PedidoEncomenda* p){
 	if(p->getFinalizado()) os << "Finalizado" << endl;
 	os << "Produto: " << setw(15) << "Quantidade:" << endl;
 	for (unsigned int i=0; i<p->getProdutos().size();i++){
-		os << p->getProdutos().at(i)->getNome() << setw(15) << p->getQuantidade().at(i) << endl;
+		os << p->getProdutos().at(i) << setw(15) << p->getQuantidade().at(i) << endl;
 	}
 	return os;
 	/** @brief Imprime no ecra os atributos da classe por overload do operator<<
