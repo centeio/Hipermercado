@@ -277,7 +277,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 	string medida, nomeProduto, nomeFornecedor, NIF, morada;
 	float stock, preco;
 	unsigned int opcao, min, max;
-	char answer = 'n';
+	char answer;
 
 	do {
 		//system("cls");
@@ -303,7 +303,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			//system("pause");
 		}
 		else if (opcao == 2) {
-
+			answer = 'n';
 			cout << "Introduza o nome do produto: " << flush;
 			cin.clear();
 			cin.ignore(1000,'\n');
@@ -318,7 +318,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			getline(cin, nomeFornecedor);
 			Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
 			if(fornecedor == NULL) {
-				cout << "Esse fornecedor não faz parte dos fornecedores do " << hipermercado->getNome() << "."
+				cout << "Esse fornecedor nao faz parte dos fornecedores do " << hipermercado->getNome() << "."
 						<< endl << "Pretende adiciona-lo como novo fornecedor(Y/N): " << flush;
 				cin >> answer;
 				while (tolower(answer) != 'n' && tolower(answer) != 'y') {
@@ -396,6 +396,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			}
 		} else if (opcao == 3) {
 			string novoNome;
+			answer = 'n';
 			do {
 				cin.clear();
 				cin.ignore(1000, '\n');
@@ -418,7 +419,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			hipermercado->alteraNomeProduto(nomeProduto, novoNome);
 		} else if (opcao == 4) {
 			string novaMedida;
-
+			answer = 'n';
 			do {
 				cin.clear();
 				cin.ignore(1000, '\n');
@@ -443,7 +444,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 
 		} else if (opcao == 5) {
 			float novoStock;
-
+			answer = 'n';
 			do {
 				cin.clear();
 				cin.ignore(1000, '\n');
@@ -526,6 +527,7 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				hipermercado->alteraFornecedorProduto(nomeProduto, fornecedor);
 			}*/
 		} else if(opcao == 7) {
+			answer = 'n';
 			cin.clear();
 			cin.ignore(1000, '\n');
 			do {
