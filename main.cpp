@@ -276,9 +276,9 @@ void menuinicial(Hipermercado* hipermercado) {
 			stringstream ss(opcaoString);
 			ss >> opcao;
 
-			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 9))
+			if ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 9)))
 				cout << "Opcao invalida." << flush;
-		}while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 9));
+		}while ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 9)));
 
 		if (opcao == 1) {
 			opcaoprodutos(hipermercado);
@@ -324,11 +324,11 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 			stringstream ss(opcaoString);
 			ss >> opcao;
 
-			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
-					(opcao != 5) && (opcao != 6) && (opcao != 7) && (opcao != 9))
+			if ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
+					(opcao != 5) && (opcao != 6) && (opcao != 7) && (opcao != 9)))
 				cout << "Opcao invalida." << flush;
-		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
-				(opcao != 5) && (opcao != 6) && (opcao != 7) && (opcao != 9));
+		} while ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
+				(opcao != 5) && (opcao != 6) && (opcao != 7) && (opcao != 9)));
 
 
 		if (opcao == 1) {
@@ -575,12 +575,12 @@ void opcaoprodutos(Hipermercado* hipermercado) {
 				cout << "Introduza o stock inicial do produto: " << flush;
 				getline(cin, opcaoString);
 				stringstream ss(opcaoString);
-				ss >> stock;
+				ss >> novoStock;
 				if (stock == 0)	cout << "Tem de introduzir um valor valido." << flush;
 
-			} while (stock == 0);
+			} while (novoStock == 0);
 			Produto* produto = new Produto(nomeProduto,"",0);
-			hipermercado->alteraProdutoFila(produto, stock);
+			hipermercado->alteraProdutoFila(produto, novoStock);
 
 		} else if (opcao == 6) {
 			/*cin.clear();
@@ -689,7 +689,6 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 		cout << setw(10) << "4 - Alterar fornecedor." << endl;
 		cout << setw(10) << "5 - Eliminar fornecedor." << endl;
 		cout << setw(10) << "9 - Voltar ao menu inicial." << endl;
-		cin >> opcao;
 
 		do {
 			cout << "Introduza a opcao pretendida: " << flush;
@@ -697,11 +696,11 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 			stringstream ss(opcaoString);
 			ss >> opcao;
 
-			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
-				(opcao != 5) && (opcao != 9))
+			if ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
+				(opcao != 5) && (opcao != 9)))
 				cout << "Opcao invalida." << flush;
-		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
-				(opcao != 5) && (opcao != 9));
+		} while ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) &&
+				(opcao != 5) && (opcao != 9)));
 
 		if (opcao == 1) {
 			hipermercado->displayFornecedores();
@@ -804,10 +803,10 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 			stringstream ss(opcaoString);
 			ss >> opcao;
 
-			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 9))
+			if ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 9)))
 				cout << "Opcao invalida." << flush;
 
-		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 9));
+		} while ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 9)));
 
 		if (opcao == 1) {
 			do {
@@ -916,12 +915,12 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 			stringstream ss(opcaoString);
 			ss >> opcao;
 
-			if ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
-					&& (opcao != 5) && (opcao != 6) && (opcao != 9))
+			if ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
+					&& (opcao != 5) && (opcao != 6) && (opcao != 9)))
 				cout << "Opcao invalida." << flush;
 
-		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
-				&& (opcao != 5) && (opcao != 6) && (opcao != 9));
+		} while ((opcao == 0) || ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4)
+				&& (opcao != 5) && (opcao != 6) && (opcao != 9)));
 
 		if (opcao == 1) {
 			hipermercado->displayEncomendas();
@@ -937,7 +936,7 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 
 			do {
 				answer = "n";
-				cout << "Introduza o nome do produto que pretende eliminar: " << flush;
+				cout << "Introduza o nome do produto que pretende encomendar: " << flush;
 				getline(cin, nomeProduto);
 
 				ProdutoFornecedor temp(nomeProduto,"",0,NULL,NULL);
@@ -984,7 +983,7 @@ void opcaoencomendas(Hipermercado* hipermercado) {
 
 			cout << "Qual a nova quantidade de produto do pedido de encomenda: " << flush;;
 			cin >> quantidade;
-			//esta função não existe
+			//esta funcao nao existe
 			//hipermercado->alteraPedidos(numPedido,nomeProduto,quantidade);
 
 		} else if (opcao == 5) {
