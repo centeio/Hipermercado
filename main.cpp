@@ -677,7 +677,7 @@ void alteraFornecedor(Hipermercado* hipermercado);
  *	@brief Opcao do menu relativamente aos fornecedores
  */
 void opcaofornecedores(Hipermercado* hipermercado) {
-	string nomeFornecedor, morada, tipo, NIF, opcaoString;
+	string nomeFornecedor, morada, tipo, NIF, opcaoString, answer;
 	unsigned int opcao;
 
 	do {
@@ -737,47 +737,31 @@ void opcaofornecedores(Hipermercado* hipermercado) {
 			alteraFornecedor(hipermercado);
 		}
 		else if (opcao == 5) {
-			/*
-			cout << "Introduza o tipo de fornecedor (Individual ou Empresa): " << flush;
-			cin.clear();
-			cin.ignore(1000,'\n');
-			getline(cin, tipo);
 
-			transform(tipo.begin(), tipo.end(), tipo.begin(), ptr_fun <int, int> (tolower));
-			while((tipo != "individual") && (tipo != "empresa")) {
-				cout << "Tipo de fornecedor invalido. Por favor, introduza novamente o tipo de fornecedor (Individual ou Empresa): " << flush;
-				getline(cin, tipo);
-				transform(tipo.begin(), tipo.end(), tipo.begin(), ptr_fun <int, int> (tolower));
-			}
+			do {
+				answer = "n";
+				cout << "Introduza o nome do fornecedor que pretende alterar: " << flush;
+				getline(cin, nomeFornecedor);
 
-			cout << "Introduza o nome do novo fornecedor: " << flush;
-			getline(cin, nomeFornecedor);
-			cout << "Introduza o NIF do novo fornecedor: " << flush;
-			getline(cin, nif);
-			cout << "Introduza o morada do novo fornecedor: " << flush;
-			getline(cin, moradaFornecedor);
+				Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
+				if (fornecedor == NULL) {
+					cout << "O fornecedor que introduziu nao existe. Prentende reintroduzir o nome(Y/N): " << flush;
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
+						cout << "Por favor introduza Y para sim e N para nao. " << flush;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					}
+					if (answer == "n")	return;
+				}
+			}while(answer == "y");
 
-			if(tipo == "individual") hipermercado->addFornecedor(new FornecedorIndividual(nomeFornecedor, nif, moradaFornecedor));
-			else hipermercado->addFornecedor(new FornecedorEmpresa(nomeFornecedor, nif, moradaFornecedor));
-
+			Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
+			hipermercado->eliminaFornecedor(fornecedor);
 		} else if (opcao == 6) {
 			alteraFornecedor(hipermercado);
-		}
-		else if (opcao == 7) {
-
-			hipermercado->displayFornecedores();
-			cout << setw(10) << "Introduza o indice do fornecedor que quer eliminar: " << flush;
-			cin >> indiceFornecedor;
-
-			while((indiceFornecedor <= 0) || (indiceFornecedor > hipermercado->getFornecedores().size())) {
-				if(indiceFornecedor == 0) opcaofornecedores(hipermercado);
-				cerr << "Indice invalido. Por favor, introduza um indice valido ou 0 para sair: " << flush;
-				cin >> indiceFornecedor;
-			}
-
-			hipermercado->eliminaFornecedor(indiceFornecedor - 1);
-			 */
-		} else { return; }
+		} else return;
 	}while(opcao != 9);
 }
 

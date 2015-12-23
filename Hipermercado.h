@@ -90,7 +90,7 @@ public:
 	void displayProdutosFornecedor() const;
 	void processaPedido();
 	void addFornecedor(Fornecedor* fornecedor);
-	void eliminaFornecedor(unsigned int indice);
+	void eliminaFornecedor(Fornecedor* fornecedor);
 	void addProduto(ProdutoFornecedor produto);
 	void eliminaProduto(ProdutoFornecedor produto);
 	void alteraNomeProduto(string produto, string novonome);

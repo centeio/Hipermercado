@@ -434,24 +434,6 @@ void Hipermercado::displayTabela(){
 	};
 }
 
-/*BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome){
-	existeProduto(nome, produtos.root);
-}
-
-
-BinaryNode<ProdutoFornecedor> * Hipermercado::existeProduto(string nome,  BinaryNode<ProdutoFornecedor> *t){
-
-	if( t == NULL )
-		return NULL;
-	else if( nome < t->element.getNome() )
-		return existeProduto( nome, t->left );
-	else if( t->element.getNome() < nome )
-		return existeProduto( nome, t->right );
-	else
-		return t;    // Match
-}*/
-
-
 /**
 	 *	@return Retorna verdadeiro se o produto existir na fila de prioridades
 	 *
