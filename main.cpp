@@ -795,7 +795,6 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 		cout << setw(10) << "2 - Alterar NIF do Fornecedor" << endl;
 		cout << setw(10) << "3 - Alterar morada do Fornecedor" << endl;
 		cout << setw(10) << "9 - Voltar ao menu fornecedores" << endl;
-		cin >> opcao2;
 
 		do {
 			cout << "Introduza a opcao pretendida: " << flush;
@@ -809,79 +808,80 @@ void alteraFornecedor(Hipermercado* hipermercado) {
 		} while ((opcao == 0) && (opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 9));
 
 		if (opcao == 1) {
-			answer = "n";
 			do {
-				cin.clear();
-				cin.ignore(1000, '\n');
+				answer = "n";
 				cout << "Introduza o nome do fornecedor que pretende alterar: " << flush;
 				getline(cin, nomeFornecedor);
 				Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
 
 				if (fornecedor == NULL) {
-					cout << "O fornecedor que introduziu não existe. Prentende reintroduzir o nome(Y/N): " << flush;
-					cin >> answer;
-					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+					cout << "O fornecedor que introduziu nao existe. Prentende reintroduzir o nome(Y/N): " << flush;
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
 						cout << "Por favor introduza Y para sim e N para nao. " << flush;
-						cin >> answer;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 					}
-					if(tolower(answer) == 'n') return;
+					if (answer == "n")	return;
 				} else {
 					cout << "Introduza o novo nome do fornecedor: " << flush;
 					getline(cin, nomeFornecedor);
 					fornecedor->setNome(nomeFornecedor);
 				}
-			}while(tolower(answer) == 'y');
+			}while(answer == "y");
 
-		} else if (opcao2 == 2) {
+		} else if (opcao == 2) {
 			answer = 'n';
 			do {
-				cin.clear();
-				cin.ignore(1000, '\n');
+				answer = "n";
 				cout << "Introduza o nome do fornecedor que pretende alterar: " << flush;
 				getline(cin, nomeFornecedor);
 				Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
 
 				if (fornecedor == NULL) {
-					cout << "O fornecedor que introduziu não existe. Prentende reintroduzir o nome(Y/N): " << flush;
-					cin >> answer;
-					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+					cout << "O fornecedor que introduziu nao existe. Prentende reintroduzir o nome(Y/N): " << flush;
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
 						cout << "Por favor introduza Y para sim e N para nao. " << flush;
-						cin >> answer;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 					}
-					if(tolower(answer) == 'n') return;
+					if (answer == "n")	return;
 				} else {
 					cout << "Introduza o novo NIF do fornecedor: " << flush;
 					getline(cin, NIF);
 					fornecedor->setNIF(NIF);
 				}
-			}while(tolower(answer) == 'y');
+			}while(answer == "y");
 
-		} else if (opcao2 == 3) {
-			answer = 'n';
+		} else if (opcao == 3) {
 			do {
-				cin.clear();
-				cin.ignore(1000, '\n');
+				answer = "n";
 				cout << "Introduza o nome do fornecedor que pretende alterar: " << flush;
 				getline(cin, nomeFornecedor);
 				Fornecedor* fornecedor = procuraFornecedor(hipermercado, nomeFornecedor);
 
 				if (fornecedor == NULL) {
-					cout << "O fornecedor que introduziu não existe. Prentende reintroduzir o nome(Y/N): " << flush;
-					cin >> answer;
-					while (tolower(answer) != 'n' && tolower(answer) != 'y') {
+					cout << "O fornecedor que introduziu nao existe. Prentende reintroduzir o nome(Y/N): " << flush;
+					getline(cin, answer);
+					transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+					while (answer != "n" && answer != "y") {
 						cout << "Por favor introduza Y para sim e N para nao. " << flush;
-						cin >> answer;
+						getline(cin, answer);
+						transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 					}
-					if(tolower(answer) == 'n') return;
+					if (answer == "n")	return;
 				} else {
 					cout << "Introduza a nova morada do fornecedor: " << flush;
 					getline(cin, morada);
 					fornecedor->setMorada(morada);
 				}
-			}while(tolower(answer) == 'y');
+			}while(answer == "y");
 
 		} else { return; }
-	}while((opcao2 != 9));
+	}while(opcao != 9);
 }
 
 //OPCAO FORNECEDORES DO MENU
